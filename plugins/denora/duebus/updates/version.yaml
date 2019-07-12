@@ -4,3 +4,6 @@
 1.0.2:
     - 'Add custom fields to user.'
     - add_fields_to_user.php
+1.0.3:
+    - 'Created table denora_duebus_sectors'
+    - builder_table_create_denora_duebus_sectors.php
