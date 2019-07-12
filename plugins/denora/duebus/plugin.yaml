@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.duebus::lang.plugin.name'
+    description: 'denora.duebus::lang.plugin.description'
+    author: Denora
+    icon: oc-icon-connectdevelop
+    homepage: ''
