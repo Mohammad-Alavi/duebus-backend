@@ -9,6 +9,7 @@ class BuilderTableCreateDenoraDuebusSectors extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('label');
+            $table->integer('sort_order')->nullable();
         });
     }
 
