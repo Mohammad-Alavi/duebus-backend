@@ -1,0 +1,19 @@
+title = "Demonstration"
+url = "/"
+layout = "default"
+is_hidden = 0
+
+[session]
+security = "all"
+==
+<div class="jumbotron">
+    <div class="container">
+        {% content "welcome.htm" %}
+    </div>
+</div>
+
+{% if user %}
+<h2>You are logged in B-)</h2>
+{% else %}
+<h2>You are not logged in :-( go to <a href="/profile">Login page</a> so we can see who you are :-(</h2>
+{% endif %}
