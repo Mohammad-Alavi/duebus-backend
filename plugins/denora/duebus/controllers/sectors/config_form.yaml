@@ -1,0 +1,10 @@
+name: Sectors
+form: $/denora/duebus/models/sector/fields.yaml
+modelClass: Denora\Duebus\Models\Sector
+defaultRedirect: denora/duebus/sectors
+create:
+    redirect: 'denora/duebus/sectors/update/:id'
+    redirectClose: denora/duebus/sectors
+update:
+    redirect: denora/duebus/sectors
+    redirectClose: denora/duebus/sectors

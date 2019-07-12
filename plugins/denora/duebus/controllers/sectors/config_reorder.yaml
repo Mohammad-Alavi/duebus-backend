@@ -1,0 +1,4 @@
+title: Sectors
+modelClass: Denora\Duebus\Models\Sector
+toolbar:
+    buttons: reorder_toolbar
