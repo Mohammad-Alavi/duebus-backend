@@ -4,3 +4,13 @@ plugin:
     author: Denora
     icon: oc-icon-connectdevelop
     homepage: ''
+navigation:
+    main-menu-duebus:
+        label: DueBus
+        url: denora/duebus/sectors
+        icon: icon-connectdevelop
+        sideMenu:
+            sub-menu-sectors:
+                label: Sectors
+                url: denora/duebus/sectors
+                icon: icon-columns
