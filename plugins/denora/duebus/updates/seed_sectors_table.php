@@ -6,9 +6,10 @@ use October\Rain\Database\Updates\Seeder;
 class SeedSectorsTable extends Seeder {
 
     public function run() {
-        Sector::create(['label' => 'Belbool']);
-        Sector::create(['label' => 'Shantool']);
-        Sector::create(['label' => 'Hantoosh']);
+        Sector::create(['label' => 'Tech']);
+        Sector::create(['label' => 'Food']);
+        Sector::create(['label' => 'Beauty']);
+        Sector::create(['label' => 'Services']);
     }
 
 }
