@@ -27,4 +27,8 @@ class Sector extends Model
      */
     public $rules = [
     ];
+
+    public $belongsToMany = [
+        'investors' => ['Denora\Duebus\Models\Investor', 'table' => 'denora_duebus_investor_sector']
+    ];
 }

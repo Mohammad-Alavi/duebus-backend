@@ -7,7 +7,12 @@
 1.0.3:
     - 'Created table denora_duebus_sectors'
     - builder_table_create_denora_duebus_sectors.php
-
 1.0.4:
     - 'Seed sectors'
     - seed_sectors_table.php
+1.0.5:
+    - 'Created table denora_duebus_investors'
+    - builder_table_create_denora_duebus_investors.php
+1.0.6:
+    - 'Created pivot table denora_investor_sector'
+    - create_investor_sector_table.php
