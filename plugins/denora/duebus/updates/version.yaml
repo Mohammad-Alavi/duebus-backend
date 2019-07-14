@@ -19,3 +19,6 @@
 1.0.7:
     - 'Created table denora_duebus_educations'
     - builder_table_create_denora_duebus_educations.php
+1.0.8:
+    - 'Created table denora_duebus_experiences'
+    - builder_table_create_denora_duebus_experiences.php
