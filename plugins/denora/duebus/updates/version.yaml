@@ -8,7 +8,7 @@
     - 'Created table denora_duebus_sectors'
     - builder_table_create_denora_duebus_sectors.php
 1.0.4:
-    - 'Seed sectors'
+    - 'Seed sectors.'
     - seed_sectors_table.php
 1.0.5:
     - 'Created table denora_duebus_investors'
@@ -22,3 +22,6 @@
 1.0.8:
     - 'Created table denora_duebus_experiences'
     - builder_table_create_denora_duebus_experiences.php
+1.0.9:
+    - 'Created table denora_duebus_entrepreneur'
+    - builder_table_create_denora_duebus_entrepreneur.php
