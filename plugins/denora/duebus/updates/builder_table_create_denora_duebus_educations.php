@@ -15,6 +15,7 @@ class BuilderTableCreateDenoraDuebusEducations extends Migration
             $table->string('field_of_study');
             $table->dateTime('from');
             $table->dateTime('to');
+            $table->integer('entrepreneur_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->primary(['id']);

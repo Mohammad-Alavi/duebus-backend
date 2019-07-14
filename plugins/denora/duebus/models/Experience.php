@@ -5,10 +5,9 @@ use Model;
 /**
  * Model
  */
-class Experience extends Model
-{
+class Experience extends Model {
     use \October\Rain\Database\Traits\Validation;
-    
+
 
     /**
      * @var string The database table used by the model.
@@ -19,5 +18,9 @@ class Experience extends Model
      * @var array Validation rules
      */
     public $rules = [
+    ];
+
+    public $belongsTo = [
+        'entrepreneur' => 'Denora\Duebus\Models\Entrepreneur'
     ];
 }

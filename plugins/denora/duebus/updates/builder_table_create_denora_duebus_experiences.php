@@ -15,6 +15,7 @@ class BuilderTableCreateDenoraDuebusExperiences extends Migration
             $table->string('job_title');
             $table->dateTime('from');
             $table->dateTime('to');
+            $table->integer('entrepreneur_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->primary(['id']);
