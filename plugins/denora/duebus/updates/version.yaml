@@ -16,3 +16,6 @@
 1.0.6:
     - 'Created pivot table denora_investor_sector'
     - create_investor_sector_table.php
+1.0.7:
+    - 'Created table denora_duebus_educations'
+    - builder_table_create_denora_duebus_educations.php
