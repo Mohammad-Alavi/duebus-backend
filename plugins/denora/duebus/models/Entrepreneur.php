@@ -20,8 +20,8 @@ class Entrepreneur extends Model {
     public $rules = [
     ];
 
-    public $hasOne = [
-        'experience' => ['Denora\Duebus\Models\Experience'],
-        'education'  => ['Denora\Duebus\Models\Education'],
+    public $hasMany = [
+        'experiences' => ['Denora\Duebus\Models\Experience'],
+        'educations'  => ['Denora\Duebus\Models\Education'],
     ];
 }

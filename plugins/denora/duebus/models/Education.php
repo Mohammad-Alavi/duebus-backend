@@ -20,6 +20,11 @@ class Education extends Model {
     public $rules = [
     ];
 
+    protected $dates = [
+        'from',
+        'to'
+    ];
+
     public $belongsTo = [
         'entrepreneur' => 'Denora\Duebus\Models\Entrepreneur'
     ];

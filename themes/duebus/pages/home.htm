@@ -1,10 +1,13 @@
-title = "Demonstration"
+title = "Home"
 url = "/"
 layout = "default"
 is_hidden = 0
 
-[session]
-security = "all"
+[entrepreneurProfile]
+user_id = 1
+
+[investorProfile]
+user_id = 1
 ==
 <div class="jumbotron">
     <div class="container">
@@ -17,3 +20,6 @@ security = "all"
 {% else %}
 <h2>You are not logged in :-( go to <a href="/profile">Login page</a> so we can see who you are :-(</h2>
 {% endif %}
+
+{% component 'entrepreneurProfile' %}
+{% component 'investorProfile' %}
