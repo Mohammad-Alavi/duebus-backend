@@ -14,7 +14,7 @@ class CreateInvestorSectorTable extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists('investor_sector');
+        Schema::dropIfExists('denora_duebus_investor_sector');
     }
 
 }

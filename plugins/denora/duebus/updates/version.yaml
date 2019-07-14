@@ -1,21 +1,21 @@
 1.0.1:
-    - 'Seed user groups.'
+    - 'Seeded user groups.'
     - seed_user_groups_table.php
 1.0.2:
-    - 'Add custom fields to user.'
+    - 'Added custom fields to user.'
     - add_fields_to_user.php
 1.0.3:
     - 'Created table denora_duebus_sectors'
     - builder_table_create_denora_duebus_sectors.php
 1.0.4:
-    - 'Seed sectors.'
+    - 'Seeded sectors.'
     - seed_sectors_table.php
 1.0.5:
     - 'Created table denora_duebus_investors'
     - builder_table_create_denora_duebus_investors.php
 1.0.6:
     - 'Created pivot table denora_investor_sector'
-    - create_investor_sector_table.php
+    - builder_table_create_denora_duebus_investor_sector.php
 1.0.7:
     - 'Created table denora_duebus_educations'
     - builder_table_create_denora_duebus_educations.php
