@@ -25,3 +25,6 @@
 1.0.9:
     - 'Created table denora_duebus_entrepreneur'
     - builder_table_create_denora_duebus_entrepreneur.php
+1.0.10:
+    - 'Created table denora_duebus_representative'
+    - builder_table_create_denora_duebus_representative.php
