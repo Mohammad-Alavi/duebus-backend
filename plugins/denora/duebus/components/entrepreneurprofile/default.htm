@@ -1,4 +1,5 @@
 {% set entrepreneur = __SELF__.entrepreneur %}
+{% if entrepreneur %}
 ===============================
 <h1>Entrepreneur Profile</h1>
 ===============================
@@ -17,3 +18,6 @@
 <p><strong>Duration: </strong>{{ experience.from.year }} - {{ experience.to.year }}</p>
 <hr>
 {% endfor %}
+{% else %}
+<h3>You are not an entrepreneur!!!</h3>
+{% endif %}
