@@ -3,11 +3,11 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableCreateDenoraDuebusEntrepreneur extends Migration
+class BuilderTableCreateDenoraDuebusRepresentative extends Migration
 {
     public function up()
     {
-        Schema::create('denora_duebus_entrepreneur', function($table)
+        Schema::create('denora_duebus_representative', function($table)
         {
             $table->engine = 'InnoDB';
             $table->integer('id');
@@ -20,6 +20,6 @@ class BuilderTableCreateDenoraDuebusEntrepreneur extends Migration
     
     public function down()
     {
-        Schema::dropIfExists('denora_duebus_entrepreneur');
+        Schema::dropIfExists('denora_duebus_representative');
     }
 }

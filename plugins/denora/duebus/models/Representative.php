@@ -5,27 +5,19 @@ use Model;
 /**
  * Model
  */
-class Education extends Model {
+class Representative extends Model
+{
     use \October\Rain\Database\Traits\Validation;
-
+    
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'denora_duebus_educations';
+    public $table = 'denora_duebus_representative';
 
     /**
      * @var array Validation rules
      */
     public $rules = [
-    ];
-
-    protected $dates = [
-        'from',
-        'to'
-    ];
-
-    public $belongsTo = [
-        'entrepreneur' => 'Denora\Duebus\Models\Entrepreneur'
     ];
 }

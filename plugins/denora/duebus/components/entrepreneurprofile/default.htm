@@ -1,0 +1,23 @@
+{% set entrepreneur = __SELF__.entrepreneur %}
+{% if entrepreneur %}
+===============================
+<h1>Entrepreneur Profile</h1>
+===============================
+<h3>Education:</h3>
+{% for education in entrepreneur.educations %}
+<p><strong>School: </strong>{{ education.school }}</p>
+<p><strong>Field: </strong>{{ education.field_of_study }}</p>
+<p><strong>Duration: </strong>{{ education.from.year }} - {{ education.to.year }}</p>
+<hr>
+{% endfor %}
+
+<h3>Experience:</h3>
+{% for experience in entrepreneur.experiences %}
+<p><strong>Company: </strong>{{ experience.company }}</p>
+<p><strong>Job title: </strong>{{ experience.job_title }}</p>
+<p><strong>Duration: </strong>{{ experience.from.year }} - {{ experience.to.year }}</p>
+<hr>
+{% endfor %}
+{% else %}
+<h3>You are not an entrepreneur!!!</h3>
+{% endif %}
