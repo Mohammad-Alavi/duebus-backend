@@ -5,7 +5,7 @@ use System\Classes\PluginBase;
 
 class Plugin extends PluginBase {
 
-    public $require = ['RainLab.User'];
+    public $require = ['RainLab.User', 'Rluders.Jwtauth', 'Mohsin.Rest'];
 
     public function registerComponents() {
         return [
