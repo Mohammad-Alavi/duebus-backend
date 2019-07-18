@@ -5,13 +5,11 @@ use RainLab\User\Models\User;
 class UserTransformer {
 
     /**
-     * @param int $userId
+     * @param User $user
      *
      * @return array
      */
-    static function transform(int $userId) {
-        /** @var User $user */
-        $user = User::find($userId);
+    static function transform(User $user) {
 
         return [
             'id'           => $user->id,

@@ -2,6 +2,8 @@
 
 use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Transformers\UserTransformer;
+use RainLab\User\Models\User;
+use UserRepository;
 
 /**
  * User Controller Back-end Controller
@@ -15,6 +17,10 @@ class UserController extends Controller {
     public $restConfig = 'config_rest.yaml';
 
     public function show($userId) {
-        return UserTransformer::transform($userId);
+
+        $userRepository = new UserRepository();
+        $user = $userRepository->findById($userId);
+
+        return UserTransformer::transform($user);
     }
 }

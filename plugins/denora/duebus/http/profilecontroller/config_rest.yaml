@@ -5,6 +5,7 @@
 # Allowed Rest Actions
 allowedActions:
   index:
+  store:
 
 # Model Class name
 modelClass: RainLab\User\Models\User

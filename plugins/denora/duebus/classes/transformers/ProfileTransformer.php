@@ -1,16 +1,15 @@
 <?php namespace Denora\Duebus\Classes\Transformers;
 
-use RainLab\User\Facades\Auth;
 use RainLab\User\Models\User;
 
 class ProfileTransformer {
 
     /**
+     * @param User $user
+     *
      * @return array
      */
-    static function transform() {
-        /** @var User $user */
-        $user = Auth::user();
+    static function transform(User $user) {
 
         return [
             'id'           => $user->id,
