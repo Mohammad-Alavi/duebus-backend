@@ -1,0 +1,12 @@
+# ===================================
+#  Rest Behavior Config
+# ===================================
+
+# Allowed Rest Actions
+allowedActions:
+  index:
+      pageSize: 20
+  show:
+
+# Model Class name
+modelClass: Denora\Duebus\Models\Sector
