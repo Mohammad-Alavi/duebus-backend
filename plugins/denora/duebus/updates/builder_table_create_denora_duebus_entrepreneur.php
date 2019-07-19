@@ -10,11 +10,10 @@ class BuilderTableCreateDenoraDuebusEntrepreneur extends Migration
         Schema::create('denora_duebus_entrepreneur', function($table)
         {
             $table->engine = 'InnoDB';
-            $table->integer('id');
+            $table->increments('id');
             $table->integer('user_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->primary(['id']);
         });
     }
     
