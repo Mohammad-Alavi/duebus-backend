@@ -11,7 +11,7 @@ class EntrepreneurTransformer {
      */
     static function transform(Entrepreneur $entrepreneur) {
         return [
-            //'id' => $entrepreneur->id,
+            'id' => $entrepreneur->id,
             'educations'  => EducationsTransformer::transform($entrepreneur->educations),
             'experiences' => ExperiencesTransformer::transform($entrepreneur->experiences),
 

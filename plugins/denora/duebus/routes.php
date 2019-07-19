@@ -8,7 +8,8 @@ Route::group(['prefix' => 'api/v1'], function () {
         function () {
             Route::resource('sector', 'Denora\Duebus\Http\SectorController');
             Route::resource('profile', 'Denora\Duebus\Http\ProfileController');
-            Route::resource('user', 'Denora\Duebus\Http\UserController');
+            Route::resource('profile/education', 'Denora\Duebus\Http\EducationController');
+            Route::resource('profile/entrepreneur', 'Denora\Duebus\Http\EntrepreneurController');
         }
     );
 

@@ -15,16 +15,7 @@ class EducationsTransformer {
         if ($educations == null) return $array;
 
         foreach ($educations as $education) {
-            array_push($array, [
-                'id'             => $education->id,
-                'school'         => $education->school,
-                'field_of_study' => $education->field_of_study,
-                'from'           => $education->from,
-                'to'             => $education->to,
-
-                'created_at' => $education->created_at,
-                'updated_at' => $education->updated_at,
-            ]);
+            array_push($array, EducationTransformer::transform($education));
         }
 
         return $array;
