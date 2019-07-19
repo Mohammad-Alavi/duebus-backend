@@ -12,6 +12,7 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::resource('profile/education', 'Denora\Duebus\Http\EducationController');
             Route::resource('profile/entrepreneur', 'Denora\Duebus\Http\EntrepreneurController');
             Route::resource('profile/investor', 'Denora\Duebus\Http\InvestorController');
+            Route::resource('profile/representative', 'Denora\Duebus\Http\RepresentativeController');
         }
     );
 
