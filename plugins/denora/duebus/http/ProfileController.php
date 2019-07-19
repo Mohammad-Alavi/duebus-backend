@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebus\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Repositories\UserRepository;
 use Denora\Duebus\Classes\Transformers\ProfileTransformer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -30,8 +31,6 @@ class ProfileController extends Controller {
 
     //  Edit Profile
     public function store() {
-        /** @var User $user */
-        $user = Auth::user();
         $data = Request::all();
 
         $validator = Validator::make($data, [
@@ -42,14 +41,10 @@ class ProfileController extends Controller {
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
-        if (array_has($data, 'name'))
-            $user->name = $data['name'];
-        if (array_has($data, 'surname'))
-            $user->surname = $data['surname'];
+        $userRepository = new UserRepository();
+        $updatedUser = $userRepository->updateUser(Auth::user()->id, $data);
 
-        $user->save();
-
-        return $this->index();
+        return ProfileTransformer::transform($updatedUser);
     }
 
 }

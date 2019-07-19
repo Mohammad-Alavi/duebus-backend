@@ -1,4 +1,4 @@
-<?php
+<?php namespace Denora\Duebus\Classes\Repositories;
 
 
 use RainLab\User\Models\User;
@@ -25,10 +25,22 @@ class UserRepository {
 
     /**
      * @param int   $userId
-     * @param array $values
+     * @param array $data
+     *
+     * @return User
      */
-    public function updateUser(int $userId, array $values){
+    public function updateUser(int $userId, array $data){
 
+        $user = $this->findById($userId);
+
+        if (array_has($data, 'name'))
+            $user->name = $data['name'];
+        if (array_has($data, 'surname'))
+            $user->surname = $data['surname'];
+
+        $user->save();
+
+        return $user;
     }
 
 }
