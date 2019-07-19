@@ -15,16 +15,7 @@ class ExperiencesTransformer {
         if ($experiences == null) return $array;
 
         foreach ($experiences as $experience) {
-            array_push($array, [
-                'id'        => $experience->id,
-                'company'   => $experience->company,
-                'job_title' => $experience->job_title,
-                'from'      => $experience->from,
-                'to'        => $experience->to,
-
-                'created_at' => $experience->created_at,
-                'updated_at' => $experience->updated_at,
-            ]);
+            array_push($array, ExperienceTransformer::transform($experience));
         }
 
         return $array;
