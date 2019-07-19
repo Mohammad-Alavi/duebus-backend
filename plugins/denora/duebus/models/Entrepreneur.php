@@ -24,4 +24,8 @@ class Entrepreneur extends Model {
         'experiences' => ['Denora\Duebus\Models\Experience'],
         'educations'  => ['Denora\Duebus\Models\Education'],
     ];
+
+    public $belongsTo = [
+        'user' => 'Rainlab\User\Models\User'
+    ];
 }

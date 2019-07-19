@@ -10,7 +10,7 @@ class BuilderTableCreateDenoraDuebusExperiences extends Migration
         Schema::create('denora_duebus_experiences', function($table)
         {
             $table->engine = 'InnoDB';
-            $table->integer('id');
+            $table->increments('id');
             $table->string('company');
             $table->string('job_title');
             $table->dateTime('from');
@@ -18,7 +18,6 @@ class BuilderTableCreateDenoraDuebusExperiences extends Migration
             $table->integer('entrepreneur_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->primary(['id']);
         });
     }
     

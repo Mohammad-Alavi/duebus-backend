@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Denora\Duebus\Models\Entrepreneur;
 use RainLab\User\Models\User;
+use UserRepository;
 
 class InvestorProfile extends ComponentBase {
 
@@ -41,7 +42,9 @@ class InvestorProfile extends ComponentBase {
     public function init() {
         $this->userId = $this->property('user_id');
 
-        $this->investor = User::find($this->userId)->investor;
+        $userRepository = new UserRepository();
+
+        $this->investor = $userRepository->findById($this->userId)->investor;
     }
 
 }

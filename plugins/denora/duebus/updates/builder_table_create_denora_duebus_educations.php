@@ -10,7 +10,7 @@ class BuilderTableCreateDenoraDuebusEducations extends Migration
         Schema::create('denora_duebus_educations', function($table)
         {
             $table->engine = 'InnoDB';
-            $table->integer('id');
+            $table->increments('id');
             $table->string('school');
             $table->string('field_of_study');
             $table->dateTime('from');
@@ -18,7 +18,6 @@ class BuilderTableCreateDenoraDuebusEducations extends Migration
             $table->integer('entrepreneur_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->primary(['id']);
         });
     }
     
