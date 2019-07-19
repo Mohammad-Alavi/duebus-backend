@@ -24,4 +24,8 @@ class Investor extends Model
     public $belongsToMany = [
         'sectors' => ['Denora\Duebus\Models\Sector', 'table' => 'denora_duebus_investor_sector']
     ];
+
+    public $belongsTo = [
+        'user' => 'Rainlab\User\Models\User'
+    ];
 }

@@ -20,4 +20,8 @@ class Representative extends Model
      */
     public $rules = [
     ];
+
+    public $belongsTo = [
+        'user' => 'Rainlab\User\Models\User'
+    ];
 }

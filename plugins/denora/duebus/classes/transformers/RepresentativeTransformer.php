@@ -11,7 +11,7 @@ class RepresentativeTransformer {
      */
     static function transform(Representative $representative) {
         return [
-            //'id'                     => $representative->id,
+            'id' => $representative->id,
 
             'created_at' => $representative->created_at,
             'updated_at' => $representative->updated_at,
