@@ -24,10 +24,7 @@ class EducationController extends Controller {
 
     public function store() {
         $user = Auth::user();
-        $userRepository = new UserRepository();
-        /** @var Entrepreneur $entrepreneur */
-        $entrepreneur = $userRepository->findById($user->id)->entrepreneur;
-        if (!$entrepreneur) return Response::make(['You must create an entrepreneur profile first'], 400);
+        if (!$user->entrepreneur) return Response::make(['You must create an entrepreneur profile first'], 400);
 
         $data = Request::all();
 
