@@ -1,6 +1,6 @@
 1.0.1:
-    - 'First seed user groups.'
-    - seed_user_groups_table.php
+    - 'Created table denora_duebus_sectors'
+    - builder_table_create_denora_duebus_sectors.php
 1.0.2:
-    - 'Add custom fields to user.'
-    - add_fields_to_user.php
+    - 'Seeded sectors.'
+    - seed_sectors_table.php
