@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.duebusprofile::lang.plugin.name'
+    description: 'denora.duebusprofile::lang.plugin.description'
+    author: Denora
+    icon: icon-address-card-o
+    homepage: ''

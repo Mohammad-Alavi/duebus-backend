@@ -2,24 +2,9 @@ title = "Home"
 url = "/"
 layout = "default"
 is_hidden = 0
-
-[entrepreneurProfile]
-user_id = 1
-
-[investorProfile]
-user_id = 1
 ==
 <div class="jumbotron">
     <div class="container">
         {% content "welcome.htm" %}
     </div>
 </div>
-
-{% if user %}
-<h2>You are logged in B-)</h2>
-{% else %}
-<h2>You are not logged in :-( go to <a href="/profile">Login page</a> so we can see who you are :-(</h2>
-{% endif %}
-
-{% component 'entrepreneurProfile' %}
-{% component 'investorProfile' %}
