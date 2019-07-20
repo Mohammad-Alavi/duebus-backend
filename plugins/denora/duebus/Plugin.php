@@ -8,11 +8,6 @@ class Plugin extends PluginBase {
     public $require = ['RainLab.User', 'Rluders.Jwtauth', 'Mohsin.Rest'];
 
     public function registerComponents() {
-        return [
-            'Denora\Duebus\Components\EntrepreneurProfile' => 'entrepreneurProfile',
-            'Denora\Duebus\Components\InvestorProfile' => 'investorProfile',
-        ];
-
     }
 
     public function registerSettings() {
