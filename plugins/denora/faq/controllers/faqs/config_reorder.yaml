@@ -1,0 +1,5 @@
+title: Faqs
+nameFrom: question
+modelClass: Denora\Faq\Models\Faq
+toolbar:
+    buttons: reorder_toolbar

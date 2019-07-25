@@ -1,0 +1,8 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table denora_faq_faqs'
+    - builder_table_create_denora_faq_faqs.php
+1.0.3:
+    - 'Seed Faqs'
+    - seed_faqs_table.php

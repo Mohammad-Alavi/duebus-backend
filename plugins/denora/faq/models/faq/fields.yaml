@@ -1,0 +1,13 @@
+fields:
+    question:
+        label: Question
+        span: full
+        required: 1
+        type: text
+    answer:
+        label: Answer
+        size: large
+        span: full
+        required: 1
+        stretch: 0
+        type: richeditor
