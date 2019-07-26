@@ -22,6 +22,7 @@ class PostTransformer {
             'metadata'     => $post->metadata,
             'has_summary'  => $post->has_summary,
             'summary'      => $post->summary,
+            'categories'   => $post->categories,
 
             'created_at' => $post->created_at,
             'updated_at' => $post->updated_at,
