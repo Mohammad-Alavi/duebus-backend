@@ -1,0 +1,11 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table denora_duebusbusiness_businesses'
+    - builder_table_create_denora_duebusbusiness_businesses.php
+1.0.3:
+    - 'Created table denora_duebusbusiness_socialmedias'
+    - builder_table_create_denora_duebusbusiness_socialmedias.php
+1.0.4:
+    - 'Created table denora_duebusbusiness_equityholder'
+    - builder_table_create_denora_duebusbusiness_equityholder.php
