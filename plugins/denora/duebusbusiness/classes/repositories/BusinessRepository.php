@@ -46,7 +46,7 @@ class BusinessRepository {
         string $legalStructure,
         string $yourRoleInBusiness,
         string $reasonOfSellingEquity,
-        int $businessValue,
+        float $businessValue,
         float $equityForSale,
         bool $isInvolvedInAnyProceedings,
         bool $isConcernWithBusinessEmployees,
