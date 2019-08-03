@@ -15,6 +15,7 @@ class BusinessRepository {
 
     /**
      * @param int         $userId
+     * @param             $logo
      * @param string      $name
      *
      * @param string      $industry
@@ -34,6 +35,7 @@ class BusinessRepository {
      */
     public function createBusiness(
         int $userId,
+        $logo,
         string $name,
         string $industry,
         int $yearFounded,
@@ -50,6 +52,7 @@ class BusinessRepository {
 
         $business = new Business();
         $business->user_id = $userId;
+        $business->logo = $logo;
         $business->name = $name;
         $business->industry = $industry;
         $business->year_founded = $yearFounded;
@@ -79,6 +82,8 @@ class BusinessRepository {
 
         $business = $this->findById($businessId);
 
+        if (array_has($data, 'logo'))
+            $business->logo = $data['logo'];
         if (array_has($data, 'name'))
             $business->name = $data['name'];
         if (array_has($data, 'industry'))

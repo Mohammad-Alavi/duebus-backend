@@ -37,4 +37,8 @@ class Business extends Model {
         'user' => 'Rainlab\User\Models\User'
     ];
 
+    public $attachOne = [
+        'logo' => 'System\Models\File'
+    ];
+
 }

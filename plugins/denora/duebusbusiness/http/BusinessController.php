@@ -18,7 +18,7 @@ class BusinessController extends Controller {
 
     public $restConfig = 'config_rest.yaml';
 
-    public function show($id){
+    public function show($id) {
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->findById($id);
 
@@ -32,6 +32,7 @@ class BusinessController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
+            'logo'                               => 'image|max:4096',  //  Size validator is in KB
             'name'                               => 'required|min:3',
             'industry'                           => 'required|min:3',
             'year_founded'                       => 'required|numeric',
@@ -53,6 +54,7 @@ class BusinessController extends Controller {
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->createBusiness(
             $user->id,
+            array_has($data, 'logo') ? $data['logo'] : null,
             $data['name'],
             $data['industry'],
             $data['year_founded'],
@@ -81,6 +83,7 @@ class BusinessController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
+            'logo'                               => 'image|max:4096',
             'name'                               => 'min:3',
             'industry'                           => 'min:3',
             'year_founded'                       => 'numeric',
@@ -119,7 +122,5 @@ class BusinessController extends Controller {
 
         $businessRepository->deleteBusiness($id);
     }
-
-
 
 }

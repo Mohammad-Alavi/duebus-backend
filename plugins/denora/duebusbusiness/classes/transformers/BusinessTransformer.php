@@ -13,6 +13,7 @@ class BusinessTransformer {
 
         return [
             'id'                                 => $business->id,
+            'logo'                               => $business->logo,
             'name'                               => $business->name,
             'industry'                           => $business->industry,
             'year_founded'                       => $business->year_founded,
