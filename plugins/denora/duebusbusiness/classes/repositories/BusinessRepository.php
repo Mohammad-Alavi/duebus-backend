@@ -23,6 +23,7 @@ class BusinessRepository {
      * @param string|null $website
      * @param bool        $allowReveal
      * @param bool        $existingBusiness
+     * @param string      $legalStructure
      * @param string      $yourRoleInBusiness
      * @param string      $reasonOfSellingEquity
      * @param int         $businessValue
@@ -42,6 +43,7 @@ class BusinessRepository {
         $website,
         bool $allowReveal,
         bool $existingBusiness,
+        string $legalStructure,
         string $yourRoleInBusiness,
         string $reasonOfSellingEquity,
         int $businessValue,
@@ -59,6 +61,7 @@ class BusinessRepository {
         $business->website = $website;
         $business->allow_reveal = $allowReveal;
         $business->existing_business = $existingBusiness;
+        $business->legal_structure = $legalStructure;
         $business->your_role_in_business = $yourRoleInBusiness;
         $business->reason_of_selling_equity = $reasonOfSellingEquity;
         $business->business_value = $businessValue;
@@ -96,6 +99,8 @@ class BusinessRepository {
             $business->allow_reveal = $data['allow_reveal'];
         if (array_has($data, 'existing_business'))
             $business->existing_business = $data['existing_business'];
+        if (array_has($data, 'legal_structure'))
+            $business->legal_structure = $data['legal_structure'];
         if (array_has($data, 'your_role_in_business'))
             $business->your_role_in_business = $data['your_role_in_business'];
         if (array_has($data, 'reason_of_selling_equity'))

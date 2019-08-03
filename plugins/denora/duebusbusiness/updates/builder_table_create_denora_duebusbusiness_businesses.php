@@ -1,14 +1,11 @@
 <?php namespace Denora\Duebusbusiness\Updates;
 
-use Schema;
 use October\Rain\Database\Updates\Migration;
+use Schema;
 
-class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration
-{
-    public function up()
-    {
-        Schema::create('denora_duebusbusiness_businesses', function($table)
-        {
+class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
+    public function up() {
+        Schema::create('denora_duebusbusiness_businesses', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('user_id');
@@ -18,6 +15,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration
             $table->string('website')->nullable();
             $table->boolean('allow_reveal');
             $table->boolean('existing_business');
+            $table->string('legal_structure');
             $table->string('your_role_in_business');
             $table->string('reason_of_selling_equity');
             $table->integer('business_value');
@@ -30,9 +28,8 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration
             $table->timestamp('deleted_at')->nullable();
         });
     }
-    
-    public function down()
-    {
+
+    public function down() {
         Schema::dropIfExists('denora_duebusbusiness_businesses');
     }
 }

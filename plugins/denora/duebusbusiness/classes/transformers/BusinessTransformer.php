@@ -20,6 +20,7 @@ class BusinessTransformer {
             'website'                            => $business->website,
             'allow_reveal'                       => $business->allow_reveal,
             'existing_business'                  => $business->existing_business,
+            'legal_structure'                    => $business->legal_structure,
             'your_role_in_business'              => $business->your_role_in_business,
             'reason_of_selling_equity'           => $business->reason_of_selling_equity,
             'business_value'                     => $business->business_value,
