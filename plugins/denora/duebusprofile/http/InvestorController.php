@@ -53,7 +53,7 @@ class InvestorController extends Controller {
     public function update($id) {
         $investorRepository = new InvestorRepository();
         $investor = $investorRepository->findById($id);
-        if (!$investor) return Response::make(['No element found'], 400);
+        if (!$investor) return Response::make(['No element found'], 404);
 
         if ($investor->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 
@@ -82,7 +82,7 @@ class InvestorController extends Controller {
     public function destroy($id) {
         $investorRepository = new InvestorRepository();
         $investor = $investorRepository->findById($id);
-        if (!$investor) return Response::make(['No element found'], 400);
+        if (!$investor) return Response::make(['No element found'], 404);
 
         if ($investor->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 

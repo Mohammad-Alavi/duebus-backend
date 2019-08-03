@@ -11,6 +11,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('name');
             $table->string('industry');
             $table->integer('year_founded');

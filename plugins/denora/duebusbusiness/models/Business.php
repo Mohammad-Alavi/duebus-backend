@@ -33,4 +33,8 @@ class Business extends Model {
         'equityHolders' => 'Denora\Duebusbusiness\Models\EquityHolder'
     ];
 
+    public $belongsTo = [
+        'user' => 'Rainlab\User\Models\User'
+    ];
+
 }

@@ -35,7 +35,7 @@ class EntrepreneurController extends Controller {
     public function destroy($id) {
         $entrepreneurRepository = new EntrepreneurRepository();
         $entrepreneur = $entrepreneurRepository->findById($id);
-        if (!$entrepreneur) return Response::make(['No element found'], 400);
+        if (!$entrepreneur) return Response::make(['No element found'], 404);
 
         if ($entrepreneur->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 
