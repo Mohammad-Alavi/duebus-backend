@@ -23,6 +23,9 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->boolean('is_involved_in_any_proceedings');
             $table->boolean('is_concern_with_business_employees');
             $table->boolean('is_founder_or_holder_in_debt');
+            $table->json('three_years_statement');
+            $table->json('social_media');
+            $table->json('equity_holders');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

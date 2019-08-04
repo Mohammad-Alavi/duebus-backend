@@ -26,11 +26,17 @@ class BusinessRepository {
      * @param string      $legalStructure
      * @param string      $yourRoleInBusiness
      * @param string      $reasonOfSellingEquity
-     * @param int         $businessValue
+     * @param float       $businessValue
      * @param float       $equityForSale
      * @param bool        $isInvolvedInAnyProceedings
      * @param bool        $isConcernWithBusinessEmployees
      * @param bool        $isFounderOrHolderInDebt
+     *
+     * @param array       $threeYearsStatement
+     *
+     * @param array       $socialMedia
+     *
+     * @param array       $equityHolders
      *
      * @return Business
      */
@@ -50,7 +56,10 @@ class BusinessRepository {
         float $equityForSale,
         bool $isInvolvedInAnyProceedings,
         bool $isConcernWithBusinessEmployees,
-        bool $isFounderOrHolderInDebt) {
+        bool $isFounderOrHolderInDebt,
+        array $threeYearsStatement,
+        array $socialMedia,
+        array $equityHolders) {
 
         $business = new Business();
         $business->user_id = $userId;
@@ -69,6 +78,9 @@ class BusinessRepository {
         $business->is_involved_in_any_proceedings = $isInvolvedInAnyProceedings;
         $business->is_concern_with_business_employees = $isConcernWithBusinessEmployees;
         $business->is_founder_or_holder_in_debt = $isFounderOrHolderInDebt;
+        $business->three_years_statement = json_encode($threeYearsStatement);
+        $business->social_media = json_encode($socialMedia);
+        $business->equity_holders = json_encode($equityHolders);
 
         $business->save();
 

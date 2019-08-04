@@ -14,10 +14,10 @@ class BusinessTransformer {
         return [
             'id'                                 => $business->id,
             'logo'                               => [
-                'id' => $business->logo->id,
+                'id'        => $business->logo->id,
                 'disk_name' => $business->logo->disk_name,
                 'extension' => $business->logo->extension,
-                'path' => $business->logo->path,
+                'path'      => $business->logo->path,
             ],
             'name'                               => $business->name,
             'industry'                           => $business->industry,
@@ -33,6 +33,13 @@ class BusinessTransformer {
             'is_involved_in_any_proceedings'     => (bool)$business->is_involved_in_any_proceedings,
             'is_concern_with_business_employees' => (bool)$business->is_concern_with_business_employees,
             'is_founder_or_holder_in_debt'       => (bool)$business->is_founder_or_holder_in_debt,
+
+            'three_years_statement' => json_decode($business->three_years_statement),
+
+            'social_media' => json_decode($business->social_media),
+
+            'equity_holders' => json_decode($business->equity_holders),
+
 
             'created_at' => $business->created_at,
             'updated_at' => $business->updated_at,
