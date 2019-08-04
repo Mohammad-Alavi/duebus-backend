@@ -3,7 +3,6 @@
 use Backend\Classes\Controller;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
-use Exception;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -212,8 +211,6 @@ class BusinessController extends Controller {
     private function generateEquityHolders($data): array {
         $equityHolders = [];
 
-        if (!array_has($data, 'equity_holders')) return $equityHolders;
-
         try {
             foreach (json_decode($data['equity_holders']) as $equityHolder) {
                 array_push($equityHolders, [
@@ -224,11 +221,8 @@ class BusinessController extends Controller {
 
                 ]);
             }
-
-        } catch (Exception $e) {
+        } finally {
+            return $equityHolders;
         }
-
-        return $equityHolders;
-
     }
 }
