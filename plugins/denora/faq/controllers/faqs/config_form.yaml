@@ -1,0 +1,10 @@
+name: Faqs
+form: $/denora/faq/models/faq/fields.yaml
+modelClass: Denora\Faq\Models\Faq
+defaultRedirect: denora/faq/faqs
+create:
+    redirect: 'denora/faq/faqs/update/:id'
+    redirectClose: denora/faq/faqs
+update:
+    redirect: denora/faq/faqs
+    redirectClose: denora/faq/faqs

@@ -1,0 +1,16 @@
+plugin:
+    name: 'denora.faq::lang.plugin.name'
+    description: 'denora.faq::lang.plugin.description'
+    author: denora
+    icon: oc-icon-question-circle
+    homepage: ''
+navigation:
+    main-menu-faq:
+        label: 'denora.faq::lang.plugin.name'
+        url: denora/faq/faqs
+        icon: icon-question
+        sideMenu:
+            side-menu-faq:
+                label: Q/A
+                url: denora/faq/faqs
+                icon: icon-question

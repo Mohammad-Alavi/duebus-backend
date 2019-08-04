@@ -1,0 +1,12 @@
+# ===================================
+#  Rest Behavior Config
+# ===================================
+
+# Allowed Rest Actions
+allowedActions:
+  index:
+    pageSize: 1000
+
+
+# Model Class name
+modelClass: Denora\Faq\Models\Faq
