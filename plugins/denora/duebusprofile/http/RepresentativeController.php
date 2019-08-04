@@ -36,7 +36,7 @@ class RepresentativeController extends Controller {
     public function destroy($id) {
         $representativeRepository = new RepresentativeRepository();
         $representative = $representativeRepository->findById($id);
-        if (!$representative) return Response::make(['No element found'], 400);
+        if (!$representative) return Response::make(['No element found'], 404);
 
         if ($representative->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 

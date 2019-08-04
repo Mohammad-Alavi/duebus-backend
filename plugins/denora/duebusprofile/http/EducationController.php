@@ -42,7 +42,7 @@ class EducationController extends Controller {
     public function update($id) {
         $educationRepository = new EducationRepository();
         $education = $educationRepository->findById($id);
-        if (!$education) return Response::make(['No element found'], 400);
+        if (!$education) return Response::make(['No element found'], 404);
 
         if ($education->entrepreneur->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 
@@ -64,7 +64,7 @@ class EducationController extends Controller {
     public function destroy($id) {
         $educationRepository = new EducationRepository();
         $education = $educationRepository->findById($id);
-        if (!$education) return Response::make(['No element found'], 400);
+        if (!$education) return Response::make(['No element found'], 404);
 
         if ($education->entrepreneur->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 

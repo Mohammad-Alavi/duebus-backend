@@ -41,7 +41,7 @@ class ExperienceController extends Controller {
     public function update($id) {
         $experienceRepository = new ExperienceRepository();
         $experience = $experienceRepository->findById($id);
-        if (!$experience) return Response::make(['No element found'], 400);
+        if (!$experience) return Response::make(['No element found'], 404);
 
         if ($experience->entrepreneur->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 
@@ -63,7 +63,7 @@ class ExperienceController extends Controller {
     public function destroy($id) {
         $experienceRepository = new ExperienceRepository();
         $experience = $experienceRepository->findById($id);
-        if (!$experience) return Response::make(['No element found'], 400);
+        if (!$experience) return Response::make(['No element found'], 404);
 
         if ($experience->entrepreneur->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 

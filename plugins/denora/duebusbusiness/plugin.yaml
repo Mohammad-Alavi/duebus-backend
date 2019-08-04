@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.duebusbusiness::lang.plugin.name'
+    description: 'denora.duebusbusiness::lang.plugin.description'
+    author: Denora
+    icon: oc-icon-briefcase
+    homepage: ''
