@@ -24,6 +24,8 @@ cache:
 # services such as redis or postgres
 before_script:
   - cp .env.testing .env
+    # Run database migrations.
+  - php artisan october:up
   # Install Composer and project dependencies.
   - composer install
   # Install Node dependencies.
@@ -33,12 +35,11 @@ before_script:
   # DB_DATABASE=project_name
   # DB_USERNAME=root
   # DB_PASSWORD=secret
-  - cp .env.example .env
+
   # Generate an application key. Re-cache.
   - php artisan key:generate
   - php artisan config:cache
-  # Run database migrations.
-  - php artisan october:up
+
 
 test:
   script:
