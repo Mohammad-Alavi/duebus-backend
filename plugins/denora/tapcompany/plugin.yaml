@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.tapcompany::lang.plugin.name'
+    description: 'denora.tapcompany::lang.plugin.description'
+    author: Denora
+    icon: oc-icon-credit-card
+    homepage: ''

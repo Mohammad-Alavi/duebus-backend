@@ -1,0 +1,49 @@
+columns:
+    name:
+        label: name
+        type: text
+        searchable: true
+    price:
+        label: price
+        type: number
+        searchable: false
+        sortable: false
+    amount:
+        label: amount
+        type: text
+        searchable: true
+        sortable: true
+    offer:
+        label: offer
+        type: text
+        searchable: true
+        sortable: true
+    description:
+        label: description
+        type: text
+        searchable: true
+    points:
+        label: points
+        type: number
+        searchable: true
+        sortable: true
+    recommended:
+        label: recommended
+        type: switch
+        searchable: true
+        sortable: true
+    created_at:
+        label: created_at
+        type: datetime
+        invisible: true
+        sortable: true
+    updated_at:
+        label: updated_at
+        type: datetime
+        invisible: true
+        sortable: true
+    sort_order:
+        label: sort_order
+        type: number
+        invisible: true
+        sortable: true

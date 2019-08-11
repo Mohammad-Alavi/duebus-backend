@@ -4,3 +4,6 @@
 1.0.2:
     - 'Seeded sectors.'
     - seed_sectors_table.php
+1.0.3:
+    - 'Created table denora_duebus_packages'
+    - builder_table_create_denora_duebus_packages.php
