@@ -24,10 +24,10 @@ cache:
 # services such as redis or postgres
 before_script:
   - cp .env.testing .env
-  # Run database migrations.
-  - php artisan october:up
   # Install Composer and project dependencies.
   - composer install
+  # Run database migrations.
+  - php artisan october:up
   # Install Node dependencies.
   # Copy over testing configuration.
   # Don't forget to set the database config in .env.testing correctly
@@ -39,3 +39,13 @@ before_script:
   # Generate an application key. Re-cache.
   - php artisan key:generate
   - php artisan config:cache
+  
+test:
+  script:
+    # run laravel tests
+    - php vendor/bin/phpunit --coverage-text --colors=never
+    # run frontend tests
+    # if you have any task for testing frontend
+    # set it in your package.json script
+    # comment this out if you don't have a frontend test
+    #- npm test
