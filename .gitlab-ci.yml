@@ -20,13 +20,6 @@ cache:
     - vendor/
     - node_modules/
 
-repositories:
-  # Paths where repositories can be stored. Give the canonicalized absolute pathname.
-  # NOTE: REPOS PATHS MUST NOT CONTAIN ANY SYMLINK!!!
-  storages: # You must have at least a 'default' storage path.
-    default:
-      path: /home/git/repositories
-
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
 before_script:
