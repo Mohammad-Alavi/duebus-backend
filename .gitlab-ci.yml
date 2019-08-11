@@ -34,10 +34,7 @@ deploy:
     # Generate an application key. Re-cache.
     - php artisan key:generate
     - php artisan config:cache
-  git:
-    clone: "/root/builds/duebus"
 
-  
 test:
   script:
     # run laravel tests
