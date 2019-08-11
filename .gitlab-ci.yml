@@ -12,7 +12,6 @@ services:
 variables:
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
-  CI_PROJECT_DIR: /root/builds/duebus
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
@@ -35,6 +34,9 @@ deploy:
     # Generate an application key. Re-cache.
     - php artisan key:generate
     - php artisan config:cache
+  git:
+    clone: "/root/builds/duebus"
+
   
 test:
   script:
