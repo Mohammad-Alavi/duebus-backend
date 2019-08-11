@@ -1,0 +1,5 @@
+title: Packages
+nameFrom: name
+modelClass: Denora\Duebus\Models\Package
+toolbar:
+    buttons: reorder_toolbar

@@ -1,0 +1,41 @@
+tabs:
+    fields:
+        name:
+            label: Name
+            span: auto
+            required: 1
+            type: text
+            tab: General
+        recommended:
+            label: Recommended
+            span: auto
+            required: 1
+            type: checkbox
+            tab: General
+        description:
+            label: Description
+            size: tiny
+            span: auto
+            type: textarea
+            tab: General
+        amount:
+            label: 'Amount (KWD)'
+            span: auto
+            required: 1
+            type: number
+            comment: 'Price without offer'
+            tab: Price
+        offer:
+            label: 'Offer (KWD)'
+            span: auto
+            default: '0'
+            required: 1
+            type: number
+            tab: Price
+        points:
+            label: Points
+            span: auto
+            required: 1
+            type: number
+            comment: 'Number of points that will be added to user''s wallet.'
+            tab: Price
