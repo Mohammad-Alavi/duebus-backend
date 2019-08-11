@@ -39,3 +39,13 @@ before_script:
   # Generate an application key. Re-cache.
   - php artisan key:generate
   - php artisan config:cache
+  
+  test:
+  script:
+    # run laravel tests
+    - php vendor/bin/phpunit --coverage-text --colors=never
+    # run frontend tests
+    # if you have any task for testing frontend
+    # set it in your package.json script
+    # comment this out if you don't have a frontend test
+    #- npm test
