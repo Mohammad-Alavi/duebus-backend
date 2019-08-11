@@ -10,7 +10,7 @@ services:
   - mysql:latest
 
 variables:
-  CUSTOM_BUILD_DIR_ENABLED: true
+  CUSTOM_BUILD_DIR_ENABLED: 1
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
   GIT_CLONE_PATH: "/root/builds/duebus"
