@@ -5,7 +5,7 @@ building:
   stage: build
   script:
     #- git reset --hard
-    - git pull https://gitlab.com/denora/control-adad/duebus-back-end.git
+    - git pull git@gitlab.com:denora/control-adad/duebus-back-end.git
     - composer install
     - cp .env.example .env
     - php artisan key:generate
