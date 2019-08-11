@@ -24,7 +24,7 @@ cache:
 # services such as redis or postgres
 before_script:
   # Install Composer and project dependencies.
-  - php composer.phar install
+  - php composer install
   # Install Node dependencies.
   # Copy over testing configuration.
   # Don't forget to set the database config in .env.testing correctly
