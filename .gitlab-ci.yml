@@ -26,19 +26,14 @@ before_script:
   - cp .env.testing .env
   # Install Composer and project dependencies.
   - composer install
-  # Run database migrations.
-  - php artisan october:up
-  # Install Node dependencies.
-  # Copy over testing configuration.
-  # Don't forget to set the database config in .env.testing correctly
-  # DB_HOST=mysql
-  # DB_DATABASE=project_name
-  # DB_USERNAME=root
-  # DB_PASSWORD=secret
-
-  # Generate an application key. Re-cache.
-  - php artisan key:generate
-  - php artisan config:cache
+  
+deploy:
+  script:
+    # Run database migrations.
+    - php artisan october:up
+    # Generate an application key. Re-cache.
+    - php artisan key:generate
+    - php artisan config:cache
   
 test:
   script:
