@@ -24,10 +24,10 @@ cache:
 # services such as redis or postgres
 before_script:
   - cp .env.testing .env
-    # Run database migrations.
-  - php artisan october:up
   # Install Composer and project dependencies.
   - composer install
+  # Run database migrations.
+  - php artisan october:up
   # Install Node dependencies.
   # Copy over testing configuration.
   # Don't forget to set the database config in .env.testing correctly
