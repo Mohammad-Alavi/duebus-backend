@@ -1,0 +1,5 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table denora_tapcompany_transactions'
+    - builder_table_create_denora_tapcompany_transactions.php

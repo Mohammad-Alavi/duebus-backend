@@ -1,0 +1,8 @@
+{% if status == "CAPTURED" %}
+<h1>Congratulations!!!! B-)</h1>
+Your payment process was successful!
+{% else %}
+<h1>SORRY!!!! :-(</h1>
+Your payment process has failed!
+{% endif %}
+Click <a href="/order-detail/{{order_id}}">HERE</a> to go back to your order.

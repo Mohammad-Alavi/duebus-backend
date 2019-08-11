@@ -1,0 +1,11 @@
+tabs:
+    fields:
+        secret_api_key:
+            label: 'Secret API key'
+            span: left
+            placeholder: 'e.g: sk_test_XKokBfNWv6FIYuTMg5sLPjhJ'
+            default: sk_test_XKokBfNWv6FIYuTMg5sLPjhJ
+            required: 1
+            type: text
+            comment: 'API Key you get from tap.company'
+            tab: 'Tap Company Settings'
