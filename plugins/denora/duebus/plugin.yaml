@@ -14,3 +14,7 @@ navigation:
                 label: Sectors
                 url: denora/duebus/sectors
                 icon: icon-columns
+            side-menu-packages:
+                label: Packages
+                url: denora/duebus/packages
+                icon: icon-money

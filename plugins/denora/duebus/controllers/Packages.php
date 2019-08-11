@@ -3,7 +3,7 @@
 use Backend\Classes\Controller;
 use BackendMenu;
 
-class Sectors extends Controller {
+class Packages extends Controller {
     public $implement = ['Backend\Behaviors\ListController',
                          'Backend\Behaviors\FormController',
                          'Backend\Behaviors\ReorderController'];
@@ -14,6 +14,6 @@ class Sectors extends Controller {
 
     public function __construct() {
         parent::__construct();
-        BackendMenu::setContext('Denora.Duebus', 'main-menu-duebus', 'sub-menu-sectors');
+        BackendMenu::setContext('Denora.Duebus', 'main-menu-duebus', 'side-menu-packages');
     }
 }

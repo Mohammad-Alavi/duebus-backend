@@ -1,0 +1,10 @@
+name: Packages
+form: $/denora/duebus/models/package/fields.yaml
+modelClass: Denora\Duebus\Models\Package
+defaultRedirect: denora/duebus/packages
+create:
+    redirect: 'denora/duebus/packages/update/:id'
+    redirectClose: denora/duebus/packages
+update:
+    redirect: denora/duebus/packages
+    redirectClose: denora/duebus/packages
