@@ -13,7 +13,7 @@ variables:
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
   GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
-  TARGET_DIR: /home/admin/domains/denora.ir/current
+  TARGET_DIR: /home/admin/domains/denora.ir/current/public
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
