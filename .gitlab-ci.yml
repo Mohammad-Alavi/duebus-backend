@@ -6,7 +6,7 @@ services:
 stages:
   - build
   - deploy
-  - test
+  - composer
 
 variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
@@ -26,9 +26,7 @@ cache:
 # services such as redis or postgres
 before_script:
   - cp .env.testing .env
-  # Install Composer and project dependencies.
-  - composer install
-  
+
 build:
   stage: build
   script:
@@ -49,13 +47,8 @@ deploy:
      - chmod -R o+w $TARGET_DIR/storage
      - sudo chown -R admin $TARGET_DIR
      
-test:
-  stage: test
+composer:
+  stage: composer
   script:
-    # run laravel tests
-    - php vendor/bin/phpunit --coverage-text --colors=never
-    # run frontend tests
-    # if you have any task for testing frontend
-    # set it in your package.json script
-    # comment this out if you don't have a frontend test
-    #- npm test
+    - cd $TARGET_DIR
+    - composer install
