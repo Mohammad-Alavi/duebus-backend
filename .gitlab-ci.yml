@@ -47,6 +47,7 @@ deploy:
      - rsync -r --delete ./ $TARGET_DIR
      - sudo chmod -R 755 $TARGET_DIR
      - chmod -R o+w $TARGET_DIR/storage
+     - sudo chown -R admin $TARGET_DIR
      
 test:
   stage: test
