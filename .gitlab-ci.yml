@@ -13,7 +13,7 @@ variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
-  GIT_CLONE_PATH: "/admin/admins/builds/duebus"
+  GIT_CLONE_PATH: "/admin/domains/builds/duebus"
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
