@@ -43,6 +43,8 @@ deploy:
   script:
      - mkdir -pv $TARGET_DIR
      - rsync -r --delete ./ $TARGET_DIR
+     - sudo chmod -R 755 $TARGET_DIR
+     - chmod -R o+w $TARGET_DIR/storage
      
 test:
   stage: test
