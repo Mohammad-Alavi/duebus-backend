@@ -36,6 +36,8 @@ build:
     - php artisan october:up
     # Generate an application key. Re-cache.
     - php artisan key:generate
+    - php artisan cache:clear 
+    - php artisan config:clear
     - php artisan config:cache
 
 deploy:
