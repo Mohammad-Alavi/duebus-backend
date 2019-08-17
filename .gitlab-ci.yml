@@ -1,7 +1,5 @@
-image: php:latest
-
-services:
-  - mysql:latest
+only:
+  - master
 
 stages:
   - build
