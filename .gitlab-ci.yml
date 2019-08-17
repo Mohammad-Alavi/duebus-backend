@@ -3,9 +3,6 @@ image: php:latest
 services:
   - mysql:latest
 
-only:
-  - master
-
 stages:
   - build
   - deploy
@@ -40,6 +37,8 @@ build:
     - php artisan cache:clear 
     - php artisan config:clear
     - php artisan config:cache
+  only:
+    - master
 
 deploy:
   stage: deploy
