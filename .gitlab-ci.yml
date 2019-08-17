@@ -37,6 +37,8 @@ build:
     - php artisan cache:clear 
     - php artisan config:clear
     - php artisan config:cache
+  only:
+    - master
 
 deploy:
   stage: deploy
@@ -46,9 +48,13 @@ deploy:
      - sudo chmod -R 755 $TARGET_DIR
      - chmod -R o+w $TARGET_DIR/storage
      - sudo chown -R admin $TARGET_DIR
-     
+  only:
+    - master
+
 composer:
   stage: composer
   script:
     - cd $TARGET_DIR
     - composer install
+  only:
+    - master
