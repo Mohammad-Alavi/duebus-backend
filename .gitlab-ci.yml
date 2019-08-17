@@ -1,0 +1,54 @@
+image: php:latest
+
+services:
+  - mysql:latest
+
+stages:
+  - build
+  - deploy
+  - composer
+
+variables:
+  CUSTOM_BUILD_DIR_ENABLED: 1
+  MYSQL_DATABASE: admin_duebus
+  MYSQL_ROOT_PASSWORD: admin_duebus
+  GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
+  TARGET_DIR: /home/admin/domains/denora.ir/current/public
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+
+# This is a basic example for a gem or script which doesn't use
+# services such as redis or postgres
+before_script:
+  - cp .env.testing .env
+
+build:
+  stage: build
+  script:
+    # Run database migrations.
+    - php artisan october:up
+    # Generate an application key. Re-cache.
+    - php artisan key:generate
+    - php artisan cache:clear 
+    - php artisan config:clear
+    - php artisan config:cache
+
+deploy:
+  stage: deploy
+  script:
+     - mkdir -pv $TARGET_DIR
+     - rsync -r --delete ./ $TARGET_DIR
+     - sudo chmod -R 755 $TARGET_DIR
+     - chmod -R o+w $TARGET_DIR/storage
+     - sudo chown -R admin $TARGET_DIR
+     
+composer:
+  stage: composer
+  script:
+    - cd $TARGET_DIR
+    - composer install
