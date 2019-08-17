@@ -3,11 +3,6 @@ image: php:latest
 services:
   - mysql:latest
 
-stages:
-  - build
-  - deploy
-  - composer
-
 variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
   MYSQL_DATABASE: admin_duebus
