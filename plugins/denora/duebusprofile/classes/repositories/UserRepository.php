@@ -9,7 +9,7 @@ class UserRepository {
      *
      * @return User
      */
-    public function findById(int $userId){
+    public function findById(int $userId) {
         return User::find($userId);
     }
 
@@ -18,7 +18,7 @@ class UserRepository {
      *
      * @return User
      */
-    public function findByEmail(string $userEmail){
+    public function findByEmail(string $userEmail) {
         return User::findByEmail($userEmail);
     }
 
@@ -28,7 +28,7 @@ class UserRepository {
      *
      * @return User
      */
-    public function updateUser(int $userId, array $data){
+    public function updateUser(int $userId, array $data) {
 
         $user = $this->findById($userId);
 
@@ -40,6 +40,16 @@ class UserRepository {
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * @param int $userId
+     * @param int $points
+     */
+    public function chargeWallet(int $userId, int $points) {
+        $user = $this->findById($userId);
+        $user->point = $user->point + $points;
+        $user->save();
     }
 
 }

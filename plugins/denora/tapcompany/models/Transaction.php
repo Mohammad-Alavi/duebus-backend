@@ -1,5 +1,8 @@
 <?php namespace Denora\TapCompany\Models;
 
+use Carbon\Carbon;
+use Denora\Duebus\Classes\Repositories\PackageRepository;
+use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Model;
 
 /**
@@ -21,7 +24,27 @@ class Transaction extends Model
     public $rules = [
     ];
 
-    public $belongsTo = [
-        'order' => 'Denora\Letterwriting\Models\Order'
-    ];
+    function capture(){
+        $this->paid_at = Carbon::now();
+        $this->save();
+
+        $this->onCaptured();
+    }
+
+    private function onCaptured(){
+        switch ($this->chargeable) {
+            case 'wallet':{
+                $userRepository = new UserRepository();
+                $user = $userRepository->findById($this->chargeable_id);
+                $userRepository->chargeWallet($user->id, $this->points);
+                break;
+            }
+            case 'business':{
+                //  TODO: do it
+                dd('It is not implemented yet');
+                break;
+            }
+        }
+    }
+
 }
