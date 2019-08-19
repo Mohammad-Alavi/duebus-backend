@@ -11,8 +11,6 @@ class Plugin extends PluginBase {
      */
     public function registerComponents() {
         return [
-            'Denora\Tapcompany\Components\Pay'           => 'pay',
-            'Denora\Tapcompany\Components\PaymentVerify' => 'paymentVerify',
         ];
     }
 
@@ -26,7 +24,7 @@ class Plugin extends PluginBase {
             'payment' => [
                 'label'       => 'Payment',
                 'description' => 'Settings related to payment system.',
-                'category'    => 'Letter Writing',
+                'category'    => 'DueBus',
                 'icon'        => 'icon-money',
                 'class'       => 'Denora\Tapcompany\Models\Settings',
                 'order'       => 500,

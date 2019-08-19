@@ -14,8 +14,8 @@ class PostsTransformer {
 
         if ($posts == null) return $array;
 
-        foreach ($posts as $education) {
-            array_push($array, PostTransformer::transform($education));
+        foreach ($posts as $post) {
+            array_push($array, PostTransformer::transform($post));
         }
 
         return $array;
