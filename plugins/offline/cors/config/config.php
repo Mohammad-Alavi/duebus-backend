@@ -4,6 +4,6 @@ return [
     'maxAge'              => 3600,
     'allowedOrigins'      => ['*'],
     'allowedHeaders'      => ['*'],
-    'allowedMethods'      => ['GET', 'POST'],
+    'allowedMethods'      => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     'exposedHeaders'      => [''],
 ];
