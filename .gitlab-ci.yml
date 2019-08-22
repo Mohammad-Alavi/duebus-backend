@@ -66,6 +66,7 @@ mirror:
     - cd $BUILD_DIR
     - php artisan october:mirror public
     - cd public
+    - mkdir -pv $SITE_DIR
     - rsync -r --delete ./ $SITE_DIR
   only:
     - master
