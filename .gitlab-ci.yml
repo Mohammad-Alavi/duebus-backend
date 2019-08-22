@@ -7,13 +7,16 @@ stages:
   - build
   - deploy
   - composer
+  - mirror
 
 variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
   GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
-  TARGET_DIR: /home/admin/domains/denora.ir/current/public
+  DOMAIN_DIR: /home/admin/domains/denora.ir
+  TARGET_DIR: $DOMAIN_DIR/build
+  SITE_DIR: $DOMAIN_DIR/current/public
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
@@ -56,5 +59,15 @@ composer:
   script:
     - cd $TARGET_DIR
     - composer install
+  only:
+    - master
+
+mirror:
+  stage: mirror
+  script:
+    - cd $TARGET_DIR
+    - php artisan october:mirror public
+    - cd public
+    - rsync -r --delete ./ $SITE_DIR
   only:
     - master
