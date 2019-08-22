@@ -7,7 +7,7 @@ stages:
   - deploy
   - composer
   - build
-  - mirror
+  - permissions
   - clean_up
 
 variables:
@@ -16,7 +16,6 @@ variables:
   MYSQL_ROOT_PASSWORD: admin_duebus
   #GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
   DOMAIN_DIR: /home/admin/domains/denora.ir
-  BUILD_DIR: $DOMAIN_DIR/build
   SITE_DIR: $DOMAIN_DIR/current/public
 
 # This folder is cached between builds
@@ -31,17 +30,14 @@ deploy:
   script:
     - cp .env.testing .env
     - mkdir -pv $BUILD_DIR
-    - rsync -r --delete ./ $BUILD_DIR
-    - sudo chmod -R 755 $BUILD_DIR
-    - chmod -R o+w $BUILD_DIR/storage
-    - sudo chown -R admin $BUILD_DIR
+    - rsync -r --delete ./ $SITE_DIR
   only:
     - master
 
 composer:
   stage: composer
   script:
-    - cd $BUILD_DIR
+    - cd $SITE_DIR
     - composer install
   only:
     - master
@@ -49,7 +45,7 @@ composer:
 build:
   stage: build
   script:
-    - cd $BUILD_DIR
+    - cd $SITE_DIR
     # Run database migrations.
     - php artisan october:up
     # Generate an application key. Re-cache.
@@ -60,14 +56,13 @@ build:
   only:
     - master
 
-mirror:
-  stage: mirror
+permissions:
+  stage: permissions
   script:
-    - cd $BUILD_DIR
-    - php artisan october:mirror public --relative
-    - cd public
-    - mkdir -pv $SITE_DIR
-    - rsync -r --delete ./ $SITE_DIR
+    - sudo chmod -R 775 $SITE_DIR
+    - sudo chown -R admin:admin $SITE_DIR
+#    - sudo chmod -R 775 $SITE_DIR/storage
+#    - sudo chown -R admin:admin $SITE_DIR/storage
   only:
     - master
 
@@ -76,7 +71,5 @@ clean_up:
   script:
     - rm -rf $CI_BUILDS_DIR/$CI_JOB_ID
     - cd $GIT_CLONE_PATH
-    - cd ..
-    - rm -rf $CI_PROJECT_NAME
   only:
     - master
