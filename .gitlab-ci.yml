@@ -14,7 +14,7 @@ variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
-  GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
+  #GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
   DOMAIN_DIR: /home/admin/domains/denora.ir
   BUILD_DIR: $DOMAIN_DIR/build
   SITE_DIR: $DOMAIN_DIR/current/public
@@ -64,7 +64,7 @@ mirror:
   stage: mirror
   script:
     - cd $BUILD_DIR
-    - php artisan october:mirror public
+    - php artisan october:mirror public --relative
     - cd public
     - mkdir -pv $SITE_DIR
     - rsync -r --delete ./ $SITE_DIR
@@ -74,7 +74,7 @@ mirror:
 clean_up:
   stage: clean_up
   script:
-    - rm -rf $BUILD_DIR
+    - rm -rf $CI_BUILDS_DIR/$CI_JOB_ID
     - cd $GIT_CLONE_PATH
     - cd ..
     - rm -rf $CI_PROJECT_NAME
