@@ -75,7 +75,7 @@ clean_up:
   stage: clean_up
   script:
     - rm -rf $BUILD_DIR
-    - cd /$GIT_CLONE_PATH
+    - cd $GIT_CLONE_PATH
     - cd ..
     - rm -rf $CI_PROJECT_NAME
   only:
