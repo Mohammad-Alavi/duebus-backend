@@ -5,8 +5,8 @@ services:
 
 stages:
   - deploy
-  - build
   - composer
+  - build
   - mirror
   - clean_up
 
@@ -38,6 +38,14 @@ deploy:
   only:
     - master
 
+composer:
+  stage: composer
+  script:
+    - cd $BUILD_DIR
+    - composer install
+  only:
+    - master
+
 build:
   stage: build
   script:
@@ -49,14 +57,6 @@ build:
     - php artisan cache:clear
     - php artisan config:clear
     - php artisan config:cache
-  only:
-    - master
-
-composer:
-  stage: composer
-  script:
-    - cd $BUILD_DIR
-    - composer install
   only:
     - master
 
