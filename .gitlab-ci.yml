@@ -4,10 +4,11 @@ services:
   - mysql:latest
 
 stages:
-  - build
   - deploy
+  - build
   - composer
   - mirror
+  - clean_up
 
 variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
@@ -15,7 +16,7 @@ variables:
   MYSQL_ROOT_PASSWORD: admin_duebus
   GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
   DOMAIN_DIR: /home/admin/domains/denora.ir
-  TARGET_DIR: $DOMAIN_DIR/build
+  BUILD_DIR: $DOMAIN_DIR/build
   SITE_DIR: $DOMAIN_DIR/current/public
 
 # This folder is cached between builds
@@ -25,10 +26,17 @@ cache:
     - vendor/
     - node_modules/
 
-# This is a basic example for a gem or script which doesn't use
-# services such as redis or postgres
-before_script:
-  - cp .env.testing .env
+deploy:
+  stage: deploy
+  script:
+    - cp .env.testing .env
+    - mkdir -pv $BUILD_DIR
+    - rsync -r --delete ./ $BUILD_DIR
+    - sudo chmod -R 755 $BUILD_DIR
+    - chmod -R o+w $BUILD_DIR/storage
+    - sudo chown -R admin $BUILD_DIR
+  only:
+    - master
 
 build:
   stage: build
@@ -37,27 +45,16 @@ build:
     - php artisan october:up
     # Generate an application key. Re-cache.
     - php artisan key:generate
-    - php artisan cache:clear 
+    - php artisan cache:clear
     - php artisan config:clear
     - php artisan config:cache
-  only:
-    - master
-
-deploy:
-  stage: deploy
-  script:
-     - mkdir -pv $TARGET_DIR
-     - rsync -r --delete ./ $TARGET_DIR
-     - sudo chmod -R 755 $TARGET_DIR
-     - chmod -R o+w $TARGET_DIR/storage
-     - sudo chown -R admin $TARGET_DIR
   only:
     - master
 
 composer:
   stage: composer
   script:
-    - cd $TARGET_DIR
+    - cd $BUILD_DIR
     - composer install
   only:
     - master
@@ -65,9 +62,19 @@ composer:
 mirror:
   stage: mirror
   script:
-    - cd $TARGET_DIR
+    - cd $BUILD_DIR
     - php artisan october:mirror public
     - cd public
     - rsync -r --delete ./ $SITE_DIR
+  only:
+    - master
+
+clean_up:
+  stage: clean_up
+  script:
+    - rm -rf $BUILD_DIR
+    - cd /$GIT_CLONE_PATH
+    - cd ..
+    - rm -rf $CI_PROJECT_NAME
   only:
     - master
