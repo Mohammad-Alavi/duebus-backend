@@ -21,10 +21,10 @@ variables:
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-    - vendor/
-    - node_modules/
+#cache:
+#  paths:
+#    - vendor/
+#    - node_modules/
 
 deploy:
   stage: deploy
@@ -41,6 +41,7 @@ deploy:
 build:
   stage: build
   script:
+    - cd $BUILD_DIR
     # Run database migrations.
     - php artisan october:up
     # Generate an application key. Re-cache.
