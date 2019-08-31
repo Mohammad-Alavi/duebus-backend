@@ -4,7 +4,7 @@ Route::group(
     [
         'prefix' => 'api/auth',
         'namespace' => 'RLuders\JWTAuth\Http\Controllers',
-        'middleware' => ['api'],
+        'middleware' => ['api', '\Barryvdh\Cors\HandleCors'],
     ],
     function () {
 

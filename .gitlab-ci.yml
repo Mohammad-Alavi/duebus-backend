@@ -4,57 +4,72 @@ services:
   - mysql:latest
 
 stages:
-  - build
   - deploy
   - composer
+  - build
+  - permissions
+  - clean_up
 
 variables:
   CUSTOM_BUILD_DIR_ENABLED: 1
   MYSQL_DATABASE: admin_duebus
   MYSQL_ROOT_PASSWORD: admin_duebus
-  GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
-  TARGET_DIR: /home/admin/domains/denora.ir/current/public
+  #GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_JOB_ID/$CI_PROJECT_NAME'
+  DOMAIN_DIR: /home/admin/domains/denora.ir
+  SITE_DIR: $DOMAIN_DIR/current/public
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-    - vendor/
-    - node_modules/
-
-# This is a basic example for a gem or script which doesn't use
-# services such as redis or postgres
-before_script:
-  - cp .env.testing .env
-
-build:
-  stage: build
-  script:
-    # Run database migrations.
-    - php artisan october:up
-    # Generate an application key. Re-cache.
-    - php artisan key:generate
-    - php artisan cache:clear 
-    - php artisan config:clear
-    - php artisan config:cache
-  only:
-    - master
+#cache:
+#  paths:
+#    - vendor/
+#    - node_modules/
 
 deploy:
   stage: deploy
   script:
-     - mkdir -pv $TARGET_DIR
-     - rsync -r --delete ./ $TARGET_DIR
-     - sudo chmod -R 755 $TARGET_DIR
-     - chmod -R o+w $TARGET_DIR/storage
-     - sudo chown -R admin $TARGET_DIR
+    - cp .env.testing .env
+    - mkdir -pv $SITE_DIR
+    - rsync -r --delete ./ $SITE_DIR
   only:
     - master
 
 composer:
   stage: composer
   script:
-    - cd $TARGET_DIR
+    - cd $SITE_DIR
     - composer install
+  only:
+    - master
+
+build:
+  stage: build
+  script:
+    - cd $SITE_DIR
+    # Run database migrations.
+    - php artisan october:up
+    # Generate an application key. Re-cache.
+    - php artisan key:generate
+    - php artisan cache:clear
+    - php artisan config:clear
+    - php artisan config:cache
+  only:
+    - master
+
+permissions:
+  stage: permissions
+  script:
+    - sudo chmod -R 775 $SITE_DIR
+    - sudo chown -R admin:admin $SITE_DIR
+#    - sudo chmod -R 775 $SITE_DIR/storage
+#    - sudo chown -R admin:admin $SITE_DIR/storage
+  only:
+    - master
+
+clean_up:
+  stage: clean_up
+  script:
+    - rm -rf $CI_BUILDS_DIR/$CI_JOB_ID
+    - cd $GIT_CLONE_PATH
   only:
     - master

@@ -16,6 +16,8 @@ sftp-config.json
 .ftpconfig
 selenium.php
 composer.lock
+Vagrantfile
+Homestead.yaml
 
 # for netbeans
 nbproject
