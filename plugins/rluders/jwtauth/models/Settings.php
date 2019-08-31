@@ -45,7 +45,7 @@ class Settings extends Model
         $this->persistent_claims = null;
         $this->lock_subject = true;
         $this->leeway = 0;
-        $this->blacklist_enabled = true;
+        $this->blacklist_enabled = false;
         $this->blacklist_grace_period = 0;
         $this->encrypt_cookies = false;
         $this->activation_url = '/#/auth/activation/{code}';
