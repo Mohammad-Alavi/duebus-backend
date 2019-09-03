@@ -7,3 +7,6 @@
 1.0.3:
     - 'Created table denora_duebus_packages'
     - builder_table_create_denora_duebus_packages.php
+1.0.4:
+    - 'Seeded blog posts.'
+    - seed_blog_table.php
