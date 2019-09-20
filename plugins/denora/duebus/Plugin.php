@@ -12,7 +12,7 @@ class Plugin extends PluginBase {
 
     public function registerSettings() {
         return [
-            'payment' => [
+            'ui-config' => [
                 'label'       => 'UI Configurations',
                 'description' => 'Configurations of front-end website.',
                 'category'    => 'DueBus',
