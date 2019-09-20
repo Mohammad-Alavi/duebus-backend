@@ -1,0 +1,67 @@
+tabs:
+    fields:
+        title_section:
+            label: Titles
+            span: full
+            type: section
+            tab: Texts
+        site_title:
+            label: 'Site Title'
+            span: left
+            default: ''
+            required: 1
+            type: text
+            tab: Texts
+        site_footer_title:
+            label: 'Site Footer Title'
+            span: right
+            placeholder: ''
+            default: ''
+            required: 1
+            type: text
+            tab: Texts
+        home_page_heading_1_section:
+            label: 'Home Page Heading 1'
+            span: full
+            type: section
+            tab: Texts
+        home_page_heading_text_1:
+            label: Text
+            size: small
+            span: left
+            required: 1
+            type: textarea
+            tab: Texts
+        home_page_heading_author_1:
+            label: Author
+            span: right
+            default: ''
+            required: 1
+            type: text
+            tab: Texts
+        home_page_heading_2_section:
+            label: 'Home Page Heading 2'
+            span: full
+            type: section
+            tab: Texts
+        home_page_heading_text_2:
+            label: Text
+            size: small
+            span: left
+            required: 1
+            type: textarea
+            tab: Texts
+        home_page_heading_author_2:
+            label: Author
+            span: right
+            default: ''
+            required: 1
+            type: text
+            tab: Texts
+        currency_symbol:
+            label: 'Currency Symbol'
+            span: left
+            default: ''
+            required: 1
+            type: text
+            tab: Currency

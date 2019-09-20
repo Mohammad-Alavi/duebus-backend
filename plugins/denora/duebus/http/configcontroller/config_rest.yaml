@@ -1,0 +1,10 @@
+# ===================================
+#  Rest Behavior Config
+# ===================================
+
+# Allowed Rest Actions
+allowedActions:
+  index:
+
+# Model Class name
+modelClass: Denora\Duebus\Models\Settings
