@@ -11,6 +11,17 @@ class Plugin extends PluginBase {
     }
 
     public function registerSettings() {
+        return [
+            'payment' => [
+                'label'       => 'UI Configurations',
+                'description' => 'Configurations of front-end website.',
+                'category'    => 'DueBus',
+                'icon'        => 'icon-code',
+                'class'       => 'Denora\Duebus\Models\Settings',
+                'order'       => 500,
+                'keywords'    => 'settings front ui config configuration'
+            ],
+        ];
     }
 
 }
