@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebus\Classes\Transformers;
 
+use Denora\Duebus\Models\Settings;
 use Model;
 
 class ConfigTransformer {
@@ -24,6 +25,9 @@ class ConfigTransformer {
                 'text'   => $settings::get('home_page_heading_text_2', 'Text 2 comes here ...'),
             ],
             'currency_symbol'             => $settings::get('currency_symbol', '$'),
+            'home_page_banner'             => $settings->home_page_banner->path,
+            'blog_page_banner'             => $settings->blog_page_banner->path,
+
         ];
 
     }
