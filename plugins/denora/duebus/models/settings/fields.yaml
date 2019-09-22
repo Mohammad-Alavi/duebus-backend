@@ -114,3 +114,22 @@ tabs:
             required: 1
             type: fileupload
             tab: Images
+        about_us_sections:
+            label: Sections
+            prompt: 'Add new section'
+            span: full
+            type: repeater
+            tab: 'About Us'
+            form:
+                fields:
+                    section_title:
+                        label: Title
+                        span: auto
+                        required: 1
+                        type: text
+                    section_text:
+                        label: Text
+                        size: large
+                        span: auto
+                        required: 1
+                        type: textarea

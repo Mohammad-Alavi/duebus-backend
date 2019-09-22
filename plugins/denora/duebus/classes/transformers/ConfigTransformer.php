@@ -37,6 +37,8 @@ class ConfigTransformer {
             ],
 
             'businesses_count' => (new BusinessRepository)->countAll(),
+
+            'about_us_sections' => $settings::get('about_us_sections'),
         ];
 
     }
