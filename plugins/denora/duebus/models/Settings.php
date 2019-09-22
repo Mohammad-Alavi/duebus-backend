@@ -21,7 +21,13 @@ class Settings extends Model {
         'home_page_heading_text_1'   => 'required',
         'home_page_heading_author_2' => 'required',
         'home_page_heading_text_2'   => 'required',
-        'currency_symbol'            => 'required',
+
+        'currency_symbol' => 'required',
+
+        'home_page_banner' => 'required',
+        'blog_page_banner' => 'required',
+        'logo'             => 'required',
+
     ];
 
     public $attachOne = [

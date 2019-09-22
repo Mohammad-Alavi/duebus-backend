@@ -14,8 +14,8 @@ class ConfigTransformer {
     static function transform($settings) {
 
         return [
-            'site_title'                  => $settings::get('site_title', 'Duebus'),
-            'site_footer_title'           => $settings::get('site_footer_title', 'Footer title comes here'),
+            'site_title'        => $settings::get('site_title', 'Duebus'),
+            'site_footer_title' => $settings::get('site_footer_title', 'Footer title comes here'),
 
             'home_page_heading_1_section' => [
                 'author' => $settings::get('home_page_heading_author_1', 'Author 1'),
@@ -26,14 +26,14 @@ class ConfigTransformer {
                 'text'   => $settings::get('home_page_heading_text_2', 'Text 2 comes here ...'),
             ],
 
-            'currency_symbol'             => $settings::get('currency_symbol', '$'),
+            'currency_symbol' => $settings::get('currency_symbol', '$'),
 
-            'home_page_banner'             => $settings->home_page_banner->path,
-            'blog_page_banner'             => $settings->blog_page_banner->path,
-            'logo' => [
-                'small' => $settings->logo->getThumb(200, 0, ['mode' => 'auto']),
-                'medium' => $settings->logo->getThumb(400, 0, ['mode' => 'auto']),
-                'original' => $settings->logo->path
+            'home_page_banner' => $settings->home_page_banner ? $settings->home_page_banner->path : null,
+            'blog_page_banner' => $settings->blog_page_banner ? $settings->blog_page_banner->path : null,
+            'logo'             => [
+                'small'    => $settings->logo ? $settings->logo->getThumb(200, 0, ['mode' => 'auto']) : null,
+                'medium'   => $settings->logo ? $settings->logo->getThumb(400, 0, ['mode' => 'auto']) : null,
+                'original' => $settings->logo ? $settings->logo->path : null
             ],
 
             'businesses_count' => (new BusinessRepository)->countAll(),
