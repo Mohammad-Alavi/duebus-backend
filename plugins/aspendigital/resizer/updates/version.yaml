@@ -1,0 +1,14 @@
+1.0.0:
+    - 'Initial plugin version'
+
+1.0.1:
+    - 'Add global `smartResize` function'
+
+1.0.2:
+    - 'Add ability to flatten transparent images with defined background color'
+
+1.0.3:
+    - 'Fix path bugs with direct file references'
+
+1.1.0:
+    - '!!! Update function signature to match change introduced in OctoberCMS build 457'
