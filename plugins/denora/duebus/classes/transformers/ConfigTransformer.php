@@ -39,13 +39,19 @@ class ConfigTransformer {
 
             'businesses_count' => (new BusinessRepository)->countAll(),
 
-            'sectors' => SectorsTransformer::transform((new SectorRepository())->findAll()),
-
             'about_us_sections' => $settings::get('about_us_sections')?: self::$default['about_us_sections'],
+
+            'registration_fields' => [
+                'sectors' => SectorsTransformer::transform((new SectorRepository())->findAll()),
+                
+            ]
         ];
 
     }
 
+    /**
+     * @var array
+     */
     private static $default = [
         'site_title' => 'Duebus',
         'site_footer_title' => 'Duebus',
