@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebus\Classes\Transformers;
 
+use Denora\Duebus\Classes\Repositories\SectorRepository;
 use Denora\Duebus\Models\Settings;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 
@@ -37,6 +38,8 @@ class ConfigTransformer {
             ],
 
             'businesses_count' => (new BusinessRepository)->countAll(),
+
+            'sectors' => SectorsTransformer::transform((new SectorRepository())->findAll()),
 
             'about_us_sections' => $settings::get('about_us_sections')?: self::$default['about_us_sections'],
         ];
