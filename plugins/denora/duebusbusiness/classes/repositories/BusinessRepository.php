@@ -143,4 +143,11 @@ class BusinessRepository {
         $business->delete();
     }
 
+    /**
+     * @return int
+     */
+    public function countAll(): int {
+        return Business::all()->count();
+    }
+
 }

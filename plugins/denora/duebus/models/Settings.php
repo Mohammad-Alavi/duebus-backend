@@ -24,5 +24,10 @@ class Settings extends Model {
         'currency_symbol'            => 'required',
     ];
 
+    public $attachOne = [
+        'home_page_banner' => 'System\Models\File',
+        'blog_page_banner' => 'System\Models\File',
+        'logo'             => 'System\Models\File',
+    ];
 
 }

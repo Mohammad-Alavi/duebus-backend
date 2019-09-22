@@ -65,3 +65,52 @@ tabs:
             required: 1
             type: text
             tab: Currency
+        logo_section:
+            label: Logos
+            span: full
+            type: section
+            tab: Images
+        logo:
+            label: 'Site Logo'
+            mode: image
+            imageWidth: '200'
+            imageHeight: '200'
+            useCaption: 0
+            thumbOptions:
+                mode: landscape
+                extension: jpg
+            span: auto
+            required: 1
+            type: fileupload
+            tab: Images
+        banners_section:
+            label: Banners
+            span: full
+            type: section
+            tab: Images
+        home_page_banner:
+            label: 'Home Page Banner'
+            mode: image
+            imageWidth: '200'
+            imageHeight: '200'
+            useCaption: 0
+            thumbOptions:
+                mode: landscape
+                extension: jpg
+            span: left
+            required: 1
+            type: fileupload
+            tab: Images
+        blog_page_banner:
+            label: 'Blog Page Banner'
+            mode: image
+            imageWidth: '200'
+            imageHeight: '200'
+            useCaption: 0
+            thumbOptions:
+                mode: landscape
+                extension: jpg
+            span: right
+            required: 1
+            type: fileupload
+            tab: Images
