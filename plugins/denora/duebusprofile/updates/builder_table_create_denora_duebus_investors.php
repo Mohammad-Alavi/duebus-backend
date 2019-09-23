@@ -9,10 +9,9 @@ class BuilderTableCreateDenoraDuebusInvestors extends Migration {
         Schema::create('denora_duebus_investors', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('investments_from')->nullable();
-            $table->integer('investments_to')->nullable();
-            $table->integer('businesses_invested_in');
-            $table->integer('user_id');
+            $table->string('range_of_investment')->nullable();
+            $table->string('range_of_businesses_invested_in')->nullable();
+            $table->integer('user_id')->unique();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

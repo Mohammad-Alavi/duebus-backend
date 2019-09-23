@@ -14,23 +14,24 @@ class InvestorRepository {
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      *
-     * @param int $investmentsFrom
-     * @param int $investmentsTo
-     * @param int $businessesInvestedIn
+     * @param string $range_of_investment
+     * @param string $range_of_businesses_invested_in
+     *
+     * @param array  $sectors
      *
      * @return Investor
      */
-    public function createInvestor(int $userId, int $investmentsFrom, int $investmentsTo, int $businessesInvestedIn) {
+    public function createInvestor(int $userId, string $range_of_investment = null, string $range_of_businesses_invested_in = null, $sectors = []) {
 
         $investor = new Investor();
-        $investor->investments_from = $investmentsFrom;
-        $investor->investments_to = $investmentsTo;
-        $investor->businesses_invested_in = $businessesInvestedIn;
+        $investor->range_of_investment = $range_of_investment;
+        $investor->range_of_businesses_invested_in = $range_of_businesses_invested_in;
         $investor->user_id = $userId;
 
         $investor->save();
+        $investor->sectors()->sync(json_decode($sectors));
 
         return $investor;
     }
@@ -45,12 +46,12 @@ class InvestorRepository {
 
         $investor = $this->findById($investorId);
 
-        if (array_has($data, 'investments_from'))
-            $investor->investments_from = $data['investments_from'];
-        if (array_has($data, 'investments_to'))
-            $investor->investments_to = $data['investments_to'];
-        if (array_has($data, 'businesses_invested_in'))
-            $investor->businesses_invested_in = $data['businesses_invested_in'];
+        if (array_has($data, 'range_of_investment'))
+            $investor->range_of_investment = $data['range_of_investment'];
+        if (array_has($data, 'range_of_businesses_invested_in'))
+            $investor->range_of_businesses_invested_in = $data['range_of_businesses_invested_in'];
+        if (array_has($data, 'sectors'))
+            $investor->sectors()->sync(json_decode($data['sectors']));
 
         $investor->save();
 
