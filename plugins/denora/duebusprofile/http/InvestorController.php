@@ -28,19 +28,21 @@ class InvestorController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'investments_from'       => 'required|integer',
-            'investments_to'         => 'required|integer',
-            'businesses_invested_in' => 'required|integer',
+            'range_of_investment'             => 'required',
+            'range_of_businesses_invested_in' => 'required',
+            'sectors'                         => 'required',
         ]);
 
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
         $investorRepository = new InvestorRepository();
-        $investor = $investorRepository->createInvestor($user->id,
-            $data['investments_from'],
-            $data['investments_to'],
-            $data['businesses_invested_in']);
+        $investor = $investorRepository->createInvestor(
+            $user->id,
+            $data['range_of_investment'],
+            $data['range_of_businesses_invested_in'],
+            $data['sectors']
+        );
 
         return ProfileTransformer::transform($investor->user);
     }
@@ -60,9 +62,8 @@ class InvestorController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'investments_from'       => 'integer',
-            'investments_to'         => 'integer',
-            'businesses_invested_in' => 'integer',
+            'range_of_investment'             => 'string',
+            'range_of_businesses_invested_in' => 'string',
         ]);
 
         if ($validator->fails())
@@ -70,7 +71,7 @@ class InvestorController extends Controller {
 
         $investor = $investorRepository->updateInvestor($id, $data);
 
-        return InvestorTransformer::transform($investor);
+        return ProfileTransformer::transform($investor->user);
     }
 
     /**
