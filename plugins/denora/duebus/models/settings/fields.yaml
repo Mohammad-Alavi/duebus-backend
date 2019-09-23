@@ -114,7 +114,7 @@ tabs:
             required: 1
             type: fileupload
             tab: Images
-        about_us_sections:
+        about_us_repeater:
             label: Sections
             prompt: 'Add new section'
             span: full
@@ -133,3 +133,63 @@ tabs:
                         span: auto
                         required: 1
                         type: textarea
+        range_of_investments_repeater:
+            label: 'Range of investments'
+            prompt: 'Add new range'
+            span: full
+            type: repeater
+            tab: 'Registration fields'
+            form:
+                fields:
+                    range:
+                        label: Range
+                        span: left
+                        placeholder: '1000 - 5000'
+                        required: 1
+                        type: text
+                        comment: 'example: [100 - 250] , [< 100] , [15,000+]'
+        number_of_clients_repeater:
+            label: 'Number of clients'
+            prompt: 'Add new range'
+            span: full
+            type: repeater
+            tab: 'Registration fields'
+            form:
+                fields:
+                    range:
+                        label: Range
+                        span: left
+                        placeholder: '1 - 3'
+                        required: 1
+                        type: text
+                        comment: 'example: [1 - 3] , [None] , [More than 8]'
+        number_of_businesses_repeater:
+            label: 'Number of businesses invested in'
+            prompt: 'Add new range'
+            span: full
+            type: repeater
+            tab: 'Registration fields'
+            form:
+                fields:
+                    range:
+                        label: Range
+                        span: left
+                        placeholder: '1 - 3'
+                        required: 1
+                        type: text
+                        comment: 'example: [1 - 3] , [None] , [More than 8]'
+        interested_in_repeater:
+            label: 'Interested in'
+            prompt: 'Add new interest'
+            span: full
+            type: repeater
+            tab: 'Registration fields'
+            form:
+                fields:
+                    interest:
+                        label: Range
+                        span: left
+                        placeholder: 'investing'
+                        required: 1
+                        type: text
+                        comment: 'example: [investing] , [funding]'
