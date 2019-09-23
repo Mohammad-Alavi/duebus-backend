@@ -2,6 +2,9 @@
 
 namespace RLuders\JWTAuth\Http\Controllers;
 
+use Denora\Duebusprofile\Classes\Repositories\EntrepreneurRepository;
+use Denora\Duebusprofile\Classes\Repositories\InvestorRepository;
+use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Mail;
 use Event;
 use Illuminate\Http\Response;
@@ -51,7 +54,27 @@ class RegisterController extends Controller
             $this->sendActivationEmail($user);
         }
 
+        $this->setUserType($user, $data['type']);
+
         return response()->json([], Response::HTTP_CREATED);
+    }
+
+    private function setUserType($user, string $type){
+        switch ($type){
+            case 'investor':{
+                (new InvestorRepository)->createInvestor($user->id);
+                break;
+            }
+            case 'entrepreneur':{
+                (new EntrepreneurRepository())->createEntrepreneur($user->id);
+                break;
+            }
+            case 'br':{
+                (new InvestorRepository)->createInvestor($user->id);
+                (new RepresentativeRepository())->createRepresentative($user->id);
+                break;
+            }
+        }
     }
 
     /**
