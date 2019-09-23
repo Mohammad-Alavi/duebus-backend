@@ -10,6 +10,8 @@ class BuilderTableCreateDenoraDuebusRepresentative extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('user_id');
+            $table->string('number_of_clients');
+            $table->string('interested_in');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
