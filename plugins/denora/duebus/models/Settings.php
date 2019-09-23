@@ -15,18 +15,18 @@ class Settings extends Model {
     public $settingsFields = 'fields.yaml';
 
     public $rules = [
-        'site_title'                 => 'required',
-        'site_footer_title'          => 'required',
-        'home_page_heading_author_1' => 'required',
-        'home_page_heading_text_1'   => 'required',
-        'home_page_heading_author_2' => 'required',
-        'home_page_heading_text_2'   => 'required',
-
-        'currency_symbol' => 'required',
-
-        'home_page_banner' => 'required',
-        'blog_page_banner' => 'required',
-        'logo'             => 'required',
+//        'site_title'                 => 'required',
+//        'site_footer_title'          => 'required',
+//        'home_page_heading_author_1' => 'required',
+//        'home_page_heading_text_1'   => 'required',
+//        'home_page_heading_author_2' => 'required',
+//        'home_page_heading_text_2'   => 'required',
+//
+//        'currency_symbol' => 'required',
+//
+//        'home_page_banner' => 'required',
+//        'blog_page_banner' => 'required',
+//        'logo'             => 'required',
 
     ];
 
