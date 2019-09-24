@@ -5,20 +5,21 @@ namespace RLuders\JWTAuth\Http\Controllers;
 use Denora\Duebusprofile\Classes\Repositories\EntrepreneurRepository;
 use Denora\Duebusprofile\Classes\Repositories\InvestorRepository;
 use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
-use Mail;
 use Event;
 use Illuminate\Http\Response;
-use RLuders\JWTAuth\Models\User;
 use Illuminate\Routing\Controller;
-use RLuders\JWTAuth\Classes\JWTAuth;
-use RLuders\JWTAuth\Models\Settings;
-use RLuders\JWTAuth\Http\Requests\RegisterRequest;
-use RLuders\JWTAuth\Http\Controllers\Traits\CanMakeUrl;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Mail;
 use RainLab\User\Models\Settings as RainLabUserSettings;
+use RLuders\JWTAuth\Classes\JWTAuth;
+use RLuders\JWTAuth\Http\Controllers\Traits\CanMakeUrl;
 use RLuders\JWTAuth\Http\Controllers\Traits\CanSendMail;
+use RLuders\JWTAuth\Http\Requests\RegisterRequest;
+use RLuders\JWTAuth\Models\Settings;
+use RLuders\JWTAuth\Models\User;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller {
     use CanMakeUrl,
         CanSendMail;
 
@@ -43,6 +44,18 @@ class RegisterController extends Controller
 
         $data = $request->all();
 
+        //  region - Moslem added this
+        $validator = Validator::make($data, [
+            'type' => [
+                'required',
+                Rule::in(['investor', 'entrepreneur', 'br']),
+            ],
+        ]);
+
+        if ($validator->fails())
+            return \Illuminate\Support\Facades\Response::make($validator->messages(), 400);
+        //  endregion
+
         Event::fire('rainlab.user.beforeRegister', [&$data]);
 
         $activationMode = $this->getActivationMode();
@@ -54,36 +67,43 @@ class RegisterController extends Controller
             $this->sendActivationEmail($user);
         }
 
+        // region - Moslem added this
         $this->setUserType($user, $data['type']);
+
+        // endregion
 
         return response()->json([], Response::HTTP_CREATED);
     }
 
-    private function setUserType($user, string $type){
-        switch ($type){
-            case 'investor':{
-                (new InvestorRepository)->createInvestor($user->id);
-                break;
-            }
-            case 'entrepreneur':{
-                (new EntrepreneurRepository())->createEntrepreneur($user->id);
-                break;
-            }
-            case 'br':{
-                (new InvestorRepository)->createInvestor($user->id);
-                (new RepresentativeRepository())->createRepresentative($user->id);
-                break;
-            }
+    //  region - Moslem added this
+    private function setUserType($user, string $type) {
+        switch ($type) {
+            case 'investor':
+                {
+                    (new InvestorRepository)->createInvestor($user->id);
+                    break;
+                }
+            case 'entrepreneur':
+                {
+                    (new EntrepreneurRepository())->createEntrepreneur($user->id);
+                    break;
+                }
+            case 'br':
+                {
+                    (new InvestorRepository)->createInvestor($user->id);
+                    (new RepresentativeRepository())->createRepresentative($user->id);
+                    break;
+                }
         }
     }
+    //  endregion
 
     /**
      * Check if the settings allow user registration
      *
      * @return boolean
      */
-    protected function canRegister()
-    {
+    protected function canRegister() {
         return RainLabUserSettings::get('allow_registration', true);
     }
 
@@ -92,8 +112,7 @@ class RegisterController extends Controller
      *
      * @return string
      */
-    protected function getActivationMode()
-    {
+    protected function getActivationMode() {
         switch (RainLabUserSettings::get('activate_mode')) {
             case RainLabUserSettings::ACTIVATE_USER:
                 return 'email';
@@ -111,8 +130,7 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    protected function sendActivationEmail(User $user)
-    {
+    protected function sendActivationEmail(User $user) {
         $code = implode('!', [$user->id, $user->getActivationCode()]);
         $link = $this->makeActivationUrl($code);
 
@@ -136,9 +154,9 @@ class RegisterController extends Controller
      *
      * @return string
      */
-    protected function makeActivationUrl($code)
-    {
+    protected function makeActivationUrl($code) {
         $url = Settings::get('activation_url');
+
         return $this->makeUrl($url, $code);
     }
 }
