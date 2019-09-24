@@ -1,12 +1,13 @@
 <?php namespace Denora\Duebusprofile\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusprofile\Classes\Repositories\InvestorRepository;
-use Denora\Duebusprofile\Classes\Transformers\InvestorTransformer;
 use Denora\Duebusprofile\Classes\Transformers\ProfileTransformer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use RainLab\User\Facades\Auth;
 
 /**
@@ -28,9 +29,17 @@ class InvestorController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'range_of_investment'             => 'required',
-            'range_of_businesses_invested_in' => 'required',
-            'sectors'                         => 'required',
+            'range_of_investment'             => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
+            ],
+            'range_of_businesses_invested_in' => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_businesses']),
+            ],
+            'sectors'                         => [
+                'required'
+            ]
         ]);
 
         if ($validator->fails())
@@ -62,8 +71,12 @@ class InvestorController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'range_of_investment'             => 'string',
-            'range_of_businesses_invested_in' => 'string',
+            'range_of_investment'             => [
+                Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
+            ],
+            'range_of_businesses_invested_in' => [
+                Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_businesses']),
+            ]
         ]);
 
         if ($validator->fails())
@@ -89,6 +102,5 @@ class InvestorController extends Controller {
 
         $investorRepository->deleteInvestor($id);
     }
-
 
 }

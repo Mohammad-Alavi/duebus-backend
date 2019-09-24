@@ -1,11 +1,13 @@
 <?php namespace Denora\Duebusprofile\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Denora\Duebusprofile\Classes\Transformers\ProfileTransformer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use RainLab\User\Facades\Auth;
 
 /**
@@ -28,8 +30,14 @@ class RepresentativeController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'number_of_clients' => 'required',
-            'interested_in'     => 'required',
+            'number_of_clients' => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_clients']),
+            ],
+            'interested_in'     => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
+            ],
         ]);
 
         if ($validator->fails())
@@ -55,8 +63,12 @@ class RepresentativeController extends Controller {
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'number_of_clients'             => 'string',
-            'interested_in' => 'string',
+            'number_of_clients' => [
+                Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_clients']),
+            ],
+            'interested_in'     => [
+                Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
+            ],
         ]);
 
         if ($validator->fails())
