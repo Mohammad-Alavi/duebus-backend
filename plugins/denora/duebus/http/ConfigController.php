@@ -16,7 +16,7 @@ class ConfigController extends Controller
     public $restConfig = 'config_rest.yaml';
 
     public function index() {
-        return ConfigTransformer::transform(Settings::instance());
+        return ConfigTransformer::transform();
     }
 
 }

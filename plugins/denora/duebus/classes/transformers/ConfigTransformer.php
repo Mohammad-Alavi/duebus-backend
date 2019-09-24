@@ -8,11 +8,11 @@ class ConfigTransformer {
 
     /**
      *
-     * @param Settings $settings
-     *
      * @return array
      */
-    static function transform($settings) {
+    static function transform() {
+
+        $settings = Settings::instance();
 
         return [
             'site_title'        => $settings::get('site_title') ?: self::$default['site_title'],
@@ -43,10 +43,10 @@ class ConfigTransformer {
 
             'registration_fields' => [
                 'sectors'              => SectorsTransformer::transform((new SectorRepository())->findAll()),
-                'range_of_investments' => $settings::get('range_of_investments_repeater') ?: self::$default['range_of_investments'],
-                'number_of_clients'    => $settings::get('number_of_clients_repeater') ?: self::$default['number_of_clients'],
-                'number_of_businesses' => $settings::get('number_of_businesses_repeater') ?: self::$default['number_of_businesses'],
-                'interested_in'        => $settings::get('interested_in_repeater') ?: self::$default['interested_in'],
+                'range_of_investments' => self::getValues($settings::get('range_of_investments_repeater')) ?: self::$default['range_of_investments'],
+                'number_of_clients'    => self::getValues($settings::get('number_of_clients_repeater')) ?: self::$default['number_of_clients'],
+                'number_of_businesses' => self::getValues($settings::get('number_of_businesses_repeater')) ?: self::$default['number_of_businesses'],
+                'interested_in'        => self::getValues($settings::get('interested_in_repeater')) ?: self::$default['interested_in'],
             ]
         ];
 
@@ -85,26 +85,36 @@ Once a fleeting idea, today this platform is called DueBus.'
             ],
         ],
         'range_of_investments' => [
-            ['range' => '< 10,000'],
-            ['range' => '10,000 - 25,000'],
-            ['range' => '25,000 - 50,000'],
-            ['range' => '50,000+'],
+            '< 10,000',
+            '10,000 - 25,000',
+            '25,000 - 50,000',
+            '50,000+',
         ],
         'number_of_clients'    => [
-            ['range' => 'None'],
-            ['range' => '1-3'],
-            ['range' => '4-7'],
-            ['range' => 'More than 8'],
+            'None',
+            '1-3',
+            '4-7',
+            'More than 8',
         ],
         'number_of_businesses' => [
-            ['range' => 'None'],
-            ['range' => '1-3'],
-            ['range' => '4-7'],
-            ['range' => 'More than 8'],
+            'None',
+            '1-3',
+            '4-7',
+            'More than 8',
         ],
         'interested_in'        => [
-            ['interest' => 'Investing'],
-            ['interest' => 'Funding/Selling a Business'],
+            'Investing',
+            'Funding/Selling a Business',
         ],
     ];
+
+    private static function getValues($array) {
+        if (!$array) return [];
+        $values = [];
+        foreach ($array as $item) {
+            array_push($values, array_values($item)[0]);
+        }
+
+        return $values;
+    }
 }
