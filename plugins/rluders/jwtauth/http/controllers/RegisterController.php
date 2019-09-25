@@ -48,7 +48,7 @@ class RegisterController extends Controller {
         $validator = Validator::make($data, [
             'type' => [
                 'required',
-                Rule::in(['investor', 'entrepreneur', 'br']),
+                Rule::in(['investor', 'entrepreneur', 'representative']),
             ],
         ]);
 
@@ -88,7 +88,7 @@ class RegisterController extends Controller {
                     (new EntrepreneurRepository())->createEntrepreneur($user->id);
                     break;
                 }
-            case 'br':
+            case 'representative':
                 {
                     (new InvestorRepository)->createInvestor($user->id);
                     (new RepresentativeRepository())->createRepresentative($user->id);
