@@ -1,6 +1,5 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
-use Carbon\Carbon;
 use Denora\Duebusprofile\Models\Education;
 use Denora\Duebusprofile\Models\Entrepreneur;
 
@@ -22,7 +21,7 @@ class EducationRepository {
      *
      * @return Education
      */
-    public function createEducation(int $userId, string $school, string $fieldOfStudy) {
+    public function createEducation(int $userId, string $school, string $fieldOfStudy, $from, $to) {
         $userRepository = new UserRepository();
         /** @var Entrepreneur $entrepreneur */
         $entrepreneur = $userRepository->findById($userId)->entrepreneur;
@@ -30,8 +29,8 @@ class EducationRepository {
         $education = new Education();
         $education->school = $school;
         $education->field_of_study = $fieldOfStudy;
-        $education->from = Carbon::now();
-        $education->to = Carbon::now();
+        $education->from = $from;
+        $education->to = $to;
         $education->entrepreneur_id = $entrepreneur->id;
 
         $education->save();
@@ -53,6 +52,10 @@ class EducationRepository {
             $education->school = $data['school'];
         if (array_has($data, 'field_of_study'))
             $education->field_of_study = $data['field_of_study'];
+        if (array_has($data, 'from'))
+            $education->from = $data['from'];
+        if (array_has($data, 'to'))
+            $education->to = $data['to'];
 
         $education->save();
 

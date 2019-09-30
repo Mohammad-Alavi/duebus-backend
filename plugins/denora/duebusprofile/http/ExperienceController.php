@@ -27,13 +27,21 @@ class ExperienceController extends Controller {
         $validator = Validator::make($data, [
             'company'   => 'required|min:3',
             'job_title' => 'required|min:3',
+            'from'      => 'required|date',
+            'to'        => 'required|date',
         ]);
 
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
         $experienceRepository = new ExperienceRepository();
-        $experience = $experienceRepository->createExperience($user->id, $data['company'], $data['job_title']);
+        $experience = $experienceRepository->createExperience(
+            $user->id,
+            $data['company'],
+            $data['job_title'],
+            $data['from'],
+            $data['to']
+        );
 
         return ExperienceTransformer::transform($experience);
     }
@@ -50,6 +58,8 @@ class ExperienceController extends Controller {
         $validator = Validator::make($data, [
             'company'   => 'min:3',
             'job_title' => 'min:3',
+            'from'      => 'date',
+            'to'        => 'date',
         ]);
 
         if ($validator->fails())
