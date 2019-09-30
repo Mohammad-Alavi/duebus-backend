@@ -28,13 +28,21 @@ class EducationController extends Controller {
         $validator = Validator::make($data, [
             'school'         => 'required|min:3',
             'field_of_study' => 'required|min:3',
+            'from'           => 'required|date',
+            'to'             => 'required|date',
         ]);
 
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
         $educationRepository = new EducationRepository();
-        $education = $educationRepository->createEducation($user->id, $data['school'], $data['field_of_study']);
+        $education = $educationRepository->createEducation(
+            $user->id,
+            $data['school'],
+            $data['field_of_study'],
+            $data['from'],
+            $data['to']
+        );
 
         return EducationTransformer::transform($education);
     }
@@ -51,6 +59,8 @@ class EducationController extends Controller {
         $validator = Validator::make($data, [
             'school'         => 'min:3',
             'field_of_study' => 'min:3',
+            'from'           => 'date',
+            'to'             => 'date',
         ]);
 
         if ($validator->fails())

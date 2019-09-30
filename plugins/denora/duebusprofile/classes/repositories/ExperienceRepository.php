@@ -1,6 +1,5 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
-use Carbon\Carbon;
 use Denora\Duebusprofile\Models\Entrepreneur;
 use Denora\Duebusprofile\Models\Experience;
 
@@ -20,9 +19,12 @@ class ExperienceRepository {
      * @param string $company
      * @param string $jobTitle
      *
+     * @param        $from
+     * @param        $to
+     *
      * @return Experience
      */
-    public function createExperience(int $userId, string $company, string $jobTitle) {
+    public function createExperience(int $userId, string $company, string $jobTitle, $from, $to) {
         $userRepository = new UserRepository();
         /** @var Entrepreneur $entrepreneur */
         $entrepreneur = $userRepository->findById($userId)->entrepreneur;
@@ -30,8 +32,8 @@ class ExperienceRepository {
         $experience = new Experience();
         $experience->company = $company;
         $experience->job_title = $jobTitle;
-        $experience->from = Carbon::now();
-        $experience->to = Carbon::now();
+        $experience->from = $from;
+        $experience->to = $to;
         $experience->entrepreneur_id = $entrepreneur->id;
 
         $experience->save();
@@ -53,6 +55,10 @@ class ExperienceRepository {
             $experience->company = $data['company'];
         if (array_has($data, 'job_title'))
             $experience->job_title = $data['job_title'];
+        if (array_has($data, 'from'))
+            $experience->from = $data['from'];
+        if (array_has($data, 'to'))
+            $experience->to = $data['to'];
 
         $experience->save();
 
