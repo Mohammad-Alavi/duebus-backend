@@ -21,8 +21,8 @@ class ProfileTransformer {
             'point'        => $user->point,
             'is_superuser' => $user->is_superuser,
 
-            'investor_profile'       => $user->investor ? InvestorTransformer::transform($user->investor) : null,
             'entrepreneur_profile'   => $user->entrepreneur ? EntrepreneurTransformer::transform($user->entrepreneur) : null,
+            'investor_profile'       => $user->investor ? InvestorTransformer::transform($user->investor) : null,
             'representative_profile' => $user->representative ? RepresentativeTransformer::transform($user->representative) : null,
 
             'created_at' => $user->created_at,
