@@ -15,7 +15,7 @@ class InvestorTransformer {
             'id'                              => $investor->id,
             'range_of_investment'             => $investor->range_of_investment,
             'range_of_businesses_invested_in' => $investor->range_of_businesses_invested_in,
-            'sectors'                         => SectorsTransformer::transform($investor->sectors),
+            'sectors'                         => SectorsTransformer::transform($investor->sectors) ?SectorsTransformer::transform($investor->sectors): null ,
 
             'created_at' => $investor->created_at,
             'updated_at' => $investor->updated_at,
