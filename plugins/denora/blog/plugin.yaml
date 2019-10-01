@@ -1,0 +1,20 @@
+plugin:
+    name: 'denora.blog::lang.plugin.name'
+    description: 'denora.blog::lang.plugin.description'
+    author: Denora
+    icon: icon-file-text-o
+    homepage: ''
+navigation:
+    blog-menu-item:
+        label: Blog
+        url: denora/blog/posts
+        icon: icon-life-ring
+        sideMenu:
+            post-menu-item:
+                label: Posts
+                url: denora/blog/posts
+                icon: icon-sitemap
+            category-menu-item:
+                label: Categories
+                url: denora/blog/categories
+                icon: icon-sitemap

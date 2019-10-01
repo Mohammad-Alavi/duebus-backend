@@ -1,11 +1,11 @@
-<?php namespace Denora\Duebus\Http;
+<?php namespace Denora\Blog\Http;
 
 use Backend\Classes\Controller;
-use Denora\Duebus\Classes\Repositories\PostRepository;
-use Denora\Duebus\Classes\Transformers\PostsTransformer;
-use Denora\Duebus\Classes\Transformers\PostTransformer;
+use Denora\Blog\Classes\Repositories\PostRepository;
+use Denora\Blog\Classes\Transformers\PostsTransformer;
+use Denora\Blog\Classes\Transformers\PostTransformer;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Request;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Blog Controller Back-end Controller
@@ -19,6 +19,7 @@ class PostController extends Controller {
     public $restConfig = 'config_rest.yaml';
 
     public function index() {
+
         $postRepository = new PostRepository();
 
         $page = Request::input('page', 1);

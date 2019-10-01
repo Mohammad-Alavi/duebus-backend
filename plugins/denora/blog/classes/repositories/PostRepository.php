@@ -1,6 +1,6 @@
-<?php namespace Denora\Duebus\Classes\Repositories;
+<?php namespace Denora\Blog\Classes\Repositories;
 
-use RainLab\Blog\Models\Post;
+use Denora\Blog\Models\Post;
 
 class PostRepository {
 
@@ -10,11 +10,7 @@ class PostRepository {
      * @return Post
      */
     public function findById(int $postId) {
-        $post = new Post();
-        $query = Post::query()->where('id', $postId);
-        $query = $post->scopeIsPublished($query);
-
-        return $query->first();
+        return Post::find($postId);
     }
 
     /**
@@ -27,7 +23,6 @@ class PostRepository {
     public function paginate(int $page, array $categories = null) {
         $post = new Post();
         $query = Post::query();
-        $query = $post->scopeIsPublished($query);
         if ($categories) $query = $post->scopeFilterCategories($query, $categories);
 
         return $query->paginate(20, $page);

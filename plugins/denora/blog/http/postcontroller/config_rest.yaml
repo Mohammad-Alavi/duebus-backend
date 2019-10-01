@@ -5,8 +5,8 @@
 # Allowed Rest Actions
 allowedActions:
   index:
-      pageSize: 20
+    pageSize: 20
   show:
 
 # Model Class name
-modelClass: Rainlab\Blog\Models\Post
+modelClass: Denora\Blog\Models\Post

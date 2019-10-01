@@ -1,0 +1,10 @@
+name: Categories
+form: $/denora/blog/models/category/fields.yaml
+modelClass: Denora\Blog\Models\Category
+defaultRedirect: denora/blog/categories
+create:
+    redirect: 'denora/blog/categories/update/:id'
+    redirectClose: denora/blog/categories
+update:
+    redirect: denora/blog/categories
+    redirectClose: denora/blog/categories

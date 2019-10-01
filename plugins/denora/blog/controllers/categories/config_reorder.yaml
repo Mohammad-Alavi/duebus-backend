@@ -1,0 +1,5 @@
+title: Categories
+nameFrom: label
+modelClass: Denora\Blog\Models\Category
+toolbar:
+    buttons: reorder_toolbar

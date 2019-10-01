@@ -1,6 +1,6 @@
-<?php namespace Denora\Duebus\Classes\Transformers;
+<?php namespace Denora\Blog\Classes\Transformers;
 
-use RainLab\Blog\Models\Post;
+use Denora\Blog\Models\Post;
 
 class PostsTransformer {
 
