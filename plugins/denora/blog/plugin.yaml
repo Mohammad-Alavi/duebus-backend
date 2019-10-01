@@ -8,12 +8,12 @@ navigation:
     blog-menu-item:
         label: Blog
         url: denora/blog/posts
-        icon: icon-life-ring
+        icon: icon-file-text-o
         sideMenu:
             post-menu-item:
                 label: Posts
                 url: denora/blog/posts
-                icon: icon-sitemap
+                icon: icon-file-text-o
             category-menu-item:
                 label: Categories
                 url: denora/blog/categories
