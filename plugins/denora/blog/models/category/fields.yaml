@@ -1,0 +1,6 @@
+fields:
+    label:
+        label: Label
+        span: left
+        required: 1
+        type: text

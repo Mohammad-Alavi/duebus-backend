@@ -1,0 +1,14 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table denora_blog_posts'
+    - builder_table_create_denora_blog_posts.php
+1.0.3:
+    - 'Created table denora_blog_categories'
+    - builder_table_create_denora_blog_categories.php
+1.0.4:
+    - 'Created table denora_blog_posts_categories'
+    - builder_table_create_denora_blog_posts_categories.php
+1.0.5:
+    - 'Seeded blog posts.'
+    - seed_blog_table.php

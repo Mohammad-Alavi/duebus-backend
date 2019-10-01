@@ -1,0 +1,28 @@
+fields:
+    title:
+        label: Title
+        span: left
+        required: 1
+        type: text
+    cover:
+        label: 'Cover image'
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        required: 1
+        type: fileupload
+    text:
+        label: Text
+        size: large
+        span: full
+        required: 1
+        type: richeditor
+    categories:
+        label: Categories
+        nameFrom: label
+        descriptionFrom: description
+        span: auto
+        type: relation
