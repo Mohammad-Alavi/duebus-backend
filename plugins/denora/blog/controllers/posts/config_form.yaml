@@ -1,0 +1,10 @@
+name: Posts
+form: $/denora/blog/models/post/fields.yaml
+modelClass: Denora\Blog\Models\Post
+defaultRedirect: denora/blog/posts
+create:
+    redirect: 'denora/blog/posts/update/:id'
+    redirectClose: denora/blog/posts
+update:
+    redirect: denora/blog/posts
+    redirectClose: denora/blog/posts
