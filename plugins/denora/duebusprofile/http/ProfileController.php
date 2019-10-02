@@ -3,6 +3,7 @@
 use Backend\Classes\Controller;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Denora\Duebusprofile\Classes\Transformers\ProfileTransformer;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -32,17 +33,26 @@ class ProfileController extends Controller {
     //  Edit Profile
     public function store() {
         $data = Request::all();
+        $user = Auth::user();
 
         $validator = Validator::make($data, [
-            'name'    => 'min:3',
-            'surname' => 'min:3',
+            'name'                  => 'min:3',
+            'surname'               => 'min:3',
+            'current_password'      => '',
+            'new_password'          => 'required_with:current_password|min:6',
+            'password_confirmation' => 'required_with:new_password|same:new_password',
+
         ]);
 
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
+        //  Check if current password is correct
+        if (array_has($data, 'current_password') && !Hash::check($data['current_password'], $user->password))
+            return Response::make(['Current password is wrong'], 400);
+
         $userRepository = new UserRepository();
-        $updatedUser = $userRepository->updateUser(Auth::user()->id, $data);
+        $updatedUser = $userRepository->updateUser($user->id, $data);
 
         return ProfileTransformer::transform($updatedUser);
     }
