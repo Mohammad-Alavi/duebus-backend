@@ -41,7 +41,7 @@ class ProfileController extends Controller {
             'current_password'      => '',
             'new_password'          => 'required_with:current_password|min:6',
             'password_confirmation' => 'required_with:new_password|same:new_password',
-
+            'avatar'                => 'image'
         ]);
 
         if ($validator->fails())
