@@ -12,6 +12,9 @@ class BuilderTableCreateDenoraDuebusRepresentative extends Migration {
             $table->integer('user_id')->unique();
             $table->string('number_of_clients')->nullable();
             $table->string('interested_in')->nullable();
+            $table->string('business_name')->nullable();
+            $table->integer('year_founded')->nullable();
+            $table->string('website')->nullable();
 
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();

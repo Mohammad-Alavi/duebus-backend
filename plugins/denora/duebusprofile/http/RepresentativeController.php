@@ -38,6 +38,9 @@ class RepresentativeController extends Controller {
                 'required',
                 Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
             ],
+            'business_name'     => 'required|min:3',
+            'year_founded'      => 'required|numeric',
+            'website'           => 'required|url',
         ]);
 
         if ($validator->fails())
@@ -47,7 +50,10 @@ class RepresentativeController extends Controller {
         $representative = $representativeRepository->createRepresentative(
             $user->id,
             $data['number_of_clients'],
-            $data['interested_in']
+            $data['interested_in'],
+            $data['business_name'],
+            $data['year_founded'],
+            $data['website']
         );
 
         return ProfileTransformer::transform($representative->user);
@@ -69,6 +75,9 @@ class RepresentativeController extends Controller {
             'interested_in'     => [
                 Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
             ],
+            'business_name'     => 'min:3',
+            'year_founded'      => 'numeric',
+            'website'           => 'url',
         ]);
 
         if ($validator->fails())
