@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
+use Denora\Duebusbusiness\Http\BusinessController;
 use Denora\Duebusprofile\Models\Representative;
 
 class RepresentativeRepository {
@@ -23,6 +24,8 @@ class RepresentativeRepository {
      * @param string|null $yearFounded
      * @param string|null $website
      *
+     * @param array       $socialMedia
+     *
      * @return Representative
      */
     public function createRepresentative(
@@ -31,7 +34,8 @@ class RepresentativeRepository {
         string $interestedIn = null,
         string $businessName = null,
         string $yearFounded = null,
-        string $website= null
+        string $website = null,
+        array $socialMedia = []
     ) {
 
         $representative = new Representative();
@@ -41,6 +45,7 @@ class RepresentativeRepository {
         $representative->business_name = $businessName;
         $representative->year_founded = $yearFounded;
         $representative->website = $website;
+        $representative->social_media = json_encode($socialMedia);
 
         $representative->save();
 
@@ -67,6 +72,8 @@ class RepresentativeRepository {
             $representative->number_of_clients = $data['number_of_clients'];
         if (array_has($data, 'interested_in'))
             $representative->interested_in = $data['interested_in'];
+        if (array_has($data, 'social_media'))
+            $representative->social_media = json_encode(BusinessController::generateSocialMedia($data));
 
         $representative->save();
 
@@ -79,7 +86,8 @@ class RepresentativeRepository {
      *
      * @throws \Exception
      */
-    public function deleteRepresentative(int $representativeId) {
+    public
+    function deleteRepresentative(int $representativeId) {
         $representative = $this->findById($representativeId);
         $representative->delete();
     }

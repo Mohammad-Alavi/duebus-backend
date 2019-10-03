@@ -16,6 +16,8 @@ class BuilderTableCreateDenoraDuebusRepresentative extends Migration {
             $table->integer('year_founded')->nullable();
             $table->string('website')->nullable();
 
+            $table->json('social_media');
+
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
