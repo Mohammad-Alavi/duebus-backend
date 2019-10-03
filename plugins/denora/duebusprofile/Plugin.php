@@ -21,6 +21,7 @@ class Plugin extends PluginBase {
             $model->hasOne['investor'] = ['Denora\Duebusprofile\Models\Investor'];
             $model->hasOne['entrepreneur'] = ['Denora\Duebusprofile\Models\Entrepreneur'];
             $model->hasOne['representative'] = ['Denora\Duebusprofile\Models\Representative'];
+            $model->attachOne['avatar'] = ['System\Models\File'];
         });
     }
 
