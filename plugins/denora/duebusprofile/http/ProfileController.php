@@ -51,7 +51,7 @@ class ProfileController extends Controller {
             return Response::make(['Current password is wrong'], 400);
 
         $userRepository = new UserRepository();
-        $updatedUser = $userRepository->updateUser($user->id, $data);
+        $userRepository->updateUser($user->id, $data);
 
         return ProfileTransformer::transform($userRepository->findById($user->id));
     }

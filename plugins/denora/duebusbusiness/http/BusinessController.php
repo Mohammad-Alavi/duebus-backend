@@ -218,7 +218,6 @@ class BusinessController extends Controller {
                     'equity' => $equityHolder->equity,
                     'email'  => $equityHolder->email,
                     'role'   => $equityHolder->role,
-
                 ]);
             }
         } finally {
