@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use RainLab\User\Facades\Auth;
-use RainLab\User\Models\User;
 
 /**
  * Profile Controller Back-end Controller
@@ -24,8 +23,8 @@ class ProfileController extends Controller {
 
     //  Get Profile
     public function index() {
-        /** @var User $user */
-        $user = Auth::user();
+        $userRepository = new UserRepository();
+        $user = $userRepository->findById(Auth::user()->id);
 
         return ProfileTransformer::transform($user);
     }
@@ -54,7 +53,7 @@ class ProfileController extends Controller {
         $userRepository = new UserRepository();
         $updatedUser = $userRepository->updateUser($user->id, $data);
 
-        return ProfileTransformer::transform($updatedUser);
+        return ProfileTransformer::transform($userRepository->findById($user->id));
     }
 
 }

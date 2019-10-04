@@ -17,6 +17,7 @@ class UserTransformer {
             'surname'      => $user->surname,
             'username'     => $user->username,
             'email'        => $user->email,
+            'avatar'       => $user->avatar ? $user->avatar->path : null,
             'is_activated' => $user->is_activated,
             'is_superuser' => $user->is_superuser,
 
