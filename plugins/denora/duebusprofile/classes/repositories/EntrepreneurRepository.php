@@ -14,14 +14,19 @@ class EntrepreneurRepository {
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
+     *
+     * @param string $educations
+     * @param string $experiences
      *
      * @return Entrepreneur
      */
-    public function createEntrepreneur(int $userId) {
+    public function createEntrepreneur(int $userId, string $educations = null, string $experiences = null) {
 
         $entrepreneur = new Entrepreneur();
         $entrepreneur->user_id = $userId;
+        $entrepreneur->educations = $educations;
+        $entrepreneur->experiences = $experiences;
 
         $entrepreneur->save();
 
