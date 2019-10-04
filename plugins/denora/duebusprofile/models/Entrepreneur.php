@@ -21,11 +21,6 @@ class Entrepreneur extends Model {
     public $rules = [
     ];
 
-    public $hasMany = [
-        'experiences' => ['Denora\Duebusprofile\Models\Experience'],
-        'educations'  => ['Denora\Duebusprofile\Models\Education'],
-    ];
-
     public $belongsTo = [
         'user' => 'Rainlab\User\Models\User'
     ];
