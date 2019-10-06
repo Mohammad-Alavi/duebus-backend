@@ -32,10 +32,14 @@ class UserRepository {
 
         $user = $this->findById($userId);
 
-        if (array_has($data, 'name'))
-            $user->name = $data['name'];
-        if (array_has($data, 'surname'))
-            $user->surname = $data['surname'];
+        if (array_has($data, 'name')) $user->name = $data['name'];
+        if (array_has($data, 'surname')) $user->surname = $data['surname'];
+        if (array_has($data, 'avatar')) $user->avatar = $data['avatar'];
+        if (array_has($data, 'current_password')) {
+            //  Update password
+            $user->password = $data['new_password'];
+            $user->password_confirmation = $data['password_confirmation'];
+        }
 
         $user->save();
 

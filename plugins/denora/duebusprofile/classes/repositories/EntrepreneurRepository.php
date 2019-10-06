@@ -14,19 +14,45 @@ class EntrepreneurRepository {
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
+     *
+     * @param string $educations
+     * @param string $experiences
      *
      * @return Entrepreneur
      */
-    public function createEntrepreneur(int $userId) {
+    public function createEntrepreneur(int $userId, string $educations = null, string $experiences = null) {
 
         $entrepreneur = new Entrepreneur();
         $entrepreneur->user_id = $userId;
+        $entrepreneur->educations = $educations;
+        $entrepreneur->experiences = $experiences;
 
         $entrepreneur->save();
 
         return $entrepreneur;
     }
+
+    /**
+     * @param int   $entrepreneurId
+     * @param array $data
+     *
+     * @return Entrepreneur
+     */
+    public function updateEntrepreneur(int $entrepreneurId, array $data) {
+
+        $entrepreneur = $this->findById($entrepreneurId);
+
+        if (array_has($data, 'educations'))
+            $entrepreneur->educations = $data['educations'];
+        if (array_has($data, 'experiences'))
+            $entrepreneur->experiences = $data['experiences'];
+
+        $entrepreneur->save();
+
+        return $entrepreneur;
+    }
+
 
     /**
      * @param int $entrepreneurId

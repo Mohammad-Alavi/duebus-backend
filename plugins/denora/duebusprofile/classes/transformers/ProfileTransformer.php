@@ -17,6 +17,7 @@ class ProfileTransformer {
             'surname'      => $user->surname,
             'username'     => $user->username,
             'email'        => $user->email,
+            'avatar'       => $user->avatar ? $user->avatar->path : null,
             'is_activated' => $user->is_activated,
             'point'        => $user->point,
             'is_superuser' => $user->is_superuser,

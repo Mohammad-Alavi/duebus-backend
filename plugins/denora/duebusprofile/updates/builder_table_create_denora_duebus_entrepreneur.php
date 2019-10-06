@@ -10,6 +10,8 @@ class BuilderTableCreateDenoraDuebusEntrepreneur extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('user_id');
+            $table->json('educations')->nullable();
+            $table->json('experiences')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

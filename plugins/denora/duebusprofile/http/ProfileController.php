@@ -3,11 +3,11 @@
 use Backend\Classes\Controller;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Denora\Duebusprofile\Classes\Transformers\ProfileTransformer;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use RainLab\User\Facades\Auth;
-use RainLab\User\Models\User;
 
 /**
  * Profile Controller Back-end Controller
@@ -23,8 +23,8 @@ class ProfileController extends Controller {
 
     //  Get Profile
     public function index() {
-        /** @var User $user */
-        $user = Auth::user();
+        $userRepository = new UserRepository();
+        $user = $userRepository->findById(Auth::user()->id);
 
         return ProfileTransformer::transform($user);
     }
@@ -32,19 +32,28 @@ class ProfileController extends Controller {
     //  Edit Profile
     public function store() {
         $data = Request::all();
+        $user = Auth::user();
 
         $validator = Validator::make($data, [
-            'name'    => 'min:3',
-            'surname' => 'min:3',
+            'name'                  => 'min:3',
+            'surname'               => 'min:3',
+            'current_password'      => '',
+            'new_password'          => 'required_with:current_password|min:6',
+            'password_confirmation' => 'required_with:new_password|same:new_password',
+            'avatar'                => 'image'
         ]);
 
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
-        $userRepository = new UserRepository();
-        $updatedUser = $userRepository->updateUser(Auth::user()->id, $data);
+        //  Check if current password is correct
+        if (array_has($data, 'current_password') && !Hash::check($data['current_password'], $user->password))
+            return Response::make(['Current password is wrong'], 400);
 
-        return ProfileTransformer::transform($updatedUser);
+        $userRepository = new UserRepository();
+        $userRepository->updateUser($user->id, $data);
+
+        return ProfileTransformer::transform($userRepository->findById($user->id));
     }
 
 }

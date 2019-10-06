@@ -194,7 +194,7 @@ class BusinessController extends Controller {
      *
      * @return array
      */
-    private function generateSocialMedia($data): array {
+    public static function generateSocialMedia($data): array {
         return [
             'instagram' => array_has($data, 'social_media.instagram') ? $data['social_media']['instagram'] : null,
             'facebook'  => array_has($data, 'social_media.facebook') ? $data['social_media']['facebook'] : null,
@@ -218,7 +218,6 @@ class BusinessController extends Controller {
                     'equity' => $equityHolder->equity,
                     'email'  => $equityHolder->email,
                     'role'   => $equityHolder->role,
-
                 ]);
             }
         } finally {

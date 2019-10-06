@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
+use Denora\Duebusbusiness\Http\BusinessController;
 use Denora\Duebusprofile\Models\Representative;
 
 class RepresentativeRepository {
@@ -14,19 +15,37 @@ class RepresentativeRepository {
     }
 
     /**
-     * @param int    $userId
+     * @param int         $userId
      *
-     * @param string $numberOfClients
-     * @param string $interestedIn
+     * @param string      $numberOfClients
+     * @param string      $interestedIn
+     *
+     * @param string|null $businessName
+     * @param string|null $yearFounded
+     * @param string|null $website
+     *
+     * @param array       $socialMedia
      *
      * @return Representative
      */
-    public function createRepresentative(int $userId, string $numberOfClients = null, string $interestedIn = null) {
+    public function createRepresentative(
+        int $userId,
+        string $numberOfClients = null,
+        string $interestedIn = null,
+        string $businessName = null,
+        string $yearFounded = null,
+        string $website = null,
+        array $socialMedia = []
+    ) {
 
         $representative = new Representative();
         $representative->user_id = $userId;
         $representative->number_of_clients = $numberOfClients;
         $representative->interested_in = $interestedIn;
+        $representative->business_name = $businessName;
+        $representative->year_founded = $yearFounded;
+        $representative->website = $website;
+        $representative->social_media = json_encode($socialMedia);
 
         $representative->save();
 
@@ -43,10 +62,18 @@ class RepresentativeRepository {
 
         $representative = $this->findById($representativeId);
 
+        if (array_has($data, 'business_name'))
+            $representative->business_name = $data['business_name'];
+        if (array_has($data, 'year_founded'))
+            $representative->year_founded = $data['year_founded'];
+        if (array_has($data, 'website'))
+            $representative->website = $data['website'];
         if (array_has($data, 'number_of_clients'))
             $representative->number_of_clients = $data['number_of_clients'];
         if (array_has($data, 'interested_in'))
             $representative->interested_in = $data['interested_in'];
+        if (array_has($data, 'social_media'))
+            $representative->social_media = json_encode(BusinessController::generateSocialMedia($data));
 
         $representative->save();
 
@@ -59,7 +86,8 @@ class RepresentativeRepository {
      *
      * @throws \Exception
      */
-    public function deleteRepresentative(int $representativeId) {
+    public
+    function deleteRepresentative(int $representativeId) {
         $representative = $this->findById($representativeId);
         $representative->delete();
     }
