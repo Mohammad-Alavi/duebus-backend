@@ -109,7 +109,7 @@ class EntrepreneurController extends Controller {
             'data.*.school'         => 'required|string|min:2',
             'data.*.field_of_study' => 'required|string|min:2',
             'data.*.from'           => 'required|date',
-            'data.*.to'             => 'required|date',
+            'data.*.to'             => 'date|nullable',
         ]);
     }
 
@@ -125,7 +125,7 @@ class EntrepreneurController extends Controller {
             'data.*.company'   => 'required|string|min:2',
             'data.*.job_title' => 'required|string|min:2',
             'data.*.from'      => 'required|date',
-            'data.*.to'        => 'required|date',
+            'data.*.to'        => 'date|nullable',
         ]);
     }
 
