@@ -94,7 +94,7 @@ class EntrepreneurController extends Controller {
 
         $entrepreneur = $entrepreneurRepository->updateEntrepreneur($id, $data);
 
-        return EntrepreneurTransformer::transform($entrepreneur);
+        return ProfileTransformer::transform($entrepreneur->user);
     }
 
     /**
