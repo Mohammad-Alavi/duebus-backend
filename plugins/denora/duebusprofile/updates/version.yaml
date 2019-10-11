@@ -11,14 +11,11 @@
     - 'Created pivot table denora_investor_sector'
     - builder_table_create_denora_duebus_investor_sector.php
 1.0.5:
-    - 'Created table denora_duebus_educations'
-    - builder_table_create_denora_duebus_educations.php
+    - 'Created pivot table denora_br_sector'
+    - builder_table_create_denora_duebus_br_sector.php
 1.0.6:
-    - 'Created table denora_duebus_experiences'
-    - builder_table_create_denora_duebus_experiences.php
-1.0.7:
     - 'Created table denora_duebus_entrepreneur'
     - builder_table_create_denora_duebus_entrepreneur.php
-1.0.8:
+1.0.7:
     - 'Created table denora_duebus_representative'
     - builder_table_create_denora_duebus_representative.php
