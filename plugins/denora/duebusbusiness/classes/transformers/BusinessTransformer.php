@@ -16,7 +16,7 @@ class BusinessTransformer {
             'logo'                               => $business->logo ? $business->logo->path : null,
             'name'                               => $business->name,
             'industry'                           => $business->industry,
-            'year_founded'                       => (int)$business->year_founded,
+            'year_founded'                       => $business->year_founded,
             'website'                            => $business->website,
             'allow_reveal'                       => (bool)$business->allow_reveal,
             'existing_business'                  => (bool)$business->existing_business,

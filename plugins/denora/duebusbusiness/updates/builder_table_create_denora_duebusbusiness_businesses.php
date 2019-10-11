@@ -11,7 +11,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->integer('user_id');
             $table->string('name');
             $table->string('industry');
-            $table->integer('year_founded');
+            $table->date('year_founded');
             $table->string('website')->nullable();
             $table->boolean('allow_reveal');
             $table->boolean('existing_business');
