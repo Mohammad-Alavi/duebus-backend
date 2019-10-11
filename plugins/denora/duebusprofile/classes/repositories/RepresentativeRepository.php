@@ -33,7 +33,7 @@ class RepresentativeRepository {
     public function createRepresentative(
         int $userId,
         string $numberOfClients = null,
-        string $interestedIn = null,
+        $interestedIn = '[]',
         string $range_of_investment = null,
         $sectors = '[]',
         string $businessName = null,

@@ -15,7 +15,7 @@ class RepresentativeTransformer {
             'id' => $representative->id,
 
             'number_of_clients'   => $representative->number_of_clients,
-            'interested_in'       => $representative->interested_in,
+            'interested_in'       => $representative->interested_in? json_decode($representative->interested_in): [],
             'range_of_investment' => $representative->range_of_investment,
             'sectors'             => SectorsTransformer::transform($representative->sectors) ? SectorsTransformer::transform($representative->sectors) : null,
             'business_name'       => $representative->business_name,

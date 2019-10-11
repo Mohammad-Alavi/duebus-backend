@@ -37,7 +37,7 @@ class RepresentativeController extends Controller {
             ],
             'interested_in'          => [
                 'required',
-                Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
+                'json',
             ],
             'range_of_investment'    => [
                 'required',
@@ -61,6 +61,13 @@ class RepresentativeController extends Controller {
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
+        //  Validate interested_in json
+        $hasInterestedIn = array_has($data, 'interested_in');
+        if ($hasInterestedIn) {
+            $interestedIn = $data['interested_in'];
+            $interestedInValidation = $this->validateInterestedInJson($interestedIn);
+            if ($interestedInValidation->fails()) return Response::make($interestedInValidation->messages(), 400);
+        }
 
         $representative = $representativeRepository->createRepresentative(
             $user->id,
@@ -91,7 +98,7 @@ class RepresentativeController extends Controller {
                 Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_clients']),
             ],
             'interested_in'          => [
-                Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
+                'json',
             ],
             'range_of_investment'    => [
                 Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
@@ -111,9 +118,33 @@ class RepresentativeController extends Controller {
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
+        //  Validate interested_in json
+        $hasInterestedIn = array_has($data, 'interested_in');
+        if ($hasInterestedIn) {
+            $interestedIn = $data['interested_in'];
+            $interestedInValidation = $this->validateInterestedInJson($interestedIn);
+            if ($interestedInValidation->fails()) return Response::make($interestedInValidation->messages(), 400);
+        }
+
         $representative = $representativeRepository->updateRepresentative($id, $data);
 
         return ProfileTransformer::transform($representative->user);
+    }
+
+    /**
+     * @param $json
+     *
+     * @return mixed
+     */
+    private function validateInterestedInJson($json) {
+        $data = ['data' => json_decode($json, true)];
+
+        return Validator::make($data, [
+            'data.*' => [
+                'string',
+                Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
+            ],
+        ]);
     }
 
 
