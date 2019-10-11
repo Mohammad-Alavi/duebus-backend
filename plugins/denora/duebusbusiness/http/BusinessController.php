@@ -109,7 +109,7 @@ class BusinessController extends Controller {
             'logo'                                            => 'image|max:4096',  //  Size validator is in KB
             'name'                                            => 'min:3',
             'industry'                                        => 'min:3',
-            'year_founded'                                    => 'numeric',
+            'year_founded'                                    => 'date',
             'website'                                         => 'url',
             'allow_reveal'                                    => 'boolean',
             'existing_business'                               => 'boolean',

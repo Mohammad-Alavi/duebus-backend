@@ -47,7 +47,7 @@ class RepresentativeController extends Controller {
                 'required'
             ],
             'business_name'          => 'required|min:3',
-            'year_founded'           => 'required|numeric',
+            'year_founded'           => 'required|date',
             'website'                => 'required|url',
 
             //  Social Media
@@ -104,7 +104,7 @@ class RepresentativeController extends Controller {
                 Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
             ],
             'business_name'          => 'min:3',
-            'year_founded'           => 'numeric',
+            'year_founded'           => 'date',
             'website'                => 'url',
 
             //  Social Media

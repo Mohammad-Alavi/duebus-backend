@@ -9,6 +9,7 @@ class Representative extends Model {
 
     use \October\Rain\Database\Traits\Validation;
 
+    protected $dates = ['year_founded'];
 
     /**
      * @var string The database table used by the model.

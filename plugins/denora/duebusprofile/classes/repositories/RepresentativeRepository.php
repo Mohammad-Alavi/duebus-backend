@@ -37,7 +37,7 @@ class RepresentativeRepository {
         string $range_of_investment = null,
         $sectors = '[]',
         string $businessName = null,
-        string $yearFounded = null,
+        $yearFounded = null,
         string $website = null,
         array $socialMedia = []
     ) {

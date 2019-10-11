@@ -45,7 +45,7 @@ class BusinessRepository {
         $logo,
         string $name,
         string $industry,
-        int $yearFounded,
+        $yearFounded,
         $website,
         bool $allowReveal,
         bool $existingBusiness,
