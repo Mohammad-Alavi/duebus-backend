@@ -20,6 +20,8 @@ class RepresentativeRepository {
      * @param string      $numberOfClients
      * @param string      $interestedIn
      *
+     * @param string|null $range_of_investment
+     * @param string      $sectors
      * @param string|null $businessName
      * @param string|null $yearFounded
      * @param string|null $website
@@ -32,6 +34,8 @@ class RepresentativeRepository {
         int $userId,
         string $numberOfClients = null,
         string $interestedIn = null,
+        string $range_of_investment = null,
+        $sectors = '[]',
         string $businessName = null,
         string $yearFounded = null,
         string $website = null,
@@ -42,12 +46,15 @@ class RepresentativeRepository {
         $representative->user_id = $userId;
         $representative->number_of_clients = $numberOfClients;
         $representative->interested_in = $interestedIn;
+        $representative->range_of_investment = $range_of_investment;
         $representative->business_name = $businessName;
         $representative->year_founded = $yearFounded;
         $representative->website = $website;
         $representative->social_media = json_encode($socialMedia);
 
         $representative->save();
+        $representative->sectors()->sync(json_decode($sectors));
+
 
         return $representative;
     }
@@ -72,6 +79,10 @@ class RepresentativeRepository {
             $representative->number_of_clients = $data['number_of_clients'];
         if (array_has($data, 'interested_in'))
             $representative->interested_in = $data['interested_in'];
+        if (array_has($data, 'range_of_investment'))
+            $representative->range_of_investment = $data['range_of_investment'];
+        if (array_has($data, 'sectors'))
+            $representative->sectors()->sync(json_decode($data['sectors']));
         if (array_has($data, 'social_media'))
             $representative->social_media = json_encode(BusinessController::generateSocialMedia($data));
 

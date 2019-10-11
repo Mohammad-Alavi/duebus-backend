@@ -19,11 +19,16 @@ class InvestorRepository {
      * @param string $range_of_investment
      * @param string $range_of_businesses_invested_in
      *
-     * @param array  $sectors
+     * @param string $sectors
      *
      * @return Investor
      */
-    public function createInvestor(int $userId, string $range_of_investment = null, string $range_of_businesses_invested_in = null, $sectors = '[]') {
+    public function createInvestor(
+        int $userId,
+        string $range_of_investment = null,
+        string $range_of_businesses_invested_in = null,
+        $sectors = '[]'
+    ) {
 
         $investor = new Investor();
         $investor->range_of_investment = $range_of_investment;
