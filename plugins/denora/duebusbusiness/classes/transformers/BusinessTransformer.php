@@ -13,12 +13,7 @@ class BusinessTransformer {
 
         return [
             'id'                                 => $business->id,
-            'logo'                               => [
-                'id'        => $business->logo->id,
-                'disk_name' => $business->logo->disk_name,
-                'extension' => $business->logo->extension,
-                'path'      => $business->logo->path,
-            ],
+            'logo'                               => $business->logo ? $business->logo->path : null,
             'name'                               => $business->name,
             'industry'                           => $business->industry,
             'year_founded'                       => (int)$business->year_founded,
