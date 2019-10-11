@@ -39,6 +39,13 @@ class RepresentativeController extends Controller {
                 'required',
                 Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
             ],
+            'range_of_investment'    => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
+            ],
+            'sectors'                => [
+                'required'
+            ],
             'business_name'          => 'required|min:3',
             'year_founded'           => 'required|numeric',
             'website'                => 'required|url',
@@ -59,6 +66,8 @@ class RepresentativeController extends Controller {
             $user->id,
             $data['number_of_clients'],
             $data['interested_in'],
+            $data['range_of_investment'],
+            $data['sectors'],
             $data['business_name'],
             $data['year_founded'],
             $data['website'],
@@ -83,6 +92,9 @@ class RepresentativeController extends Controller {
             ],
             'interested_in'          => [
                 Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
+            ],
+            'range_of_investment'    => [
+                Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
             ],
             'business_name'          => 'min:3',
             'year_founded'           => 'numeric',
