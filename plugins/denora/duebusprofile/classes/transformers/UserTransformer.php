@@ -25,8 +25,8 @@ class UserTransformer {
             'entrepreneur_profile'   => $user->entrepreneur ? EntrepreneurTransformer::transform($user->entrepreneur) : null,
             'representative_profile' => $user->representative ? RepresentativeTransformer::transform($user->representative) : null,
 
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at,
+            //'created_at' => $user->created_at,
+            //'updated_at' => $user->updated_at,
         ];
     }
 
