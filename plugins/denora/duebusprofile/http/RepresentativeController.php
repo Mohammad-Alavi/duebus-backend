@@ -48,7 +48,7 @@ class RepresentativeController extends Controller {
             ],
             'business_name'          => 'required|min:3',
             'year_founded'           => 'required|date',
-            'website'                => 'required|url',
+            'website'                => 'url',
 
             //  Social Media
             'social_media.instagram' => 'min:3',
@@ -142,6 +142,7 @@ class RepresentativeController extends Controller {
         return Validator::make($data, [
             'data.*' => [
                 'string',
+                'required',
                 Rule::in(ConfigTransformer::transform()['registration_fields']['interested_in']),
             ],
         ]);

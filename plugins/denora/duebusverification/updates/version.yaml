@@ -1,0 +1,14 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table denora_duebusVerification_investorVerification'
+    - builder_table_create_denora_duebusverification_investorverification.php
+1.0.3:
+    - 'Created table denora_duebusverification_items'
+    - builder_table_create_denora_duebusverification_items.php
+1.0.4:
+    - 'Created table denora_duebusverification_identifications'
+    - builder_table_create_denora_duebusverification_identifications.php
+1.0.5:
+    - 'Created table denora_duebusverification_passports'
+    - builder_table_create_denora_duebusverification_passports.php

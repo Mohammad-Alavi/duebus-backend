@@ -1,6 +1,8 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
 use Denora\Duebusprofile\Models\Investor;
+use Denora\Duebusverification\Classes\Repositories\InvestorVerificationRepository;
+use Denora\Duebusverification\Models\InvestorVerification;
 
 class InvestorRepository {
 
@@ -37,6 +39,9 @@ class InvestorRepository {
 
         $investor->save();
         $investor->sectors()->sync(json_decode($sectors));
+
+        //  Create a verification model attached to investor
+        InvestorVerificationRepository::createInvestorVerification($investor);
 
         return $investor;
     }
