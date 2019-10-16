@@ -24,8 +24,8 @@ class RepresentativeTransformer {
 
             'social_media' => json_decode($representative->social_media),
 
-            'created_at' => $representative->created_at,
-            'updated_at' => $representative->updated_at,
+            //'created_at' => $representative->created_at,
+            //'updated_at' => $representative->updated_at,
         ];
     }
 

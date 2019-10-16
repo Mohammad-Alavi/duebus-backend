@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.duebusverification::lang.plugin.name'
+    description: 'denora.duebusverification::lang.plugin.description'
+    author: Denora
+    icon: oc-icon-check-circle
+    homepage: ''
