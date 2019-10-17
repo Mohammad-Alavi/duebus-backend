@@ -47,7 +47,12 @@ class ConfigTransformer {
                 'number_of_clients'    => self::getValues($settings::get('number_of_clients_repeater')) ?: self::$default['number_of_clients'],
                 'number_of_businesses' => self::getValues($settings::get('number_of_businesses_repeater')) ?: self::$default['number_of_businesses'],
                 'interested_in'        => self::getValues($settings::get('interested_in_repeater')) ?: self::$default['interested_in'],
-            ]
+            ],
+
+            'business_fields' => [
+                'roles' => self::getValues($settings::get('roles_in_business_repeater')) ?: self::$default['roles_in_business'],
+                'reasons_of_selling_equity' => self::getValues($settings::get('reasons_of_selling_equity_repeater')) ?: self::$default['reasons_of_selling_equity'],
+            ],
         ];
 
     }
@@ -105,6 +110,18 @@ Once a fleeting idea, today this platform is called DueBus.'
         'interested_in'        => [
             'Investing',
             'Funding/Selling a Business',
+        ],
+        'roles_in_business'    => [
+            'Founder',
+            'Co-Founder',
+            'Partner',
+        ],
+        'reasons_of_selling_equity'    => [
+            'Raise Capital',
+            'Exit',
+            'Strategic Requirement',
+            'Legal',
+            'Other',
         ],
     ];
 
