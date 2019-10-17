@@ -189,7 +189,33 @@ tabs:
                     interest:
                         label: Range
                         span: left
-                        placeholder: 'investing'
+                        placeholder: investing
                         required: 1
                         type: text
                         comment: 'example: [investing] , [funding]'
+        roles_in_business_repeater:
+            label: 'Roles in business'
+            prompt: 'Add new role'
+            span: full
+            type: repeater
+            tab: 'Business fields'
+            form:
+                fields:
+                    role:
+                        label: 'Role name'
+                        span: auto
+                        required: 1
+                        type: text
+        reasons_of_selling_equity_repeater:
+            label: 'Reasons of selling equity'
+            prompt: 'Add new reason'
+            span: full
+            type: repeater
+            tab: 'Business fields'
+            form:
+                fields:
+                    reason_of_selling_equity:
+                        label: 'Reason of selling equity'
+                        span: left
+                        required: 1
+                        type: text

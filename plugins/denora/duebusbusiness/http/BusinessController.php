@@ -1,11 +1,13 @@
 <?php namespace Denora\Duebusbusiness\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use RainLab\User\Facades\Auth;
 
 /**
@@ -114,8 +116,12 @@ class BusinessController extends Controller {
             'allow_reveal'                                    => 'boolean',
             'existing_business'                               => 'boolean',
             'legal_structure'                                 => 'min:2',
-            'your_role_in_business'                           => 'min:2',
-            'reason_of_selling_equity'                        => 'min:2',
+            'your_role_in_business'                           => [
+                Rule::in(ConfigTransformer::transform()['business_fields']['roles'])
+            ],
+            'reason_of_selling_equity'                        => [
+                Rule::in(ConfigTransformer::transform()['business_fields']['reasons_of_selling_equity'])
+            ],
             'business_value'                                  => 'numeric',
             'equity_for_sale'                                 => 'numeric',
             'is_involved_in_any_proceedings'                  => 'boolean',
