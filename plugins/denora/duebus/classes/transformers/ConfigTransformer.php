@@ -50,6 +50,7 @@ class ConfigTransformer {
             ],
 
             'business_fields' => [
+                'price' => (int)$settings::get('business_price') ?: self::$default['business_price'],
                 'roles' => self::getValues($settings::get('roles_in_business_repeater')) ?: self::$default['roles_in_business'],
                 'reasons_of_selling_equity' => self::getValues($settings::get('reasons_of_selling_equity_repeater')) ?: self::$default['reasons_of_selling_equity'],
             ],
@@ -123,6 +124,7 @@ Once a fleeting idea, today this platform is called DueBus.'
             'Legal',
             'Other',
         ],
+        'business_price' => 20,
     ];
 
     private static function getValues($array) {
