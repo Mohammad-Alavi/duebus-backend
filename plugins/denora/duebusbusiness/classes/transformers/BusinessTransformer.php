@@ -25,6 +25,7 @@ class BusinessTransformer {
             'reason_of_selling_equity'           => $business->reason_of_selling_equity,
             'business_value'                     => (float)$business->business_value,
             'equity_for_sale'                    => (float)$business->equity_for_sale,
+            'asking_price'                       => (float)$business->asking_price,
             'is_involved_in_any_proceedings'     => (bool)$business->is_involved_in_any_proceedings,
             'is_concern_with_business_employees' => (bool)$business->is_concern_with_business_employees,
             'is_founder_or_holder_in_debt'       => (bool)$business->is_founder_or_holder_in_debt,
