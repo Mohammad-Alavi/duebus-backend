@@ -28,6 +28,7 @@ class BusinessRepository {
      * @param string      $reasonOfSellingEquity
      * @param float       $businessValue
      * @param float       $equityForSale
+     * @param float       $askingPrice
      * @param bool        $isInvolvedInAnyProceedings
      * @param bool        $isConcernWithBusinessEmployees
      * @param bool        $isFounderOrHolderInDebt
@@ -54,6 +55,7 @@ class BusinessRepository {
         string $reasonOfSellingEquity,
         float $businessValue,
         float $equityForSale,
+        float $askingPrice,
         bool $isInvolvedInAnyProceedings,
         bool $isConcernWithBusinessEmployees,
         bool $isFounderOrHolderInDebt,
@@ -75,6 +77,7 @@ class BusinessRepository {
         $business->reason_of_selling_equity = $reasonOfSellingEquity;
         $business->business_value = $businessValue;
         $business->equity_for_sale = $equityForSale;
+        $business->asking_price = $askingPrice;
         $business->is_involved_in_any_proceedings = $isInvolvedInAnyProceedings;
         $business->is_concern_with_business_employees = $isConcernWithBusinessEmployees;
         $business->is_founder_or_holder_in_debt = $isFounderOrHolderInDebt;
