@@ -12,6 +12,7 @@ class Transaction extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     
+    protected $dates = ['paid_at'];
 
     /**
      * @var string The database table used by the model.
@@ -41,7 +42,6 @@ class Transaction extends Model
             }
             case 'business':{
                 //  TODO: do it
-                dd('It is not implemented yet');
                 break;
             }
         }
