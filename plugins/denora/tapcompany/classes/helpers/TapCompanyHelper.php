@@ -2,8 +2,9 @@
 
 use Denora\TapCompany\Models\Settings;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Config;
+use Psr\Http\Message\ResponseInterface;
 use RainLab\User\Facades\Auth;
 use RainLab\User\Models\User;
 
@@ -12,15 +13,12 @@ class TapCompanyHelper {
     /**
      * @param int $price
      *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return mixed|ResponseInterface
+     * @throws GuzzleException
      */
     public function createCharge(int $price) {
-
         /** @var User $user */
         $user = Auth::user();
-//        $tapCompanySecretApiKey = 'sk_test_XKokBfNWv6FIYuTMg5sLPjhJ';
-        $tapCompanySecretApiKey = Settings::instance()->secret_api_key;
         $requestUrl = 'https://api.tap.company/v2/charges';
         $redirectUrl = Config::get('app.url') . '/api/v1/capture';
         $jsonArray = [
@@ -47,11 +45,21 @@ class TapCompanyHelper {
             'POST',
             $requestUrl,
             [
-                'headers' => ['Authorization' => "Bearer {$tapCompanySecretApiKey}"],
+                'headers' => ['Authorization' => "Bearer " . self::getApiKey()],
                 'json'    => $jsonArray
             ]
         );
+
         return $response;
+    }
+
+    /**
+     * @return string
+     */
+    static public function getApiKey(): string {
+        $testSecretApiKey = 'sk_test_XKokBfNWv6FIYuTMg5sLPjhJ';
+
+        return Settings::instance()->secret_api_key ?: $testSecretApiKey;
     }
 
 }

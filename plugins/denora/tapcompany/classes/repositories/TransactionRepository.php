@@ -25,6 +25,30 @@ class TransactionRepository {
     }
 
     /**
+     * @param int $businessId
+     * @return Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
+     */
+    function findBusinessTransaction(int $businessId){
+        return Transaction::query()
+            ->where('chargeable', '=', 'business')
+            ->where('chargeable_id', '=', $businessId)
+            ->whereNotNull('paid_at')
+            ->first();
+    }
+
+    /**
+     * @param int $userId
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    function findPaidWalletTransactions(int $userId){
+        return Transaction::query()
+            ->where('chargeable', '=', 'wallet')
+            ->where('chargeable_id', '=', $userId)
+            ->whereNotNull('paid_at')
+            ->get();
+    }
+
+    /**
      * @param string $chargeable
      * @param int    $chargeableId
      * @param string $chargeId

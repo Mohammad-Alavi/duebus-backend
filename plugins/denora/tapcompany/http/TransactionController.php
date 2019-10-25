@@ -2,6 +2,8 @@
 
 use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Repositories\PackageRepository;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
+use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\TapCompany\Classes\Helpers\TapCompanyHelper;
 use Denora\TapCompany\Classes\Repositories\TransactionRepository;
 use Denora\TapCompany\Classes\Transformers\TransactionTransformer;
@@ -15,14 +17,16 @@ use RainLab\User\Facades\Auth;
 /**
  * Transaction Controller Back-end Controller
  */
-class TransactionController extends Controller {
+class TransactionController extends Controller
+{
     public $implement = [
         'Mohsin.Rest.Behaviors.RestController'
     ];
 
     public $restConfig = 'config_rest.yaml';
 
-    function store() {
+    function store()
+    {
         $user = Auth::user();
         $data = Request::all();
 
@@ -38,11 +42,16 @@ class TransactionController extends Controller {
             $price = $package->price;
             $points = $package->points;
             $chargeableId = $user->id;
-        } else {
-            //  TODO: Get default price from settings
-            $price = 22;
+        } else if ($data['chargeable'] == 'business') {
+            $price = ConfigTransformer::transform()['business_fields']['price'];
             $points = 22;
             $chargeableId = $data['business_id'];
+            $business = (new BusinessRepository())->findById($chargeableId);
+
+            // check if the business is already paid
+            if ($business->is_published) return Response::make(['The business has been already paid'], 409);
+        } else {
+            return Response::make(['Chargeable is not recognized'], 400);
         }
         /** @var ResponseInterface $response */
         $response = $helper->createCharge($price);
@@ -73,10 +82,11 @@ class TransactionController extends Controller {
      *
      * @return
      */
-    private function getStoreValidator($data) {
+    private function getStoreValidator($data)
+    {
         return Validator::make($data, [
             //  General data
-            'chargeable'    => [
+            'chargeable' => [
                 'required',
                 Rule::in(['wallet', 'business']),
             ],

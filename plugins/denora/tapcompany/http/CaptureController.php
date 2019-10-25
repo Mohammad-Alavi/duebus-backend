@@ -1,12 +1,11 @@
 <?php namespace Denora\Tapcompany\Http;
 
 use Backend\Classes\Controller;
+use Denora\TapCompany\Classes\Helpers\TapCompanyHelper;
 use Denora\TapCompany\Classes\Repositories\TransactionRepository;
-use Denora\TapCompany\Models\Settings;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-use RainLab\User\Facades\Auth;
 
 /**
  * Capture Controller Back-end Controller
@@ -22,14 +21,12 @@ class CaptureController extends Controller
     function index() {
 
         $chargeId = Input::get('tap_id');
-//        $tapCompanySecretApiKey = 'sk_test_XKokBfNWv6FIYuTMg5sLPjhJ';
-        $tapCompanySecretApiKey = Settings::instance()->secret_api_key;
         $requestUrl = 'https://api.tap.company/v2/charges/';
         $client = new Client();
         $response = $client->request(
             'GET',
             $requestUrl . $chargeId,
-            ['headers' => ['Authorization' => "Bearer {$tapCompanySecretApiKey}"],]
+            ['headers' => ['Authorization' => "Bearer " . TapCompanyHelper::getApiKey()],]
         );
 
         //  Save data

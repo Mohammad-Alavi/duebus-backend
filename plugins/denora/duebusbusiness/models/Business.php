@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebusbusiness\Models;
 
+use Denora\TapCompany\Classes\Repositories\TransactionRepository;
 use Model;
 
 /**
@@ -25,14 +26,6 @@ class Business extends Model {
     public $rules = [
     ];
 
-    public $hasOne = [
-        'socialMedia' => 'Denora\Duebusbusiness\Models\SocialMedia'
-    ];
-
-    public $hasMany = [
-        'equityHolders' => 'Denora\Duebusbusiness\Models\EquityHolder'
-    ];
-
     public $belongsTo = [
         'user' => 'Rainlab\User\Models\User'
     ];
@@ -40,5 +33,17 @@ class Business extends Model {
     public $attachOne = [
         'logo' => 'System\Models\File'
     ];
+
+    public function getIsPublishedAttribute(){
+        $transactionRepository = new TransactionRepository();
+        $transaction = $transactionRepository->findBusinessTransaction($this->id);
+        return $transaction != null;
+    }
+
+    public function getPaidAtAttribute(){
+        $transactionRepository = new TransactionRepository();
+        $transaction = $transactionRepository->findBusinessTransaction($this->id);
+        return $transaction->paid_at;
+    }
 
 }
