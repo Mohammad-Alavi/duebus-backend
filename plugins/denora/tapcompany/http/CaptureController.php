@@ -3,11 +3,9 @@
 use Backend\Classes\Controller;
 use Denora\TapCompany\Classes\Helpers\TapCompanyHelper;
 use Denora\TapCompany\Classes\Repositories\TransactionRepository;
-use Denora\TapCompany\Models\Settings;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-use RainLab\User\Facades\Auth;
 
 /**
  * Capture Controller Back-end Controller
