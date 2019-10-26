@@ -20,6 +20,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->string('reason_of_selling_equity');
             $table->double('business_value');
             $table->double('equity_for_sale');
+            $table->double('asking_price');
             $table->boolean('is_involved_in_any_proceedings');
             $table->boolean('is_concern_with_business_employees');
             $table->boolean('is_founder_or_holder_in_debt');
