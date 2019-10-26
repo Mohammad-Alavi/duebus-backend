@@ -43,7 +43,7 @@ class Business extends Model {
     public function getPaidAtAttribute(){
         $transactionRepository = new TransactionRepository();
         $transaction = $transactionRepository->findBusinessTransaction($this->id);
-        return $transaction->paid_at;
+        return $transaction?$transaction->paid_at:null;
     }
 
 }
