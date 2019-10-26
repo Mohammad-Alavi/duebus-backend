@@ -34,12 +34,6 @@ class Business extends Model {
         'logo' => 'System\Models\File'
     ];
 
-    public function getIsPublishedAttribute(){
-        $transactionRepository = new TransactionRepository();
-        $transaction = $transactionRepository->findBusinessTransaction($this->id);
-        return $transaction != null;
-    }
-
     public function getPaidAtAttribute(){
         $transactionRepository = new TransactionRepository();
         $transaction = $transactionRepository->findBusinessTransaction($this->id);

@@ -2,43 +2,36 @@
 
 use Denora\Duebusbusiness\Models\Business;
 
-class BusinessRepository {
+class BusinessRepository
+{
 
     /**
-     * @param int $businessId
-     *
-     * @return Business
-     */
-    public function findById(int $businessId) {
-        return Business::find($businessId);
-    }
-
-    /**
-     * @param int         $userId
+     * @param int $userId
      * @param             $logo
-     * @param string      $name
+     * @param string $name
      *
-     * @param string      $industry
-     * @param int         $yearFounded
+     * @param string $industry
+     * @param int $yearFounded
      * @param string|null $website
-     * @param bool        $allowReveal
-     * @param bool        $existingBusiness
-     * @param string      $legalStructure
-     * @param string      $yourRoleInBusiness
-     * @param string      $reasonOfSellingEquity
-     * @param float       $businessValue
-     * @param float       $equityForSale
-     * @param float       $askingPrice
-     * @param bool        $isInvolvedInAnyProceedings
-     * @param bool        $isConcernWithBusinessEmployees
-     * @param bool        $isFounderOrHolderInDebt
+     * @param bool $allowReveal
+     * @param bool $existingBusiness
+     * @param string $legalStructure
+     * @param string $yourRoleInBusiness
+     * @param string $reasonOfSellingEquity
+     * @param float $businessValue
+     * @param float $equityForSale
+     * @param float $askingPrice
+     * @param bool $isInvolvedInAnyProceedings
+     * @param bool $isConcernWithBusinessEmployees
+     * @param bool $isFounderOrHolderInDebt
      *
-     * @param array       $threeYearsStatement
+     * @param array $threeYearsStatement
      *
-     * @param array       $socialMedia
+     * @param array $socialMedia
      *
-     * @param array       $equityHolders
+     * @param array $equityHolders
      *
+     * @param bool $isPublished
      * @return Business
      */
     public function createBusiness(
@@ -61,7 +54,9 @@ class BusinessRepository {
         bool $isFounderOrHolderInDebt,
         array $threeYearsStatement,
         array $socialMedia,
-        array $equityHolders) {
+        array $equityHolders,
+        bool $isPublished = false)
+    {
 
         $business = new Business();
         $business->user_id = $userId;
@@ -84,19 +79,48 @@ class BusinessRepository {
         $business->three_years_statement = json_encode($threeYearsStatement);
         $business->social_media = json_encode($socialMedia);
         $business->equity_holders = json_encode($equityHolders);
+        $business->is_published = $isPublished;
 
         $business->save();
 
         return $business;
     }
 
+    public function publishBusiness(int $businessId)
+    {
+        $business = $this->findById($businessId);
+        $business->is_published = true;
+        $business->save();
+
+        return $business;
+    }
+
+    public function unPublishBusiness(int $businessId)
+    {
+        $business = $this->findById($businessId);
+        $business->is_published = false;
+        $business->save();
+
+        return $business;
+    }
     /**
-     * @param int   $businessId
+     * @param int $businessId
+     *
+     * @return Business
+     */
+    public function findById(int $businessId)
+    {
+        return Business::find($businessId);
+    }
+
+    /**
+     * @param int $businessId
      * @param array $data
      *
      * @return Business
      */
-    public function updateBusiness(int $businessId, array $data) {
+    public function updateBusiness(int $businessId, array $data)
+    {
 
         $business = $this->findById($businessId);
 
@@ -141,7 +165,8 @@ class BusinessRepository {
      *
      * @throws \Exception
      */
-    public function deleteBusiness(int $businessId) {
+    public function deleteBusiness(int $businessId)
+    {
         $business = $this->findById($businessId);
         $business->delete();
     }
@@ -149,7 +174,8 @@ class BusinessRepository {
     /**
      * @return int
      */
-    public function countAll(): int {
+    public function countAll(): int
+    {
         return Business::all()->count();
     }
 
