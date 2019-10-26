@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Denora\Duebus\Classes\Repositories\PackageRepository;
+use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Model;
 
@@ -41,7 +42,8 @@ class Transaction extends Model
                 break;
             }
             case 'business':{
-                //  TODO: do it
+                $businessRepository = new BusinessRepository();
+                $businessRepository->publishBusiness($this->chargeable_id);
                 break;
             }
         }

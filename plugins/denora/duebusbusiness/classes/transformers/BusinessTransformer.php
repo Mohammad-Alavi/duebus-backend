@@ -32,7 +32,7 @@ class BusinessTransformer {
             'is_concern_with_business_employees' => (bool)$business->is_concern_with_business_employees,
             'is_founder_or_holder_in_debt'       => (bool)$business->is_founder_or_holder_in_debt,
 
-            'is_published' => $business->is_published,
+            'is_published' => (bool)$business->is_published,
             'paid_at' => $business->paid_at,
 
             'three_years_statement' => json_decode($business->three_years_statement),
