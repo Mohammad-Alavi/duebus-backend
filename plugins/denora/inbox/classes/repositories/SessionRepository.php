@@ -29,6 +29,14 @@ class SessionRepository
         return $query->get();
     }
 
+    static public function countUnreadSessions($userId){
+        $query = Session::query();
+        $unreadAsSender = $query->where('sender_id', '=', $userId)->where('is_read_by_sender', '=', false)->count();
+        $unreadAsReceiver = $query->where('receiver_id', '=', $userId)->where('is_read_by_receiver', '=', false)->count();
+        return $unreadAsSender + $unreadAsReceiver;
+
+    }
+
     static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate)
     {
         $session = new Session();
