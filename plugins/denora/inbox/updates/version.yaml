@@ -1,0 +1,8 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table denora_inbox_sessions'
+    - builder_table_create_denora_inbox_sessions.php
+1.0.3:
+    - 'Created table denora_inbox_messages'
+    - builder_table_create_denora_inbox_messages.php
