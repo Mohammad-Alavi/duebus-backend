@@ -1,0 +1,13 @@
+# ===================================
+#  Rest Behavior Config
+# ===================================
+
+# Allowed Rest Actions
+allowedActions:
+    index:
+        pageSize: 20
+    store:
+    show:
+
+# Model Class name
+modelClass: Denora\Inbox\Models\Session
