@@ -217,6 +217,19 @@ tabs:
                         span: auto
                         required: 1
                         type: text
+        legal_structures_repeater:
+            label: 'Legal structures'
+            prompt: 'Add new legal structure'
+            span: full
+            type: repeater
+            tab: 'Business fields'
+            form:
+                fields:
+                    legal_structure:
+                        label: 'Legal structure label'
+                        span: auto
+                        required: 1
+                        type: text
         reasons_of_selling_equity_repeater:
             label: 'Reasons of selling equity'
             prompt: 'Add new reason'
