@@ -50,10 +50,14 @@ class ConfigTransformer {
             ],
 
             'business_fields' => [
-                'price' => (int)$settings::get('business_price') ?: self::$default['business_price'],
                 'roles' => self::getValues($settings::get('roles_in_business_repeater')) ?: self::$default['roles_in_business'],
                 'legal_structures' => self::getValues($settings::get('legal_structures_repeater')) ?: self::$default['legal_structures'],
                 'reasons_of_selling_equity' => self::getValues($settings::get('reasons_of_selling_equity_repeater')) ?: self::$default['reasons_of_selling_equity'],
+            ],
+            'prices' => [
+                'business_price' => (int)$settings::get('business_price') ?: self::$default['business_price'],
+                'view_price' => (int)$settings::get('view_price') ?: self::$default['view_price'],
+                'reveal_price' => (int)$settings::get('reveal_price') ?: self::$default['reveal_price'],
             ],
         ];
 
@@ -131,6 +135,8 @@ Once a fleeting idea, today this platform is called DueBus.'
             'Other',
         ],
         'business_price' => 20,
+        'view_price' => 10,
+        'reveal_price' => 5,
     ];
 
     private static function getValues($array) {

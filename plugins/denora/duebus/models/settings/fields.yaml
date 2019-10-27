@@ -193,12 +193,6 @@ tabs:
                         required: 1
                         type: text
                         comment: 'example: [investing] , [funding]'
-        business_price:
-            label: 'Business price'
-            span: auto
-            required: 1
-            type: number
-            tab: 'Business fields'
         section1:
             label: 'Creation fields'
             span: full
@@ -243,3 +237,21 @@ tabs:
                         span: left
                         required: 1
                         type: text
+        business_price:
+            label: 'Business price'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        view_price:
+            label: 'View price'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        reveal_price:
+            label: 'Reveal price'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
