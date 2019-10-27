@@ -112,7 +112,10 @@ class BusinessController extends Controller
             'website' => 'nullable|url',
             'allow_reveal' => 'required|boolean',
             'existing_business' => 'required|boolean',
-            'legal_structure' => 'required|min:2',
+            'legal_structure' => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
+            ],
             'your_role_in_business' => [
                 'required',
                 Rule::in(ConfigTransformer::transform()['business_fields']['roles'])
@@ -124,36 +127,36 @@ class BusinessController extends Controller
             'business_value' => 'required|numeric',
             'equity_for_sale' => 'required|numeric',
             'asking_price' => 'required|numeric',
-            'is_involved_in_any_proceedings' => 'required|boolean',
-            'is_concern_with_business_employees' => 'required|boolean',
-            'is_founder_or_holder_in_debt' => 'required|boolean',
+            'is_involved_in_any_proceedings' => 'nullable|boolean',
+            'is_concern_with_business_employees' => 'nullable|boolean',
+            'is_founder_or_holder_in_debt' => 'nullable|boolean',
 
             //  3-Years Statement
-            'latest_operating_performance.revenue' => 'numeric',
-            'latest_operating_performance.cost_of_goods_sold' => 'numeric',
-            'latest_operating_performance.salaries' => 'numeric',
-            'latest_operating_performance.operating_expenses' => 'numeric',
-            'latest_operating_performance.ebitda' => 'numeric',
-            'latest_operating_performance.ebit' => 'numeric',
-            'latest_operating_performance.net_profit' => 'numeric',
+            'latest_operating_performance.revenue' => 'required|numeric',
+            'latest_operating_performance.cost_of_goods_sold' => 'nullable|numeric',
+            'latest_operating_performance.salaries' => 'nullable|numeric',
+            'latest_operating_performance.operating_expenses' => 'nullable|numeric',
+            'latest_operating_performance.ebitda' => 'nullable|numeric',
+            'latest_operating_performance.ebit' => 'nullable|numeric',
+            'latest_operating_performance.net_profit' => 'nullable|numeric',
 
-            'assets.cash_and_equivalents' => 'numeric',
-            'assets.accounts_receivable' => 'numeric',
-            'assets.inventory' => 'numeric',
-            'assets.tangible_assets' => 'numeric',
-            'assets.intangible_assets' => 'numeric',
-            'assets.financial_assets' => 'numeric',
+            'assets.cash_and_equivalents' => 'nullable|numeric',
+            'assets.accounts_receivable' => 'nullable|numeric',
+            'assets.inventory' => 'nullable|numeric',
+            'assets.tangible_assets' => 'nullable|numeric',
+            'assets.intangible_assets' => 'nullable|numeric',
+            'assets.financial_assets' => 'nullable|numeric',
 
-            'liabilities.accounts_payable' => 'numeric',
-            'liabilities.other_current_liabilities' => 'numeric',
-            'liabilities.long_term_liabilities' => 'numeric',
-            'liabilities.equity' => 'numeric',
+            'liabilities.accounts_payable' => 'nullable|numeric',
+            'liabilities.other_current_liabilities' => 'nullable|numeric',
+            'liabilities.long_term_liabilities' => 'nullable|numeric',
+            'liabilities.equity' => 'nullable|numeric',
 
             //  Social Media
-            'social_media.instagram' => 'min:3',
-            'social_media.facebook' => 'min:3',
-            'social_media.linked_in' => 'min:3',
-            'social_media.youtube' => 'min:3',
+            'social_media.instagram' => 'nullable|min:3',
+            'social_media.facebook' => 'nullable|min:3',
+            'social_media.linked_in' => 'nullable|min:3',
+            'social_media.youtube' => 'nullable|min:3',
 
             //  Equity Holders
             'equity_holders' => 'nullable|json',
