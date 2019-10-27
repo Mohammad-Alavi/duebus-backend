@@ -112,7 +112,10 @@ class BusinessController extends Controller
             'website' => 'nullable|url',
             'allow_reveal' => 'required|boolean',
             'existing_business' => 'required|boolean',
-            'legal_structure' => 'required|min:2',
+            'legal_structure' => [
+                'required',
+                Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
+            ],
             'your_role_in_business' => [
                 'required',
                 Rule::in(ConfigTransformer::transform()['business_fields']['roles'])
