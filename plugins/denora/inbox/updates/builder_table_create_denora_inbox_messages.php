@@ -3,20 +3,18 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableCreateDenoraInboxSessions extends Migration
+class BuilderTableCreateDenoraInboxMessages extends Migration
 {
     public function up()
     {
-        Schema::create('denora_inbox_sessions', function($table)
+        Schema::create('denora_inbox_messages', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('sender_id');
-            $table->integer('receiver_id');
-            $table->integer('business_id');
-            $table->string('type');
-            $table->boolean('is_read');
-            $table->timestamp('preferred_date')->nullable();
+            $table->integer('session_id');
+            $table->text('title')->nullable();
+            $table->text('text');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
@@ -24,6 +22,6 @@ class BuilderTableCreateDenoraInboxSessions extends Migration
     
     public function down()
     {
-        Schema::dropIfExists('denora_inbox_sessions');
+        Schema::dropIfExists('denora_inbox_messages');
     }
 }

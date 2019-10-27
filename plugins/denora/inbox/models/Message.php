@@ -5,16 +5,15 @@ use Model;
 /**
  * Model
  */
-class Session extends Model
+class Message extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-
-    protected $dates = ['preferred_date'];
+    
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'denora_inbox_sessions';
+    public $table = 'denora_inbox_messages';
 
     /**
      * @var array Validation rules
@@ -22,5 +21,5 @@ class Session extends Model
     public $rules = [
     ];
 
-    public $hasMany = ['messages' => 'Denora\Inbox\Models\Message'];
+    public $belongsTo = ['session' => 'Denora\Inbox\Models\Session'];
 }
