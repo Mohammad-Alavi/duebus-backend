@@ -25,6 +25,18 @@ class SessionRepository
         return $query->first();
     }
 
+    static public function findBySenderId(int $userId){
+        $query = Session::query();
+        $query->where('sender_id', '=', $userId);
+        return $query->get();
+    }
+
+    static public function findByReceiverId(int $userId){
+        $query = Session::query();
+        $query->where('receiver_id', '=', $userId);
+        return $query->get();
+    }
+
     static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate)
     {
         $session = new Session();
