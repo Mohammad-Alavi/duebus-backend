@@ -45,7 +45,7 @@ class SessionController extends Controller
             return Response::make($validator->messages(), 400);
 
         //  TODO: uncomment it for production
-        //if ($user->id == $data['receiver_id']) return Response::make(['You can not send a message to yourself'], 400);
+        if ($user->id == $data['receiver_id']) return Response::make(['You can not send a message to yourself'], 400);
 
         //  Return the session if exists and create a new one if not!
         $session = SessionRepository::find(
@@ -70,7 +70,7 @@ class SessionController extends Controller
         );
 
         $session = SessionRepository::findById($session->id);
-        return SessionTransformer::transform($session);
+        return SessionTransformer::transform($session, $user);
     }
 
     public function index()
@@ -96,7 +96,7 @@ class SessionController extends Controller
         $sessions = SessionRepository::paginate($page, $user->id, $type, $business_id);
 
         return new LengthAwarePaginator(
-            SessionsTransformer::transform($sessions),
+            SessionsTransformer::transform($sessions, $user),
             $sessions->total(),
             $sessions->perPage()
         );
@@ -112,7 +112,7 @@ class SessionController extends Controller
         if ($user->id != $session->sender_id && $user->id != $session->receiver_id)
             return Response::make(['You don\'t own the session'], 400);
 
-        return SessionTransformer::transform($session);
+        return SessionTransformer::transform($session, $user);
     }
 
 }

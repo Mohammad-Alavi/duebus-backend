@@ -29,7 +29,7 @@ class MessageRepository
         SessionRepository::updateUpdatedAtTimestamp($sessionId);
 
         //  Make session's is_read false
-        SessionRepository::updateIsRead($sessionId, false);
+        SessionRepository::updateIsReadOnAdd($senderId, $sessionId);
         return $message;
     }
 

@@ -5,16 +5,6 @@ use Denora\Inbox\Models\Session;
 class SessionRepository
 {
 
-    /**
-     * @param int $sessionId
-     *
-     * @return Session
-     */
-    static public function findById(int $sessionId)
-    {
-        return Session::find($sessionId);
-    }
-
     static public function find(int $senderId, int $receiverId, int $businessId, string $type)
     {
         $query = Session::query();
@@ -25,13 +15,15 @@ class SessionRepository
         return $query->first();
     }
 
-    static public function findBySenderId(int $userId){
+    static public function findBySenderId(int $userId)
+    {
         $query = Session::query();
         $query->where('sender_id', '=', $userId);
         return $query->get();
     }
 
-    static public function findByReceiverId(int $userId){
+    static public function findByReceiverId(int $userId)
+    {
         $query = Session::query();
         $query->where('receiver_id', '=', $userId);
         return $query->get();
@@ -44,7 +36,8 @@ class SessionRepository
         $session->receiver_id = $receiverId;
         $session->business_id = $businessId;
         $session->type = $type;
-        $session->is_read = false;
+        $session->is_read_by_sender = true;
+        $session->is_read_by_receiver = false;
         $session->preferred_date = $preferredDate;
 
         $session->save();
@@ -52,16 +45,38 @@ class SessionRepository
         return $session;
     }
 
-    static public function updateUpdatedAtTimestamp(int $session_id){
+    static public function updateUpdatedAtTimestamp(int $session_id)
+    {
         $session = self::findById($session_id);
         $session->updated_at = now();
         $session->save();
         return $session;
     }
 
-    static public function updateIsRead(int $session_id, bool $is_read){
+    /**
+     * @param int $sessionId
+     *
+     * @return Session
+     */
+    static public function findById(int $sessionId)
+    {
+        return Session::find($sessionId);
+    }
+
+    static public function updateIsReadOnAdd(int $userId, int $session_id)
+    {
         $session = self::findById($session_id);
-        $session->is_read = $is_read;
+        if ($userId == $session->sender_id) $session->is_read_by_receiver = false;
+        if ($userId == $session->receiver_id) $session->is_read_by_sender = false;
+        $session->save();
+        return $session;
+    }
+
+    static public function updateIsReadOnGet(int $userId, int $session_id)
+    {
+        $session = self::findById($session_id);
+        if ($userId == $session->sender_id) $session->is_read_by_sender = true;
+        if ($userId == $session->receiver_id) $session->is_read_by_receiver = true;
         $session->save();
         return $session;
     }

@@ -11,9 +11,10 @@ class SessionTransformer
     /**
      * @param Session $session
      *
+     * @param $user
      * @return array
      */
-    static function transform($session)
+    static function transform($session, $user)
     {
         return [
             'id' => $session->id,
@@ -24,7 +25,7 @@ class SessionTransformer
                 (new UserRepository())->findById($session->receiver_id)
             ),
             'type' => $session->type,
-            'is_read' => (bool)$session->is_read,
+            'is_read' => self::getIsRead($session, $user),
 
             'last_message' => MessageTransformer::transform(MessageRepository::getLastMessage($session->id)),
 
@@ -33,6 +34,12 @@ class SessionTransformer
             'updated_at' => $session->updated_at,
         ];
 
+    }
+
+    private static function getIsRead($session, $user): bool {
+        if ($user->id == $session->sender_id) return $session->is_read_by_sender;
+        if ($user->id == $session->receiver_id) return $session->is_read_by_receiver;
+        return null;
     }
 
 }
