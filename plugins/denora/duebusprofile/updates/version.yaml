@@ -19,3 +19,7 @@
 1.0.7:
     - 'Created table denora_duebus_representative'
     - builder_table_create_denora_duebus_representative.php
+1.0.8:
+    - 'Created Pivot tables for view and reveal'
+    - builder_table_create_denora_duebus_investor_view.php
+    - builder_table_create_denora_duebus_investor_reveal.php
