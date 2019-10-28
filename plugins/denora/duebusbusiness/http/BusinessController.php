@@ -66,9 +66,9 @@ class BusinessController extends Controller
             $data['business_value'],
             $data['equity_for_sale'],
             $data['asking_price'],
-            $data['is_involved_in_any_proceedings'],
-            $data['is_concern_with_business_employees'],
-            $data['is_founder_or_holder_in_debt'],
+            Request::input('is_involved_in_any_proceedings', null),
+            Request::input('is_concern_with_business_employees', null),
+            Request::input('is_founder_or_holder_in_debt', null),
             $this->generateThreeYearsStatement($data),
             $this->generateSocialMedia($data),
             $this->generateEquityHolders($data)
