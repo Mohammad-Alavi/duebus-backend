@@ -57,10 +57,10 @@ class BusinessController extends Controller
             $data['name'],
             $data['industry'],
             $data['year_founded'],
-            array_has($data, 'website') ? $data['website'] : null,
+            Request::input('website', null),
             $data['allow_reveal'],
             $data['existing_business'],
-            $data['legal_structure'],
+            Request::input('legal_structure', null),
             $data['your_role_in_business'],
             $data['reason_of_selling_equity'],
             $data['business_value'],
@@ -113,7 +113,7 @@ class BusinessController extends Controller
             'allow_reveal' => 'required|boolean',
             'existing_business' => 'required|boolean',
             'legal_structure' => [
-                'required',
+                'required_if:existing_business,==,1',
                 Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
             ],
             'your_role_in_business' => [
