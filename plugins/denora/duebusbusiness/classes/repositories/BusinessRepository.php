@@ -43,7 +43,7 @@ class BusinessRepository
         $website,
         bool $allowReveal,
         bool $existingBusiness,
-        string $legalStructure,
+        $legalStructure,
         string $yourRoleInBusiness,
         string $reasonOfSellingEquity,
         float $businessValue,
