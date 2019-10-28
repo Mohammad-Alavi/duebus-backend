@@ -26,6 +26,21 @@ class Business extends Model {
     public $rules = [
     ];
 
+    public $belongsToMany = [
+        'viewed_investors' => [
+            'Denora\Duebusprofile\Models\Investor',
+            'table' => 'denora_duebus_investor_view',
+            'key'      => 'business_id',
+            'otherKey' => 'investor_id'
+        ],
+        'revealed_investors' => [
+            'Denora\Duebusprofile\Models\Investor',
+            'table' => 'denora_duebus_investor_reveal',
+            'key'      => 'business_id',
+            'otherKey' => 'investor_id'
+        ],
+    ];
+
     public $belongsTo = [
         'user' => 'Rainlab\User\Models\User'
     ];

@@ -2,6 +2,7 @@
 
 use Denora\Duebusbusiness\Models\Business;
 use MongoDB\BSON\Timestamp;
+use RainLab\User\Facades\Auth;
 use System\Helpers\DateTime;
 
 class BusinessTransformer {
@@ -12,6 +13,10 @@ class BusinessTransformer {
      * @return array
      */
     static function transform($business) {
+        $user = Auth::user();
+        $isOwned = $user->id == $business->user_id;
+        $isViewed = $user->investor->viewed_businesses->contains($business->id);
+        $isRevealed = $user->investor->revealed_businesses->contains($business->id);
 
         return [
             'id'                                 => $business->id,
@@ -41,6 +46,8 @@ class BusinessTransformer {
 
             'equity_holders' => json_decode($business->equity_holders),
 
+            'is_viewed' => $isOwned || $isViewed,
+            'is_revealed' => $isOwned || $isRevealed,
 
             'created_at' => $business->created_at,
             'updated_at' => $business->updated_at,
