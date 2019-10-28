@@ -18,6 +18,8 @@ class InvestorTransformer {
             'range_of_businesses_invested_in' => $investor->range_of_businesses_invested_in,
             'sectors'                         => SectorsTransformer::transform($investor->sectors) ? SectorsTransformer::transform($investor->sectors) : null,
 
+            'viewed_businesses_count' => count($investor->viewed_businesses),
+            'revealed_businesses_count' => count($investor->revealed_businesses),
             'is_verified'  => $investor->verification->is_verified,
             'verification' => InvestorVerificationTransformer::transform($investor->verification),
 

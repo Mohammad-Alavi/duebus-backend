@@ -22,6 +22,16 @@ class Plugin extends PluginBase {
             $model->hasOne['entrepreneur'] = ['Denora\Duebusprofile\Models\Entrepreneur'];
             $model->hasOne['representative'] = ['Denora\Duebusprofile\Models\Representative'];
         });
+
+        //  Add methods to user
+        UserModel::extend(function($model) {
+            $model->addDynamicMethod('decreasePoints', function($point, $description = '') use ($model) {
+                if ($point > $model->point) return false;
+                $model->point = $model->point - $point;
+                $model->save();
+                return true;
+            });
+        });
     }
 
 }
