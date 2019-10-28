@@ -13,8 +13,8 @@ class BusinessTransformer {
     static function transform($business) {
         $user = Auth::user();
         $isOwned = $user->id == $business->user_id;
-        $isViewed = $user->investor->viewed_businesses->contains($business->id);
-        $isRevealed = $user->investor->revealed_businesses->contains($business->id);
+        $isViewed = $user->investor?$user->investor->viewed_businesses->contains($business->id):false;
+        $isRevealed = $user->investor?$user->investor->revealed_businesses->contains($business->id):false;
 
         return [
             'id'                                 => $business->id,
