@@ -14,6 +14,18 @@ class Business extends Model {
 
     protected $dates = ['year_founded', 'deleted_at'];
 
+    protected $casts = [
+        'allow_reveal' => 'boolean',
+        'existing_business' => 'boolean',
+        'is_involved_in_any_proceedings' => 'boolean',
+        'is_concern_with_business_employees' => 'boolean',
+        'is_founder_or_holder_in_debt' => 'boolean',
+        'is_published' => 'boolean',
+
+        'business_value' => 'float',
+        'equity_for_sale' => 'float',
+        'asking_price' => 'float',
+    ];
 
     /**
      * @var string The database table used by the model.
