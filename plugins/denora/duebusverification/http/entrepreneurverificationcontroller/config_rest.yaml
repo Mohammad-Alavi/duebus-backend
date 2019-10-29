@@ -4,12 +4,7 @@
 
 # Allowed Rest Actions
 allowedActions:
-  index:
-      pageSize: 20
-  store:
-  show:
-  update:
-  destroy:
+    store:
 
 # Model Class name
-modelClass: Denora\Duebusverification\Models\BusinessVerificationController
+modelClass: Denora\Duebusverification\Models\EntrepreneurVerification

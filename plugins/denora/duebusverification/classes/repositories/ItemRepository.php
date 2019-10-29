@@ -1,6 +1,5 @@
 <?php namespace Denora\Duebusverification\Classes\Repositories;
 
-
 use Denora\Duebusverification\Models\Item;
 
 class ItemRepository {
