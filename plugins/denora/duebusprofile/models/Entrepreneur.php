@@ -24,4 +24,9 @@ class Entrepreneur extends Model {
     public $belongsTo = [
         'user' => 'Rainlab\User\Models\User'
     ];
+
+    public $hasOne = [
+        'verification' => ['Denora\Duebusverification\Models\EntrepreneurVerification',]
+    ];
+
 }

@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
 use Denora\Duebusprofile\Models\Entrepreneur;
+use Denora\Duebusverification\Classes\Repositories\EntrepreneurVerificationRepository;
 
 class EntrepreneurRepository {
 
@@ -29,6 +30,10 @@ class EntrepreneurRepository {
         $entrepreneur->experiences = $experiences;
 
         $entrepreneur->save();
+
+        //  Create a verification model attached to entrepreneur
+        EntrepreneurVerificationRepository::createEntrepreneurVerification($entrepreneur);
+
 
         return $entrepreneur;
     }
