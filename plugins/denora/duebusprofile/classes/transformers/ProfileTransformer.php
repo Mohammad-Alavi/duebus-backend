@@ -28,6 +28,8 @@ class ProfileTransformer {
             'investor_profile'       => $user->investor ? InvestorTransformer::transform($user->investor) : null,
             'representative_profile' => $user->representative ? RepresentativeTransformer::transform($user->representative) : null,
 
+            'bookmarks_count' => count($user->bookmarked_businesses),
+
             //'created_at' => $user->created_at,
             //'updated_at' => $user->updated_at,
         ];
