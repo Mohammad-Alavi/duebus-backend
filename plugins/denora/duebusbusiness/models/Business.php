@@ -51,6 +51,12 @@ class Business extends Model {
             'key'      => 'business_id',
             'otherKey' => 'investor_id'
         ],
+        'bookmarked_users' => [
+            'RainLab\User\Models\User',
+            'table' => 'denora_duebus_user_bookmark',
+            'key'      => 'business_id',
+            'otherKey' => 'user_id'
+        ],
     ];
 
     public $belongsTo = [

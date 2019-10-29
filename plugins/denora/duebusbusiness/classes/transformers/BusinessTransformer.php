@@ -16,6 +16,8 @@ class BusinessTransformer {
         $isViewed = $user->investor?$user->investor->viewed_businesses->contains($business->id):false;
         $isRevealed = $user->investor?$user->investor->revealed_businesses->contains($business->id):false;
 
+        $isBookmarked = $user->bookmarked_businesses->contains($business->id);
+
         return [
             'id'                                 => $business->id,
             'logo'                               => $business->logo ? $business->logo->path : null,
@@ -46,6 +48,9 @@ class BusinessTransformer {
 
             'is_viewed' => $isOwned || $isViewed,
             'is_revealed' => $isOwned || $isRevealed,
+            'is_bookmarked' => $isBookmarked,
+
+            'bookmarked_count' => count($business->bookmarked_users),
 
             'created_at' => $business->created_at,
             'updated_at' => $business->updated_at,
