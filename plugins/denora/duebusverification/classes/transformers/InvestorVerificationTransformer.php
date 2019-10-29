@@ -13,8 +13,8 @@ class InvestorVerificationTransformer {
         return [
             //'id' => $investorVerification->id,
 
-            'passport'       => PassportTransformer::transform($investorVerification->passport),
-            'identification' => IdentificationTransformer::transform($investorVerification->identification),
+            'passport'       => ItemableTransformer::transform($investorVerification->passport),
+            'identification' => ItemableTransformer::transform($investorVerification->identification),
 
             //'created_at' => $investorVerification->created_at,
             //'updated_at' => $investorVerification->updated_at,

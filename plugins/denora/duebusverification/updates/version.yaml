@@ -12,3 +12,10 @@
 1.0.5:
     - 'Created table denora_duebusverification_passports'
     - builder_table_create_denora_duebusverification_passports.php
+1.0.6:
+    - 'Created entrepreneur verification tables'
+    - builder_table_create_denora_duebusverification_entrepreneurverification.php
+    - builder_table_create_denora_duebusverification_managing_partner_ids.php
+    - builder_table_create_denora_duebusverification_association_articles.php
+    - builder_table_create_denora_duebusverification_commercial_licenses.php
+    - builder_table_create_denora_duebusverification_chamber_of_commerces.php
