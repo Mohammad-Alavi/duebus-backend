@@ -47,12 +47,13 @@ class InvestorRepository {
     }
 
     /**
-     * @param int   $investorId
+     * @param int $investorId
      * @param array $data
      *
+     * @param bool $updateRepresentativeToo
      * @return Investor
      */
-    public function updateInvestor(int $investorId, array $data) {
+    public function updateInvestor(int $investorId, array $data, bool $updateRepresentativeToo = true) {
 
         $investor = $this->findById($investorId);
 
@@ -64,6 +65,11 @@ class InvestorRepository {
             $investor->sectors()->sync(json_decode($data['sectors']));
 
         $investor->save();
+
+        //  Update representative if exists
+        $representative = $investor->user->representative;
+        if ($representative && $updateRepresentativeToo)
+            (new RepresentativeRepository())->updateRepresentative($representative->id, $data, false);
 
         return $investor;
     }
