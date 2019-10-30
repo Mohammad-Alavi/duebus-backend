@@ -23,7 +23,7 @@ class ViewController extends Controller
         $user = Auth::user();
         $business = (new BusinessRepository())->findById($businessId);
 
-        $isOwned = $user->id == $business->user_id;
+        $isOwned = $user->id == $business->entrepreneur->user->id;
         $isViewed = $user->investor->viewed_businesses->contains($businessId);
         $isViewable = $isOwned || $isViewed;
 

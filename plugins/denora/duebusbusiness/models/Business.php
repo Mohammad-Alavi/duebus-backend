@@ -61,7 +61,7 @@ class Business extends Model {
     ];
 
     public $belongsTo = [
-        'user' => 'Rainlab\User\Models\User'
+        'entrepreneur' => 'Denora\Duebusprofile\Models\Entrepreneur'
     ];
 
     public $attachOne = [

@@ -23,7 +23,7 @@ class RevealController extends Controller
         $user = Auth::user();
         $business = (new BusinessRepository())->findById($businessId);
 
-        $isOwned = $user->id == $business->user_id;
+        $isOwned = $user->id == $business->entrepreneur->user->id;
         $isRevealed = $user->investor->revealed_businesses->contains($businessId);
         $isRevealable = $isOwned || $isRevealed;
 

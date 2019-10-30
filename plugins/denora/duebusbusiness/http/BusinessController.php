@@ -34,8 +34,11 @@ class BusinessController extends Controller
     public function store()
     {
         $user = Auth::user();
-        $data = Request::all();
 
+        if (!$user->entrepreneur)
+            return Response::make(['You are not an entrepreneur'], 400);
+
+        $data = Request::all();
         $validator = $this->getStoreValidator($data);
 
         if ($validator->fails())
@@ -52,7 +55,7 @@ class BusinessController extends Controller
 
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->createBusiness(
-            $user->id,
+            $user->entrepreneur->id,
             array_has($data, 'logo') ? $data['logo'] : null,
             $data['name'],
             $data['industry'],
@@ -263,7 +266,7 @@ class BusinessController extends Controller
         $business = $businessRepository->findById($id);
         if (!$business) return Response::make(['No element found'], 404);
 
-        if ($business->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
+        if ($business->entrepreneur->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
 
         $businessRepository->deleteBusiness($id);
     }

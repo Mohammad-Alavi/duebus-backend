@@ -8,7 +8,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
         Schema::create('denora_duebusbusiness_businesses', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('entrepreneur_id');
             $table->string('name');
             $table->string('industry');
             $table->date('year_founded');
