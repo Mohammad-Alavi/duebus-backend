@@ -42,7 +42,7 @@ class CaptureController extends Controller
             $responseUrl = $frontEndUrl . '/payment-success';
         } else
             $responseUrl = $frontEndUrl . '/payment-error';
-        header("Location: $responseUrl");
+        header("Location: $responseUrl"); exit();
     }
 
 }
