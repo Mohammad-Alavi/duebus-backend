@@ -15,6 +15,8 @@ class ConfigTransformer {
         $settings = Settings::instance();
 
         return [
+            'front_end_url'     => $settings::get('front_end_url') ?: self::$default['front_end_url'],
+
             'site_title'        => $settings::get('site_title') ?: self::$default['site_title'],
             'site_footer_title' => $settings::get('site_footer_title') ?: self::$default['site_footer_title'],
 
@@ -67,6 +69,8 @@ class ConfigTransformer {
      * @var array
      */
     private static $default = [
+        'front_end_url'     => 'https://duebus-3527.firebaseapp.com',
+
         'site_title'        => 'Duebus',
         'site_footer_title' => 'Duebus',
 

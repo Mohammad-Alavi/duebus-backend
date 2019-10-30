@@ -1,5 +1,12 @@
 tabs:
     fields:
+        front_end_url:
+            label: 'Front-end website url'
+            span: auto
+            placeholder: 'https://'
+            type: text
+            comment: '** DO NOT USE ''/'' AN THE END OF THE URL **'
+            tab: 'General settings'
         title_section:
             label: Titles
             span: full
