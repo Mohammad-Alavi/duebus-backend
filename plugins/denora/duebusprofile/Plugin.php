@@ -25,7 +25,8 @@ class Plugin extends PluginBase {
                 'Denora\Duebusbusiness\Models\Business',
                 'table'    => 'denora_duebus_user_bookmark',
                 'key'      => 'user_id',
-                'otherKey' => 'business_id'
+                'otherKey' => 'business_id',
+                'timestamps' => true,
             ];
         });
 

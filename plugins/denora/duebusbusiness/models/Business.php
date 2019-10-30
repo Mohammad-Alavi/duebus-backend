@@ -55,7 +55,8 @@ class Business extends Model {
             'RainLab\User\Models\User',
             'table' => 'denora_duebus_user_bookmark',
             'key'      => 'business_id',
-            'otherKey' => 'user_id'
+            'otherKey' => 'user_id',
+            'timestamps' => true,
         ],
     ];
 
