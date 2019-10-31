@@ -139,6 +139,8 @@ class BusinessRepository
         if ($yearFounded !== null)
             $query->where( DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded );
 
+        if ($legalStructure !== null) $query->whereIn('legal_structure', json_decode($legalStructure));
+
 
         return $query->paginate(20, $page);
     }
