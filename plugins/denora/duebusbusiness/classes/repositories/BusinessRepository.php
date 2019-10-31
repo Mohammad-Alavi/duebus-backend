@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusbusiness\Classes\Repositories;
 
 use Denora\Duebusbusiness\Models\Business;
+use Illuminate\Support\Facades\DB;
 
 class BusinessRepository
 {
@@ -111,6 +112,40 @@ class BusinessRepository
     public function findById(int $businessId)
     {
         return Business::find($businessId);
+    }
+
+    public function paginate(
+        int $page,
+        $industry,
+        $revenueFrom,
+        $revenueTo,
+        $sponsor,
+        $yearFounded,
+        $legalStructure,
+        $allowReveal,
+        $existingBusiness
+    ){
+        $query = Business::query();
+
+        if ($industry !== null) $query->whereIn('industry', json_decode($industry));
+
+        if ($revenueFrom !== null)
+            $query->where('three_years_statement->latest_operating_performance->revenue', '>=', (int)$revenueFrom);
+        if ($revenueTo !== null)
+            $query->where('three_years_statement->latest_operating_performance->revenue', '<=', (int)$revenueTo);
+
+        //  TODO: implement sponsor filtering
+
+        if ($yearFounded !== null)
+            $query->where( DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded );
+
+        if ($legalStructure !== null) $query->whereIn('legal_structure', json_decode($legalStructure));
+
+        if ($allowReveal !== null) $query->where('allow_reveal', $allowReveal);
+
+        if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
+
+        return $query->paginate(20, $page);
     }
 
     /**
