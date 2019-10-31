@@ -12,11 +12,11 @@ class BusinessTransformer {
      */
     static function transform($business) {
         $user = Auth::user();
-        $isOwned = $user->id == $business->entrepreneur->user->id;
-        $isViewed = $user->investor?$user->investor->viewed_businesses->contains($business->id):false;
-        $isRevealed = $user->investor?$user->investor->revealed_businesses->contains($business->id):false;
+        $isOwned = ($user)? $user->id == $business->entrepreneur->user->id: false;
+        $isViewed = ($user && $user->investor)? $user->investor->viewed_businesses->contains($business->id): false;
+        $isRevealed = ($user && $user->investor)? $user->investor->revealed_businesses->contains($business->id): false;
 
-        $isBookmarked = $user->bookmarked_businesses->contains($business->id);
+        $isBookmarked = ($user)? $user->bookmarked_businesses->contains($business->id): false;
 
         return [
             'id'                                 => $business->id,
