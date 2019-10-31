@@ -113,6 +113,30 @@ class BusinessRepository
         return Business::find($businessId);
     }
 
+    public function paginate(
+        int $page,
+        $industry,
+        $revenueFrom,
+        $revenueTo,
+        $sponsor,
+        $yearFounded,
+        $legalStructure,
+        $allowReveal,
+        $existingBusiness
+    ){
+        $query = Business::query();
+
+        if ($industry !== null) $query->whereIn('industry', json_decode($industry));
+
+        if ($revenueFrom !== null)
+            $query->where('three_years_statement->latest_operating_performance->revenue', '>=', (int)$revenueFrom);
+        if ($revenueTo !== null)
+            $query->where('three_years_statement->latest_operating_performance->revenue', '<=', (int)$revenueTo);
+
+
+        return $query->paginate(20, $page);
+    }
+
     /**
      * @param int $businessId
      * @param array $data
