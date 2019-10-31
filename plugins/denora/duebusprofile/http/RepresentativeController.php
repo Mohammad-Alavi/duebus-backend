@@ -71,13 +71,13 @@ class RepresentativeController extends Controller {
 
         $representative = $representativeRepository->createRepresentative(
             $user->id,
-            $data['number_of_clients'],
-            $data['interested_in'],
-            $data['range_of_investment'],
-            $data['sectors'],
-            $data['business_name'],
-            $data['year_founded'],
-            $data['website'],
+            Request::input('number_of_clients', null),
+            Request::input('interested_in', '[]'),
+            Request::input('range_of_investment', null),
+            Request::input('sectors', '[]'),
+            Request::input('business_name', null),
+            Request::input('year_founded', null),
+            Request::input('website', null),
             BusinessController::generateSocialMedia($data)
         );
 
