@@ -3,7 +3,9 @@
 use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
+use Denora\Duebusbusiness\Classes\Transformers\BusinessesTransformer;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -20,6 +22,51 @@ class BusinessController extends Controller
     ];
 
     public $restConfig = 'config_rest.yaml';
+
+    public function index(){
+
+        $user = Auth::user();
+
+        //  Stop user if it is not an investor
+        //  if (!$user->investor) return Response::make(['You must be an investor'], 400);
+
+        $data = Request::all();
+
+        $validator = Validator::make($data, [
+            'page' => 'integer',
+            'industry' => 'json',
+            'revenue_from' => 'numeric',
+            'revenue_to' => 'numeric',
+            'sponsor' => 'string',
+            'year_founded' => 'integer',
+            'legal_structure' => 'json',
+            'allow_reveal' => 'boolean',
+            'existing_business' => 'boolean',
+        ]);
+        if ($validator->fails())
+            return Response::make($validator->messages(), 400);
+
+        $businessRepository = new BusinessRepository();
+        $businesses = $businessRepository->paginate(
+            Request::input('page', 1),
+            Request::input('industry', null),
+            Request::input('revenue_from', null),
+            Request::input('revenue_to', null),
+            Request::input('sponsor', null),
+            Request::input('year_founded', null),
+            Request::input('legal_structure', null),
+            Request::input('allow_reveal', null),
+            Request::input('existing_business', null)
+        );
+
+        return new LengthAwarePaginator(
+            BusinessesTransformer::transform($businesses),
+            $businesses->total(),
+            $businesses->perPage()
+        );
+
+
+    }
 
     public function show($id)
     {
@@ -190,27 +237,27 @@ class BusinessController extends Controller
     {
         return [
             'latest_operating_performance' => [
-                'revenue' => array_has($data, 'latest_operating_performance.revenue') ? $data['latest_operating_performance']['revenue'] : null,
-                'cost_of_goods_sold' => array_has($data, 'latest_operating_performance.cost_of_goods_sold') ? $data['latest_operating_performance']['cost_of_goods_sold'] : null,
-                'salaries' => array_has($data, 'latest_operating_performance.salaries') ? $data['latest_operating_performance']['salaries'] : null,
-                'operating_expenses' => array_has($data, 'latest_operating_performance.operating_expenses') ? $data['latest_operating_performance']['operating_expenses'] : null,
-                'ebitda' => array_has($data, 'latest_operating_performance.ebitda') ? $data['latest_operating_performance']['ebitda'] : null,
-                'ebit' => array_has($data, 'latest_operating_performance.ebit') ? $data['latest_operating_performance']['ebit'] : null,
-                'net_profit' => array_has($data, 'latest_operating_performance.net_profit') ? $data['latest_operating_performance']['net_profit'] : null,
+                'revenue' => array_has($data, 'latest_operating_performance.revenue') ? (int)$data['latest_operating_performance']['revenue'] : null,
+                'cost_of_goods_sold' => array_has($data, 'latest_operating_performance.cost_of_goods_sold') ? (int)$data['latest_operating_performance']['cost_of_goods_sold'] : null,
+                'salaries' => array_has($data, 'latest_operating_performance.salaries') ? (int)$data['latest_operating_performance']['salaries'] : null,
+                'operating_expenses' => array_has($data, 'latest_operating_performance.operating_expenses') ?(int) $data['latest_operating_performance']['operating_expenses'] : null,
+                'ebitda' => array_has($data, 'latest_operating_performance.ebitda') ? (int)$data['latest_operating_performance']['ebitda'] : null,
+                'ebit' => array_has($data, 'latest_operating_performance.ebit') ? (int)$data['latest_operating_performance']['ebit'] : null,
+                'net_profit' => array_has($data, 'latest_operating_performance.net_profit') ? (int)$data['latest_operating_performance']['net_profit'] : null,
             ],
             'assets' => [
-                'cash_and_equivalents' => array_has($data, 'assets.cash_and_equivalents') ? $data['assets']['cash_and_equivalents'] : null,
-                'accounts_receivable' => array_has($data, 'assets.accounts_receivable') ? $data['assets']['accounts_receivable'] : null,
-                'inventory' => array_has($data, 'assets.inventory') ? $data['assets']['inventory'] : null,
-                'tangible_assets' => array_has($data, 'assets.tangible_assets') ? $data['assets']['tangible_assets'] : null,
-                'intangible_assets' => array_has($data, 'assets.intangible_assets') ? $data['assets']['intangible_assets'] : null,
-                'financial_assets' => array_has($data, 'assets.financial_assets') ? $data['assets']['financial_assets'] : null,
+                'cash_and_equivalents' => array_has($data, 'assets.cash_and_equivalents') ? (int)$data['assets']['cash_and_equivalents'] : null,
+                'accounts_receivable' => array_has($data, 'assets.accounts_receivable') ? (int)$data['assets']['accounts_receivable'] : null,
+                'inventory' => array_has($data, 'assets.inventory') ? (int)$data['assets']['inventory'] : null,
+                'tangible_assets' => array_has($data, 'assets.tangible_assets') ? (int)$data['assets']['tangible_assets'] : null,
+                'intangible_assets' => array_has($data, 'assets.intangible_assets') ? (int)$data['assets']['intangible_assets'] : null,
+                'financial_assets' => array_has($data, 'assets.financial_assets') ? (int)$data['assets']['financial_assets'] : null,
             ],
             'liabilities' => [
-                'accounts_payable' => array_has($data, 'liabilities.accounts_payable') ? $data['liabilities']['accounts_payable'] : null,
-                'other_current_liabilities' => array_has($data, 'liabilities.other_current_liabilities') ? $data['liabilities']['other_current_liabilities'] : null,
-                'long_term_liabilities' => array_has($data, 'liabilities.long_term_liabilities') ? $data['liabilities']['long_term_liabilities'] : null,
-                'equity' => array_has($data, 'liabilities.equity') ? $data['liabilities']['equity'] : null,
+                'accounts_payable' => array_has($data, 'liabilities.accounts_payable') ? (int)$data['liabilities']['accounts_payable'] : null,
+                'other_current_liabilities' => array_has($data, 'liabilities.other_current_liabilities') ? (int)$data['liabilities']['other_current_liabilities'] : null,
+                'long_term_liabilities' => array_has($data, 'liabilities.long_term_liabilities') ? (int)$data['liabilities']['long_term_liabilities'] : null,
+                'equity' => array_has($data, 'liabilities.equity') ? (int)$data['liabilities']['equity'] : null,
             ],
 
         ];
