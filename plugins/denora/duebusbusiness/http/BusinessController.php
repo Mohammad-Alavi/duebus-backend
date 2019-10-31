@@ -33,7 +33,7 @@ class BusinessController extends Controller
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'page' => 'required|integer',
+            'page' => 'integer',
             'industry' => 'json',
             'revenue_from' => 'numeric',
             'revenue_to' => 'numeric',

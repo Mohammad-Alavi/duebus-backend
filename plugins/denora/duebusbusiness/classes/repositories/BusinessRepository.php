@@ -141,6 +141,9 @@ class BusinessRepository
 
         if ($legalStructure !== null) $query->whereIn('legal_structure', json_decode($legalStructure));
 
+        if ($allowReveal !== null) $query->where('allow_reveal', $allowReveal);
+
+        if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
 
         return $query->paginate(20, $page);
     }
