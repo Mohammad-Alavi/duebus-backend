@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusbusiness\Classes\Repositories;
 
 use Denora\Duebusbusiness\Models\Business;
+use Illuminate\Support\Facades\DB;
 
 class BusinessRepository
 {
@@ -132,6 +133,11 @@ class BusinessRepository
             $query->where('three_years_statement->latest_operating_performance->revenue', '>=', (int)$revenueFrom);
         if ($revenueTo !== null)
             $query->where('three_years_statement->latest_operating_performance->revenue', '<=', (int)$revenueTo);
+
+        //  TODO: implement sponsor filtering
+
+        if ($yearFounded !== null)
+            $query->where( DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded );
 
 
         return $query->paginate(20, $page);
