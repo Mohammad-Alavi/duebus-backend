@@ -55,6 +55,15 @@ class RepresentativeRepository {
         $representative->save();
         $representative->sectors()->sync(json_decode($sectors));
 
+        // Create investor profile if not existing
+        if (!$representative->user->investor){
+            (new InvestorRepository())->createInvestor(
+                $userId,
+                $range_of_investment,
+                null,
+                $sectors
+            );
+        }
 
         return $representative;
     }
