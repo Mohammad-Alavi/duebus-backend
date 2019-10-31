@@ -29,4 +29,8 @@ class Entrepreneur extends Model {
         'verification' => ['Denora\Duebusverification\Models\EntrepreneurVerification',]
     ];
 
+    public $hasMany = [
+        'businesses' => 'Denora\Duebusbusiness\Models\Business'
+    ];
+
 }

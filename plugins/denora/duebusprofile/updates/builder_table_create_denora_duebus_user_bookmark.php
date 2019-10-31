@@ -10,6 +10,7 @@ class CreateUserBookmarkTable extends Migration {
             $table->integer('user_id')->unsigned();
             $table->integer('business_id')->unsigned();
             $table->primary(['user_id', 'business_id']);
+            $table->timestamps();
         });
     }
 

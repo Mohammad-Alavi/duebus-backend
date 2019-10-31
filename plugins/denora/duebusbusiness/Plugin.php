@@ -11,13 +11,4 @@ class Plugin extends PluginBase {
     public function registerSettings() {
     }
 
-    public function boot() {
-        parent::boot();
-
-        //  Relate user to [business] objects
-        UserModel::extend(function ($model) {
-            $model->hasMany['businesses'] = ['Denora\Duebusbusiness\Models\Business'];
-        });
-    }
-
 }

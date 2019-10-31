@@ -6,7 +6,7 @@ class BusinessRepository
 {
 
     /**
-     * @param int $userId
+     * @param int $entrepreneurId
      * @param             $logo
      * @param string $name
      *
@@ -35,7 +35,7 @@ class BusinessRepository
      * @return Business
      */
     public function createBusiness(
-        int $userId,
+        int $entrepreneurId,
         $logo,
         string $name,
         string $industry,
@@ -59,7 +59,7 @@ class BusinessRepository
     {
 
         $business = new Business();
-        $business->user_id = $userId;
+        $business->entrepreneur_id = $entrepreneurId;
         $business->logo = $logo;
         $business->name = $name;
         $business->industry = $industry;

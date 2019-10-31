@@ -14,6 +14,11 @@ class EntrepreneurRepository {
         return Entrepreneur::find($entrepreneurId);
     }
 
+    public function getOwnedBusinessIds(int $entrepreneurId){
+        $entrepreneur = $this->findById($entrepreneurId);
+        return $entrepreneur->businesses->pluck('id')->toArray();
+    }
+
     /**
      * @param int    $userId
      *

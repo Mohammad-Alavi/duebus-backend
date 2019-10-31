@@ -30,13 +30,15 @@ class Investor extends Model {
             'Denora\Duebusbusiness\Models\Business',
             'table' => 'denora_duebus_investor_view',
             'key'      => 'investor_id',
-            'otherKey' => 'business_id'
+            'otherKey' => 'business_id',
+            'timestamps' => true,
         ],
         'revealed_businesses' => [
             'Denora\Duebusbusiness\Models\Business',
             'table' => 'denora_duebus_investor_reveal',
             'key'      => 'investor_id',
-            'otherKey' => 'business_id'
+            'otherKey' => 'business_id',
+            'timestamps' => true,
         ],
     ];
 
