@@ -10,6 +10,7 @@ class CreateInvestorRevealTable extends Migration {
             $table->integer('investor_id')->unsigned();
             $table->integer('business_id')->unsigned();
             $table->primary(['investor_id', 'business_id']);
+            $table->timestamps();
         });
     }
 
