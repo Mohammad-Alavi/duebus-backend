@@ -116,6 +116,7 @@ class BusinessRepository
 
     public function paginate(
         int $page,
+        $entrepreneurId,
         $industry,
         $revenueFrom,
         $revenueTo,
@@ -128,6 +129,9 @@ class BusinessRepository
         $query = Business::query();
 
         if ($industry !== null) $query->whereIn('industry', json_decode($industry));
+
+        if ($entrepreneurId !== null)
+            $query->where('entrepreneur_id', $entrepreneurId);
 
         if ($revenueFrom !== null)
             $query->where('three_years_statement->latest_operating_performance->revenue', '>=', (int)$revenueFrom);
