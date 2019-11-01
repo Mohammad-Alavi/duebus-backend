@@ -216,6 +216,14 @@ class BusinessRepository
         $business->delete();
     }
 
+    public function viewBusiness(int $investor, int $businessId){
+        $investor->viewed_businesses()->attach($businessId);
+    }
+
+    public function revealBusiness(int $investor, int $businessId){
+        $investor->revealed_businesses()->attach($businessId);
+    }
+
     /**
      * @return int
      */
