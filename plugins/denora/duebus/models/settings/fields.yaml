@@ -1,5 +1,12 @@
 tabs:
     fields:
+        front_end_url:
+            label: 'Front-end website url'
+            span: auto
+            placeholder: 'https://'
+            type: text
+            comment: '** DO NOT USE ''/'' AN THE END OF THE URL **'
+            tab: 'General settings'
         title_section:
             label: Titles
             span: full
@@ -193,12 +200,6 @@ tabs:
                         required: 1
                         type: text
                         comment: 'example: [investing] , [funding]'
-        business_price:
-            label: 'Business price'
-            span: auto
-            required: 1
-            type: number
-            tab: 'Business fields'
         section1:
             label: 'Creation fields'
             span: full
@@ -217,6 +218,19 @@ tabs:
                         span: auto
                         required: 1
                         type: text
+        legal_structures_repeater:
+            label: 'Legal structures'
+            prompt: 'Add new legal structure'
+            span: full
+            type: repeater
+            tab: 'Business fields'
+            form:
+                fields:
+                    legal_structure:
+                        label: 'Legal structure label'
+                        span: auto
+                        required: 1
+                        type: text
         reasons_of_selling_equity_repeater:
             label: 'Reasons of selling equity'
             prompt: 'Add new reason'
@@ -230,3 +244,21 @@ tabs:
                         span: left
                         required: 1
                         type: text
+        business_price:
+            label: 'Business price'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        view_price:
+            label: 'View price'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        reveal_price:
+            label: 'Reveal price'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices

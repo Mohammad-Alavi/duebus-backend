@@ -14,6 +14,18 @@ class Business extends Model {
 
     protected $dates = ['year_founded', 'deleted_at'];
 
+    protected $casts = [
+        'allow_reveal' => 'boolean',
+        'existing_business' => 'boolean',
+        'is_involved_in_any_proceedings' => 'boolean',
+        'is_concern_with_business_employees' => 'boolean',
+        'is_founder_or_holder_in_debt' => 'boolean',
+        'is_published' => 'boolean',
+
+        'business_value' => 'float',
+        'equity_for_sale' => 'float',
+        'asking_price' => 'float',
+    ];
 
     /**
      * @var string The database table used by the model.
@@ -26,8 +38,32 @@ class Business extends Model {
     public $rules = [
     ];
 
+    public $belongsToMany = [
+        'viewed_investors' => [
+            'Denora\Duebusprofile\Models\Investor',
+            'table' => 'denora_duebus_investor_view',
+            'key'      => 'business_id',
+            'otherKey' => 'investor_id',
+            'timestamps' => true,
+        ],
+        'revealed_investors' => [
+            'Denora\Duebusprofile\Models\Investor',
+            'table' => 'denora_duebus_investor_reveal',
+            'key'      => 'business_id',
+            'otherKey' => 'investor_id',
+            'timestamps' => true,
+        ],
+        'bookmarked_users' => [
+            'RainLab\User\Models\User',
+            'table' => 'denora_duebus_user_bookmark',
+            'key'      => 'business_id',
+            'otherKey' => 'user_id',
+            'timestamps' => true,
+        ],
+    ];
+
     public $belongsTo = [
-        'user' => 'Rainlab\User\Models\User'
+        'entrepreneur' => 'Denora\Duebusprofile\Models\Entrepreneur'
     ];
 
     public $attachOne = [

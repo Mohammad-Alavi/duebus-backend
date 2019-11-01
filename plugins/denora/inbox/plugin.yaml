@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.inbox::lang.plugin.name'
+    description: 'denora.inbox::lang.plugin.description'
+    author: Denora
+    icon: oc-icon-send
+    homepage: ''

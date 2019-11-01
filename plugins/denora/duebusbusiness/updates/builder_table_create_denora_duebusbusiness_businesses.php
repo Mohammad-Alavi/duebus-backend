@@ -8,22 +8,22 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
         Schema::create('denora_duebusbusiness_businesses', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('entrepreneur_id');
             $table->string('name');
             $table->string('industry');
             $table->date('year_founded');
             $table->string('website')->nullable();
             $table->boolean('allow_reveal');
             $table->boolean('existing_business');
-            $table->string('legal_structure');
+            $table->string('legal_structure')->nullable();
             $table->string('your_role_in_business');
             $table->string('reason_of_selling_equity');
             $table->double('business_value');
             $table->double('equity_for_sale');
             $table->double('asking_price');
-            $table->boolean('is_involved_in_any_proceedings');
-            $table->boolean('is_concern_with_business_employees');
-            $table->boolean('is_founder_or_holder_in_debt');
+            $table->boolean('is_involved_in_any_proceedings')->nullable();
+            $table->boolean('is_concern_with_business_employees')->nullable();
+            $table->boolean('is_founder_or_holder_in_debt')->nullable();
             $table->json('three_years_statement');
             $table->json('social_media');
             $table->json('equity_holders');

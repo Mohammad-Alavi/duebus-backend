@@ -1,11 +1,11 @@
 <?php namespace Denora\Tapcompany\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\TapCompany\Classes\Helpers\TapCompanyHelper;
 use Denora\TapCompany\Classes\Repositories\TransactionRepository;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
 
 /**
  * Capture Controller Back-end Controller
@@ -18,7 +18,10 @@ class CaptureController extends Controller
 
     public $restConfig = 'config_rest.yaml';
 
-    function index() {
+    function index()
+    {
+
+        $frontEndUrl = ConfigTransformer::transform()['front_end_url'];
 
         $chargeId = Input::get('tap_id');
         $requestUrl = 'https://api.tap.company/v2/charges/';
@@ -36,9 +39,10 @@ class CaptureController extends Controller
         $status = json_decode($body, true)['status'];
         if ($status == 'CAPTURED') {
             $transaction->capture();
-            return Response::make(['Payment succeed'], 200);
-        }else
-            return Response::make(['Payment failed'], 400);
+            $responseUrl = $frontEndUrl . '/payment-success';
+        } else
+            $responseUrl = $frontEndUrl . '/payment-error';
+        header("Location: $responseUrl"); exit();
     }
 
 }

@@ -1,12 +1,15 @@
 <?php namespace Denora\Duebusbusiness\Classes\Repositories;
 
 use Denora\Duebusbusiness\Models\Business;
+use Denora\Notification\Classes\Events\BusinessCreatedEvent;
+use Denora\Notification\Classes\Events\BusinessPublishedEvent;
+use Illuminate\Support\Facades\DB;
 
 class BusinessRepository
 {
 
     /**
-     * @param int $userId
+     * @param int $entrepreneurId
      * @param             $logo
      * @param string $name
      *
@@ -35,7 +38,7 @@ class BusinessRepository
      * @return Business
      */
     public function createBusiness(
-        int $userId,
+        int $entrepreneurId,
         $logo,
         string $name,
         string $industry,
@@ -43,15 +46,15 @@ class BusinessRepository
         $website,
         bool $allowReveal,
         bool $existingBusiness,
-        string $legalStructure,
+        $legalStructure,
         string $yourRoleInBusiness,
         string $reasonOfSellingEquity,
         float $businessValue,
         float $equityForSale,
         float $askingPrice,
-        bool $isInvolvedInAnyProceedings,
-        bool $isConcernWithBusinessEmployees,
-        bool $isFounderOrHolderInDebt,
+        $isInvolvedInAnyProceedings,
+        $isConcernWithBusinessEmployees,
+        $isFounderOrHolderInDebt,
         array $threeYearsStatement,
         array $socialMedia,
         array $equityHolders,
@@ -59,7 +62,7 @@ class BusinessRepository
     {
 
         $business = new Business();
-        $business->user_id = $userId;
+        $business->entrepreneur_id = $entrepreneurId;
         $business->logo = $logo;
         $business->name = $name;
         $business->industry = $industry;
@@ -83,6 +86,8 @@ class BusinessRepository
 
         $business->save();
 
+        new BusinessCreatedEvent($business->entrepreneur->user->id, $business->id);
+
         return $business;
     }
 
@@ -91,6 +96,8 @@ class BusinessRepository
         $business = $this->findById($businessId);
         $business->is_published = true;
         $business->save();
+
+        new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id);
 
         return $business;
     }
@@ -111,6 +118,44 @@ class BusinessRepository
     public function findById(int $businessId)
     {
         return Business::find($businessId);
+    }
+
+    public function paginate(
+        int $page,
+        $entrepreneurId,
+        $industry,
+        $revenueFrom,
+        $revenueTo,
+        $sponsor,
+        $yearFounded,
+        $legalStructure,
+        $allowReveal,
+        $existingBusiness
+    ){
+        $query = Business::query();
+
+        if ($industry !== null) $query->whereIn('industry', json_decode($industry));
+
+        if ($entrepreneurId !== null)
+            $query->where('entrepreneur_id', $entrepreneurId);
+
+        if ($revenueFrom !== null)
+            $query->where('three_years_statement->latest_operating_performance->revenue', '>=', (int)$revenueFrom);
+        if ($revenueTo !== null)
+            $query->where('three_years_statement->latest_operating_performance->revenue', '<=', (int)$revenueTo);
+
+        //  TODO: implement sponsor filtering
+
+        if ($yearFounded !== null)
+            $query->where( DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded );
+
+        if ($legalStructure !== null) $query->whereIn('legal_structure', json_decode($legalStructure));
+
+        if ($allowReveal !== null) $query->where('allow_reveal', $allowReveal);
+
+        if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
+
+        return $query->paginate(20, $page);
     }
 
     /**

@@ -22,7 +22,24 @@ class Investor extends Model {
     ];
 
     public $belongsToMany = [
-        'sectors' => ['Denora\Duebus\Models\Sector', 'table' => 'denora_duebus_investor_sector']
+        'sectors' => [
+            'Denora\Duebus\Models\Sector',
+            'table' => 'denora_duebus_investor_sector'
+        ],
+        'viewed_businesses' => [
+            'Denora\Duebusbusiness\Models\Business',
+            'table' => 'denora_duebus_investor_view',
+            'key'      => 'investor_id',
+            'otherKey' => 'business_id',
+            'timestamps' => true,
+        ],
+        'revealed_businesses' => [
+            'Denora\Duebusbusiness\Models\Business',
+            'table' => 'denora_duebus_investor_reveal',
+            'key'      => 'investor_id',
+            'otherKey' => 'business_id',
+            'timestamps' => true,
+        ],
     ];
 
     public $belongsTo = [

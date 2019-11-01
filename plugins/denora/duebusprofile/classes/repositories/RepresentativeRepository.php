@@ -55,17 +55,27 @@ class RepresentativeRepository {
         $representative->save();
         $representative->sectors()->sync(json_decode($sectors));
 
+        // Create investor profile if not existing
+        if (!$representative->user->investor){
+            (new InvestorRepository())->createInvestor(
+                $userId,
+                $range_of_investment,
+                null,
+                $sectors
+            );
+        }
 
         return $representative;
     }
 
     /**
-     * @param int   $representativeId
+     * @param int $representativeId
      * @param array $data
      *
+     * @param bool $updateInvestorToo
      * @return Representative
      */
-    public function updateRepresentative(int $representativeId, array $data) {
+    public function updateRepresentative(int $representativeId, array $data, bool $updateInvestorToo = true) {
 
         $representative = $this->findById($representativeId);
 
@@ -87,6 +97,11 @@ class RepresentativeRepository {
             $representative->social_media = json_encode(BusinessController::generateSocialMedia($data));
 
         $representative->save();
+
+        //  Update investor if exists
+        $investor = $representative->user->investor;
+        if ($investor && $updateInvestorToo)
+            (new InvestorRepository())->updateInvestor($investor->id, $data, false);
 
         return $representative;
     }

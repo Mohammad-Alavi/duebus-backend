@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
 use Denora\Duebusprofile\Models\Entrepreneur;
+use Denora\Duebusverification\Classes\Repositories\EntrepreneurVerificationRepository;
 
 class EntrepreneurRepository {
 
@@ -11,6 +12,11 @@ class EntrepreneurRepository {
      */
     public function findById(int $entrepreneurId) {
         return Entrepreneur::find($entrepreneurId);
+    }
+
+    public function getOwnedBusinessIds(int $entrepreneurId){
+        $entrepreneur = $this->findById($entrepreneurId);
+        return $entrepreneur->businesses->pluck('id')->toArray();
     }
 
     /**
@@ -29,6 +35,10 @@ class EntrepreneurRepository {
         $entrepreneur->experiences = $experiences;
 
         $entrepreneur->save();
+
+        //  Create a verification model attached to entrepreneur
+        EntrepreneurVerificationRepository::createEntrepreneurVerification($entrepreneur);
+
 
         return $entrepreneur;
     }

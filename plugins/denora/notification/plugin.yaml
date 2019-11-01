@@ -1,0 +1,6 @@
+plugin:
+    name: 'denora.notification::lang.plugin.name'
+    description: 'denora.notification::lang.plugin.description'
+    author: Denora
+    icon: oc-icon-send
+    homepage: ''
