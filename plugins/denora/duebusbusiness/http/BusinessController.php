@@ -34,6 +34,7 @@ class BusinessController extends Controller
 
         $validator = Validator::make($data, [
             'page' => 'integer',
+            'entrepreneur_id' => 'integer',
             'industry' => 'json',
             'revenue_from' => 'numeric',
             'revenue_to' => 'numeric',
@@ -49,6 +50,7 @@ class BusinessController extends Controller
         $businessRepository = new BusinessRepository();
         $businesses = $businessRepository->paginate(
             Request::input('page', 1),
+            Request::input('entrepreneur_id', null),
             Request::input('industry', null),
             Request::input('revenue_from', null),
             Request::input('revenue_to', null),
