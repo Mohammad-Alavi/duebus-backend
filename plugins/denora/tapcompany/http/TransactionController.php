@@ -44,12 +44,34 @@ class TransactionController extends Controller
             $chargeableId = $user->id;
         } else if ($data['chargeable'] == 'business') {
             $price = ConfigTransformer::transform()['prices']['business_price'];
-            $points = 22;
+            $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
 
-            // check if the business is already paid
+            // check if the business is not already paid
             if ($business->is_published) return Response::make(['The business has been already paid'], 409);
+        } else if ($data['chargeable'] == 'view') {
+            $price = ConfigTransformer::transform()['prices']['view_price'];
+            $points = 0;
+            $chargeableId = $data['business_id'];
+            $business = (new BusinessRepository())->findById($chargeableId);
+
+            // check if the business is not already viewed
+            $isOwned = $user->id == $business->entrepreneur->user->id;
+            $isViewed = $user->investor->viewed_businesses->contains($business->id);
+            $isViewable = $isOwned || $isViewed;
+            if ($isViewable) return Response::make(['The business has been already viewed'], 409);
+        }else if ($data['chargeable'] == 'reveal') {
+            $price = ConfigTransformer::transform()['prices']['reveal_price'];
+            $points = 0;
+            $chargeableId = $data['business_id'];
+            $business = (new BusinessRepository())->findById($chargeableId);
+
+            // check if the business is not already revealed
+            $isOwned = $user->id == $business->entrepreneur->user->id;
+            $isRevealed = $user->investor->revealed_businesses->contains($business->id);
+            $isRevealable = $isOwned || $isRevealed;
+            if ($isRevealable) return Response::make(['The business has been already revealed'], 409);
         } else {
             return Response::make(['Chargeable is not recognized'], 400);
         }
@@ -88,9 +110,9 @@ class TransactionController extends Controller
             //  General data
             'chargeable' => [
                 'required',
-                Rule::in(['wallet', 'business']),
+                Rule::in(['wallet', 'business', 'view', 'reveal']),
             ],
-            "business_id" => 'required_if:chargeable,==,business',
+            "business_id" => 'required_if:chargeable,business|required_if:chargeable,view|required_if:chargeable,reveal',
             "package_id" => 'required_if:chargeable,==,wallet'
         ]);
     }

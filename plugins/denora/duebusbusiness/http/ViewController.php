@@ -21,7 +21,8 @@ class ViewController extends Controller
     public function show($businessId)
     {
         $user = Auth::user();
-        $business = (new BusinessRepository())->findById($businessId);
+        $businessRepository = new BusinessRepository();
+        $business = $businessRepository->findById($businessId);
 
         $isOwned = $user->id == $business->entrepreneur->user->id;
         $isViewed = $user->investor->viewed_businesses->contains($businessId);
@@ -34,8 +35,9 @@ class ViewController extends Controller
         $price = ConfigTransformer::transform()['prices']['view_price'];
         if ($user->decreasePoints($price, 'view')){
             //  Add new relation
-            $user->investor->viewed_businesses()->attach($businessId);
+            $businessRepository->viewBusiness($user->investor, $businessId);
             //  Show the business
+            $business = $businessRepository->findById($businessId);
             return BusinessTransformer::transform($business);
         }
         else

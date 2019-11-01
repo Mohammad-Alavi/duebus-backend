@@ -21,7 +21,8 @@ class RevealController extends Controller
     public function show($businessId)
     {
         $user = Auth::user();
-        $business = (new BusinessRepository())->findById($businessId);
+        $businessRepository = new BusinessRepository();
+        $business = $businessRepository->findById($businessId);
 
         $isOwned = $user->id == $business->entrepreneur->user->id;
         $isRevealed = $user->investor->revealed_businesses->contains($businessId);
@@ -34,8 +35,9 @@ class RevealController extends Controller
         $price = ConfigTransformer::transform()['prices']['reveal_price'];
         if ($user->decreasePoints($price, 'reveal')){
             //  Add new relation
-            $user->investor->revealed_businesses()->attach($businessId);
+            $businessRepository->revealBusiness($user->investor, $businessId);
             //  Show the business
+            $business = $businessRepository->findById($businessId);
             return BusinessTransformer::transform($business);
         }
         else
