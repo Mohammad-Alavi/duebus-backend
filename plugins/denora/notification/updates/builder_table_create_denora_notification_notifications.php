@@ -15,6 +15,9 @@ class BuilderTableCreateDenoraNotificationNotifications extends Migration
             $table->string('action_type');
             $table->string('doer_type')->nullable();
             $table->integer('doer_id')->nullable();
+            $table->string('object_type')->nullable();
+            $table->integer('object_id')->nullable();
+            $table->integer('cost')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
