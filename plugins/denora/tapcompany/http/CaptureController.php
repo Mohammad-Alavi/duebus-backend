@@ -39,7 +39,7 @@ class CaptureController extends Controller
         $status = json_decode($body, true)['status'];
         if ($status == 'CAPTURED') {
             $transaction->capture();
-            $responseUrl = $frontEndUrl . '/payment-success';
+            $responseUrl = $transaction->redirect_url;
         } else
             $responseUrl = $frontEndUrl . '/payment-error';
         header("Location: $responseUrl"); exit();

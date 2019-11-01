@@ -17,6 +17,7 @@ class BuilderTableCreateDenoraTapcompanyTransactions extends Migration {
             $table->integer('price');
             $table->integer('points');
             $table->text('description')->nullable();
+            $table->text('redirect_url');
 
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('created_at')->nullable();
