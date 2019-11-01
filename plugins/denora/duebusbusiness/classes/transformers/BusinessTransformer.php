@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusbusiness\Classes\Transformers;
 
 use Denora\Duebusbusiness\Models\Business;
+use Denora\Duebusprofile\Classes\Transformers\EntrepreneurTransformer;
 use RainLab\User\Facades\Auth;
 
 class BusinessTransformer {
@@ -51,6 +52,8 @@ class BusinessTransformer {
             'is_bookmarked' => $isBookmarked,
 
             'bookmarked_count' => count($business->bookmarked_users),
+
+            'entrepreneur' => EntrepreneurTransformer::transform($business->entrepreneur),
 
             'created_at' => $business->created_at,
             'updated_at' => $business->updated_at,

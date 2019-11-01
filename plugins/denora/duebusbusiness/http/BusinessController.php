@@ -319,4 +319,34 @@ class BusinessController extends Controller
 
         $businessRepository->deleteBusiness($id);
     }
+
+    public function myBusinesses()
+    {
+        $user = Auth::user();
+
+        if (!$user->entrepreneur)
+            return Response::make(['You are not an entrepreneur'], 400);
+
+        $businessRepository = new BusinessRepository();
+        $businesses = $businessRepository->paginate(
+            Request::input('page', 1),
+            $user->entrepreneur->id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+
+        return new LengthAwarePaginator(
+            BusinessesTransformer::transform($businesses),
+            $businesses->total(),
+            $businesses->perPage()
+        );
+
+
+    }
 }
