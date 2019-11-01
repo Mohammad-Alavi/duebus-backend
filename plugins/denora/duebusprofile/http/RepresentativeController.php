@@ -4,6 +4,7 @@ use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Http\BusinessController;
 use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
+use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Denora\Duebusprofile\Classes\Transformers\ProfileTransformer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -81,7 +82,8 @@ class RepresentativeController extends Controller {
             BusinessController::generateSocialMedia($data)
         );
 
-        return ProfileTransformer::transform($representative->user);
+        $user = (new UserRepository())->findById($representative->user->id);
+        return ProfileTransformer::transform($user);
     }
 
     public function update($id) {
