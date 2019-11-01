@@ -1,6 +1,8 @@
 <?php namespace Denora\Duebusbusiness\Classes\Repositories;
 
 use Denora\Duebusbusiness\Models\Business;
+use Denora\Notification\Classes\Events\BusinessCreatedEvent;
+use Denora\Notification\Classes\Events\BusinessPublishedEvent;
 use Illuminate\Support\Facades\DB;
 
 class BusinessRepository
@@ -84,6 +86,8 @@ class BusinessRepository
 
         $business->save();
 
+        new BusinessCreatedEvent($business->entrepreneur->user->id, $business->id);
+
         return $business;
     }
 
@@ -92,6 +96,8 @@ class BusinessRepository
         $business = $this->findById($businessId);
         $business->is_published = true;
         $business->save();
+
+        new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id);
 
         return $business;
     }
