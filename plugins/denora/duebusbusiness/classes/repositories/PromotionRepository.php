@@ -23,7 +23,7 @@ class PromotionRepository
     {
         $business = (new BusinessRepository())->findById($businessId);
         $business->promotion_industry = $industry;
-        $business->promotion_expire_date = now();
+        $business->promotion_expire_date = Carbon::now()->addWeek(1);
         $business->save();
     }
 
