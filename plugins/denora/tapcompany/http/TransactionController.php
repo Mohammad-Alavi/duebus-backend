@@ -91,7 +91,9 @@ class TransactionController extends Controller
             $chargeId,
             $transactionUrl,
             $price,
-            $points
+            $points,
+            $data['redirect_url'],
+            ''
         );
 
         return TransactionTransformer::transform($transaction);
@@ -113,7 +115,8 @@ class TransactionController extends Controller
                 Rule::in(['wallet', 'business', 'view', 'reveal']),
             ],
             "business_id" => 'required_if:chargeable,business|required_if:chargeable,view|required_if:chargeable,reveal',
-            "package_id" => 'required_if:chargeable,==,wallet'
+            "package_id" => 'required_if:chargeable,==,wallet',
+            "redirect_url" => 'required',
         ]);
     }
 
