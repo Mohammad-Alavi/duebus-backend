@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusbusiness\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Repositories\PromotionRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessesTransformer;
@@ -54,7 +55,9 @@ class PromotionController extends Controller
         $business = $businessRepository->findById($businessId);
         if ($user->entrepreneur->id != $business->entrepreneur_id) return Response::make(['You must own the business'], 400);
 
-        $price = 1;
+        $price = $industry?
+            ConfigTransformer::transform()['prices']['industry_promotion_price']:
+            ConfigTransformer::transform()['prices']['duebus_promotion_price'];
         if ($user->decreasePoints($price, 'promote')){
             //  Promote the business
             PromotionRepository::promote($businessId, $industry);
