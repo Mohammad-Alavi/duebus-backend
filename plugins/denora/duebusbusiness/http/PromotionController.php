@@ -27,14 +27,14 @@ class PromotionController extends Controller
     public function index(){
         $user = Auth::user();
         $industry = Request::input('industry', null);
+        $page = Request::input('page', 1);
 
-        $businesses = PromotionRepository::getAllPromotions($industry);
+        $businesses = PromotionRepository::paginate($page, $industry);
 
         return new LengthAwarePaginator(
             BusinessesTransformer::transform($businesses),
-            count($businesses),
-            1000,
-            1
+            $businesses->total(),
+            $businesses->perPage()
         );
 
     }
