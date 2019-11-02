@@ -18,6 +18,7 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::resource('business/view', 'Denora\Duebusbusiness\Http\ViewController');
             Route::resource('business/reveal', 'Denora\Duebusbusiness\Http\RevealController');
             Route::resource('bookmark', 'Denora\Duebusbusiness\Http\BookmarkController');
+            Route::resource('promotion', 'Denora\Duebusbusiness\Http\PromotionController');
         }
     );
 
