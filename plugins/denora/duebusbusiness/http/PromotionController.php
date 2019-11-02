@@ -6,6 +6,7 @@ use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Repositories\PromotionRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessesTransformer;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +30,13 @@ class PromotionController extends Controller
 
         $businesses = PromotionRepository::getAllPromotions($industry);
 
-        return BusinessesTransformer::transform($businesses);
+        return new LengthAwarePaginator(
+            BusinessesTransformer::transform($businesses),
+            count($businesses),
+            1000,
+            1
+        );
+
     }
 
     public function store(){
