@@ -2,6 +2,7 @@
 
 use Denora\Duebusbusiness\Models\Business;
 use Denora\Duebusprofile\Classes\Transformers\EntrepreneurTransformer;
+use Illuminate\Support\Carbon;
 use RainLab\User\Facades\Auth;
 
 class BusinessTransformer {
@@ -53,6 +54,7 @@ class BusinessTransformer {
 
             'bookmarked_count' => count($business->bookmarked_users),
 
+            'is_promoted' => Carbon::now()->lt($business->promotion_expire_date),
             'promotion_industry' => $business->promotion_industry,
             'promotion_expire_date' => $business->promotion_expire_date,
 

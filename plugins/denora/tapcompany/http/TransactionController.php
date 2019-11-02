@@ -88,6 +88,7 @@ class TransactionController extends Controller
 
         $transactionRepository = new TransactionRepository();
         $transaction = $transactionRepository->createTransaction(
+            $user->id,
             $data['chargeable'],
             $chargeableId,
             $chargeId,
