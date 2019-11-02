@@ -53,6 +53,9 @@ class BusinessTransformer {
 
             'bookmarked_count' => count($business->bookmarked_users),
 
+            'promotion_industry' => $business->promotion_industry,
+            'promotion_expire_date' => $business->promotion_expire_date,
+
             'entrepreneur' => EntrepreneurTransformer::transform($business->entrepreneur),
 
             'created_at' => $business->created_at,

@@ -262,3 +262,13 @@ tabs:
             required: 1
             type: number
             tab: Prices
+        duebus_promotion_price:
+            label: 'Duebus Promotion price'
+            span: left
+            type: number
+            tab: Prices
+        industry_promotion_price:
+            label: 'Industry Promotion price'
+            span: right
+            type: number
+            tab: Prices

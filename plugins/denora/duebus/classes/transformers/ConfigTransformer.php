@@ -60,6 +60,8 @@ class ConfigTransformer {
                 'business_price' => (int)$settings::get('business_price') ?: self::$default['business_price'],
                 'view_price' => (int)$settings::get('view_price') ?: self::$default['view_price'],
                 'reveal_price' => (int)$settings::get('reveal_price') ?: self::$default['reveal_price'],
+                'duebus_promotion_price' => (int)$settings::get('duebus_promotion_price') ?: self::$default['duebus_promotion_price'],
+                'industry_promotion_price' => (int)$settings::get('industry_promotion_price') ?: self::$default['industry_promotion_price'],
             ],
         ];
 
@@ -141,6 +143,8 @@ Once a fleeting idea, today this platform is called DueBus.'
         'business_price' => 20,
         'view_price' => 10,
         'reveal_price' => 5,
+        'duebus_promotion_price' => 10,
+        'industry_promotion_price' => 5,
     ];
 
     private static function getValues($array) {
