@@ -6,6 +6,7 @@ use Denora\Duebus\Classes\Repositories\PackageRepository;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Model;
+use RainLab\User\Models\User;
 
 /**
  * Model
@@ -27,6 +28,10 @@ class Transaction extends Model
     public $rules = [
     ];
 
+    public $belongsTo = [
+        'user' => 'Rainlab\User\Models\User'
+    ];
+
     function capture(){
         $this->paid_at = Carbon::now();
         $this->save();
@@ -35,9 +40,8 @@ class Transaction extends Model
     }
 
     private function onCaptured(){
-        $user = Auth::user();
-
         $userRepository = new UserRepository();
+
         $businessRepository = new BusinessRepository();
 
         switch ($this->chargeable) {
@@ -51,11 +55,11 @@ class Transaction extends Model
                 break;
             }
             case 'view':{
-                $businessRepository->viewBusiness($user->investor, $this->chargeable_id);
+                $businessRepository->viewBusiness($this->user->investor, $this->chargeable_id);
                 break;
             }
             case 'reveal':{
-                $businessRepository->revealBusiness($user->investor, $this->chargeable_id);
+                $businessRepository->revealBusiness($this->user->investor, $this->chargeable_id);
                 break;
             }
         }
