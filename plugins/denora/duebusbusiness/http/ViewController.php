@@ -69,7 +69,7 @@ class ViewController extends Controller
         if ($isViewable) return BusinessTransformer::transform($business);
 
         //  Buy it
-        $price = ConfigTransformer::transform()['prices']['view_price'];
+        $price = ConfigTransformer::transform()['prices']['view_price_with_package'];
         if ($user->decreasePoints($price, 'view')){
             //  Add new relation
             $businessRepository->viewBusiness($user->investor, $businessId);

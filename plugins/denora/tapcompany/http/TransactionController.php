@@ -52,7 +52,7 @@ class TransactionController extends Controller
             if ($business->is_published) return Response::make(['The business has been already paid'], 409);
         } else if ($data['chargeable'] == 'view') {
             if (!$user->investor) return Response::make(['You must be an investor'], 400);
-            $price = ConfigTransformer::transform()['prices']['view_price'];
+            $price = ConfigTransformer::transform()['prices']['view_price_with_no_package'];
             $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
@@ -64,7 +64,7 @@ class TransactionController extends Controller
             if ($isViewable) return Response::make(['The business has been already viewed'], 409);
         }else if ($data['chargeable'] == 'reveal') {
             if (!$user->investor) return Response::make(['You must be an investor'], 400);
-            $price = ConfigTransformer::transform()['prices']['reveal_price'];
+            $price = ConfigTransformer::transform()['prices']['reveal_price_with_no_package'];
             $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
