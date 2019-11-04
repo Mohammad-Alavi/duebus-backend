@@ -217,11 +217,11 @@ class BusinessRepository
     }
 
     public function viewBusiness($investor, int $businessId){
-        $investor->viewed_businesses()->attach($businessId);
+        $investor->viewed_businesses()->syncWithoutDetaching($businessId);
     }
 
     public function revealBusiness($investor, int $businessId){
-        $investor->revealed_businesses()->attach($businessId);
+        $investor->revealed_businesses()->syncWithoutDetaching($businessId);
     }
 
     /**
