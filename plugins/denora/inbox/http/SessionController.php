@@ -1,6 +1,7 @@
 <?php namespace Denora\Inbox\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Inbox\Classes\Repositories\MessageRepository;
 use Denora\Inbox\Classes\Repositories\SessionRepository;
 use Denora\Inbox\Classes\Transformers\SessionsTransformer;
@@ -30,9 +31,8 @@ class SessionController extends Controller
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'receiver_id' => 'required|integer',
             'business_id' => 'required|integer',
-            'preferred_date' => 'required|date',
+            'preferred_date' => 'date',
             'message_title' => 'required|string',
             'message_text' => 'required|string',
             'type' => [
@@ -44,29 +44,39 @@ class SessionController extends Controller
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
+        $businessId = $data['business_id'];
+        $type = $data['type'];
+        $preferredDate = Request::input('preferred_date', null);
+        $messageTitle = $data['message_title'];
+        $messageText = $data['message_text'];
+
+        $business = (new BusinessRepository())->findById($businessId);
+        $receiverId = $business->entrepreneur->user->id;
+
         //  TODO: uncomment it for production
-        if ($user->id == $data['receiver_id']) return Response::make(['You can not send a message to yourself'], 400);
+        if ($user->id == $receiverId) return Response::make(['You can not send a message to yourself'], 400);
+
 
         //  Return the session if exists and create a new one if not!
         $session = SessionRepository::find(
             $user->id,
-            $data['receiver_id'],
-            $data['business_id'],
-            $data['type']
+            $receiverId,
+            $businessId,
+            $type
         ) ?:
             SessionRepository::createSession(
                 $user->id,
-                $data['receiver_id'],
-                $data['business_id'],
-                $data['type'],
-                $data['preferred_date']
+                $receiverId,
+                $businessId,
+                $type,
+                $preferredDate
             );
 
         $message = MessageRepository::createMessage(
             $user->id,
             $session->id,
-            $data['message_title'],
-            $data['message_text']
+            $messageTitle,
+            $messageText
         );
 
         $session = SessionRepository::findById($session->id);
