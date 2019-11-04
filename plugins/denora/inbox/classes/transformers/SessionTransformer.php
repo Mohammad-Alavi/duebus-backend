@@ -30,6 +30,7 @@ class SessionTransformer
             'last_message' => MessageTransformer::transform(MessageRepository::getLastMessage($session->id)),
 
             'preferred_date' => $session->preferred_date,
+            'preferred_time' => $session->preferred_time,
             'created_at' => $session->created_at,
             'updated_at' => $session->updated_at,
         ];
