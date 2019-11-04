@@ -17,7 +17,10 @@ class BuilderTableCreateDenoraInboxSessions extends Migration
             $table->string('type');
             $table->boolean('is_read_by_sender');
             $table->boolean('is_read_by_receiver');
-            $table->timestamp('preferred_date')->nullable();
+
+            $table->date('preferred_date')->nullable();
+            $table->string('preferred_time')->nullable();
+
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

@@ -37,7 +37,7 @@ class SessionRepository
 
     }
 
-    static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate)
+    static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate, $preferredTime)
     {
         $session = new Session();
         $session->sender_id = $senderId;
@@ -47,6 +47,7 @@ class SessionRepository
         $session->is_read_by_sender = true;
         $session->is_read_by_receiver = false;
         $session->preferred_date = $preferredDate;
+        $session->preferred_time = $preferredTime;
 
         $session->save();
 

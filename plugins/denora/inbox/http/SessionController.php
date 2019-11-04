@@ -33,7 +33,8 @@ class SessionController extends Controller
         $validator = Validator::make($data, [
             'business_id' => 'required|integer',
             'preferred_date' => 'date',
-            'message_title' => 'required|string',
+            'preferred_time' => 'string',
+            'message_title' => 'string',
             'message_text' => 'required|string',
             'type' => [
                 'required',
@@ -47,7 +48,8 @@ class SessionController extends Controller
         $businessId = $data['business_id'];
         $type = $data['type'];
         $preferredDate = Request::input('preferred_date', null);
-        $messageTitle = $data['message_title'];
+        $preferredTime = Request::input('preferred_time', null);
+        $messageTitle = Request::input('message_title', null);
         $messageText = $data['message_text'];
 
         $business = (new BusinessRepository())->findById($businessId);
@@ -69,7 +71,8 @@ class SessionController extends Controller
                 $receiverId,
                 $businessId,
                 $type,
-                $preferredDate
+                $preferredDate,
+                $preferredTime
             );
 
         $message = MessageRepository::createMessage(
