@@ -122,6 +122,8 @@ class SessionController extends Controller
 
         $session = SessionRepository::findById($id);
 
+        if (!$session) return Response::make(['No session found!'], 404);
+
         if ($user->id != $session->sender_id && $user->id != $session->receiver_id)
             return Response::make(['You don\'t own the session'], 400);
 
