@@ -23,4 +23,6 @@ class Session extends Model
     ];
 
     public $hasMany = ['messages' => 'Denora\Inbox\Models\Message'];
+
+    public $belongsTo = ['business' => 'Denora\Duebusbusiness\Models\Business'];
 }

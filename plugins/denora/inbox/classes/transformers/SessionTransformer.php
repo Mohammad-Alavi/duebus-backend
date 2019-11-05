@@ -1,5 +1,6 @@
 <?php namespace Denora\Inbox\Classes\Transformers;
 
+use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Denora\Duebusprofile\Classes\Transformers\UserTransformer;
 use Denora\Inbox\Classes\Repositories\MessageRepository;
@@ -24,6 +25,7 @@ class SessionTransformer
             'receiver' => UserTransformer::transform(
                 (new UserRepository())->findById($session->receiver_id)
             ),
+            'business' => BusinessTransformer::transform($session->business),
             'type' => $session->type,
             'is_read' => self::getIsRead($session, $user),
 
