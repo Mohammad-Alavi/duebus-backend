@@ -101,9 +101,9 @@ class SessionRepository
     static public function paginate(int $page, int $userId, $type = null, $business_id = null)
     {
         $query = Session::query();
-        $query->where('sender_id', '=', $userId)->orWhere('receiver_id', '=', $userId);
-        if ($type) $query->where('type', '=', $type);
-        if ($business_id) $query->where('business_id', '=', $business_id);
+        $query->where('sender_id', $userId)->orWhere('receiver_id', $userId);
+        if ($type) $query->where('type', $type);
+        if ($business_id) $query->where('business_id', $business_id);
         $query->orderByDesc('updated_at');
 
         return $query->paginate(20, $page);
