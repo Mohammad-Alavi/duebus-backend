@@ -53,6 +53,7 @@ class SessionController extends Controller
         $messageText = $data['message_text'];
 
         $business = (new BusinessRepository())->findById($businessId);
+        if (!$business) return Response::make(['No element found'], 404);
         $receiverId = $business->entrepreneur->user->id;
 
         //  TODO: uncomment it for production
