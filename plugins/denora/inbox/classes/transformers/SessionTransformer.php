@@ -29,6 +29,7 @@ class SessionTransformer
             'type' => $session->type,
             'is_read' => self::getIsRead($session, $user),
 
+            'first_message' => MessageTransformer::transform(MessageRepository::getFirstMessage($session->id)),
             'last_message' => MessageTransformer::transform(MessageRepository::getLastMessage($session->id)),
 
             'preferred_date' => $session->preferred_date,
