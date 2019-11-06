@@ -39,7 +39,14 @@ class MessageRepository
      */
     static public function getLastMessage(int $sessionId){
         $query = Message::query();
-        $query->where('session_id', '=', $sessionId)->latest();
+        $query->where('session_id', '=', $sessionId)
+            ->latest();
+        return $query->first();
+    }
+
+    static public function getFirstMessage(int $sessionId){
+        $query = Message::query();
+        $query->where('session_id', '=', $sessionId);
         return $query->first();
     }
 
