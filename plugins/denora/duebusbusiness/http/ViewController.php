@@ -31,7 +31,7 @@ class ViewController extends Controller
 
         $page = Request::input('page', 1);
 
-        $businesses = $user->investor->viewed_businesses()->paginate(20, $page);
+        $businesses = $user->investor->viewed_businesses()->paginate(10, $page);
 
         return new LengthAwarePaginator(
             BusinessesTransformer::transform($businesses),
