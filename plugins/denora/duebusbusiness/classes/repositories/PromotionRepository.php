@@ -16,7 +16,7 @@ class PromotionRepository
         $query->whereDate('promotion_expire_date', '>', Carbon::now());
         $query->where('promotion_industry', $industry);
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
     static private function getAllPromotions($industry = null)

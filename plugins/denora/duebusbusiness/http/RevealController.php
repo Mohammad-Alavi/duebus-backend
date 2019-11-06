@@ -31,7 +31,7 @@ class RevealController extends Controller
 
         $page = Request::input('page', 1);
 
-        $businesses = $user->investor->revealed_businesses()->paginate(20, $page);
+        $businesses = $user->investor->revealed_businesses()->paginate(10, $page);
 
         return new LengthAwarePaginator(
             BusinessesTransformer::transform($businesses),

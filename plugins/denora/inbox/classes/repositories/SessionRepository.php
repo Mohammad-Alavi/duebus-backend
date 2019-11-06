@@ -106,7 +106,7 @@ class SessionRepository
         if ($business_id) $query->where('business_id', $business_id);
         $query->orderByDesc('updated_at');
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
 }

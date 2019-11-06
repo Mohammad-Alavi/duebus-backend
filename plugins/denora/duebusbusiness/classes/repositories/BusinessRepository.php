@@ -155,7 +155,7 @@ class BusinessRepository
 
         if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
     /**

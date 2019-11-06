@@ -24,7 +24,7 @@ class NotificationRepository
         $query->where('user_id', $userId);
         $query->orderByDesc('created_at');
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
 

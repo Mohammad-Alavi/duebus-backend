@@ -25,7 +25,7 @@ class PostRepository {
         $query = Post::query();
         if ($categories) $query = $post->scopeFilterCategories($query, $categories);
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
 }
