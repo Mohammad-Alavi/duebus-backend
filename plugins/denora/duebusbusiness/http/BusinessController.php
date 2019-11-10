@@ -5,6 +5,8 @@ use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessesTransformer;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
+use Denora\Duebusprofile\Classes\Repositories\EntrepreneurRepository;
+use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -34,6 +36,7 @@ class BusinessController extends Controller
 
         $validator = Validator::make($data, [
             'page' => 'integer',
+            'representative_id' => 'integer',
             'entrepreneur_id' => 'integer',
             'industry' => 'json',
             'revenue_from' => 'numeric',
@@ -47,10 +50,19 @@ class BusinessController extends Controller
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
+        $representativeId = Request::input('representative_id', null);
+        if ($representativeId && !(new RepresentativeRepository())->findById($representativeId))
+            return Response::make(['No such representative'], 400);
+
+        $entrepreneurId = Request::input('entrepreneur_id', null);
+        if ($entrepreneurId && !(new EntrepreneurRepository())->findById($entrepreneurId))
+            return Response::make(['No such entrepreneur'], 400);
+
         $businessRepository = new BusinessRepository();
         $businesses = $businessRepository->paginate(
             Request::input('page', 1),
-            Request::input('entrepreneur_id', null),
+            $representativeId,
+            $entrepreneurId,
             Request::input('industry', null),
             Request::input('revenue_from', null),
             Request::input('revenue_to', null),
@@ -330,6 +342,7 @@ class BusinessController extends Controller
         $businessRepository = new BusinessRepository();
         $businesses = $businessRepository->paginate(
             Request::input('page', 1),
+            null,
             $user->entrepreneur->id,
             null,
             null,

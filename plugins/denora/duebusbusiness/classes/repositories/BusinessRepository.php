@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusbusiness\Classes\Repositories;
 
 use Denora\Duebusbusiness\Models\Business;
+use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Denora\Notification\Classes\Events\BusinessCreatedEvent;
 use Denora\Notification\Classes\Events\BusinessPublishedEvent;
 use Illuminate\Support\Facades\DB;
@@ -122,6 +123,7 @@ class BusinessRepository
 
     public function paginate(
         int $page,
+        $representativeId,
         $entrepreneurId,
         $industry,
         $revenueFrom,
@@ -135,6 +137,11 @@ class BusinessRepository
         $query = Business::query();
 
         if ($industry !== null) $query->whereIn('industry', json_decode($industry));
+
+        if ($representativeId !== null){
+            $representative = (new RepresentativeRepository())->findById($representativeId);
+            $query->where('entrepreneur_id', $representative->user->entrepreneur->id);
+        }
 
         if ($entrepreneurId !== null)
             $query->where('entrepreneur_id', $entrepreneurId);
