@@ -23,7 +23,7 @@ class RepresentativeController extends Controller {
 
     public $restConfig = 'config_rest.yaml';
 
-    public function store() {
+/*    public function store() {
         $representativeRepository = new RepresentativeRepository();
         $user = Auth::user();
 
@@ -84,7 +84,7 @@ class RepresentativeController extends Controller {
 
         $user = (new UserRepository())->findById($representative->user->id);
         return ProfileTransformer::transform($user);
-    }
+    }*/
 
     public function update($id) {
         $representativeRepository = new RepresentativeRepository();

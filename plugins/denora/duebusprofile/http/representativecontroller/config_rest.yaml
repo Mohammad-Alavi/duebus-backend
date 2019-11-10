@@ -4,8 +4,7 @@
 
 # Allowed Rest Actions
 allowedActions:
-  store:
-  destroy:
+  update:
 
 # Model Class name
 modelClass: Denora\Duebusprofile\Models\Representative
