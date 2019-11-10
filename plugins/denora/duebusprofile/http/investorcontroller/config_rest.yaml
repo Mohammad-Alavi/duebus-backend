@@ -6,7 +6,6 @@
 allowedActions:
   store:
   update:
-  destroy:
 
 # Model Class name
 modelClass: Denora\Duebusprofile\Models\Investor
