@@ -15,28 +15,6 @@ class SessionRepository
         return $query->first();
     }
 
-    static public function findBySenderId(int $userId)
-    {
-        $query = Session::query();
-        $query->where('sender_id', '=', $userId);
-        return $query->get();
-    }
-
-    static public function findByReceiverId(int $userId)
-    {
-        $query = Session::query();
-        $query->where('receiver_id', '=', $userId);
-        return $query->get();
-    }
-
-    static public function countUnreadSessions($userId){
-        $query = Session::query();
-        $unreadAsSender = $query->where('sender_id', '=', $userId)->where('is_read_by_sender', '=', false)->count();
-        $unreadAsReceiver = $query->where('receiver_id', '=', $userId)->where('is_read_by_receiver', '=', false)->count();
-        return $unreadAsSender + $unreadAsReceiver;
-
-    }
-
     static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate, $preferredTime)
     {
         $session = new Session();
@@ -44,8 +22,6 @@ class SessionRepository
         $session->receiver_id = $receiverId;
         $session->business_id = $businessId;
         $session->type = $type;
-        $session->is_read_by_sender = true;
-        $session->is_read_by_receiver = false;
         $session->preferred_date = $preferredDate;
         $session->preferred_time = $preferredTime;
 
@@ -71,7 +47,6 @@ class SessionRepository
     {
         return Session::find($sessionId);
     }
-
 
     /**
      *

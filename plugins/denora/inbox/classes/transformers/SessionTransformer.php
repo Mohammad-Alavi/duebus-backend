@@ -27,7 +27,7 @@ class SessionTransformer
             ),
             'business' => BusinessTransformer::transform($session->business),
             'type' => $session->type,
-            'is_read' => self::getIsRead($session, $user),
+            'unread_messages_count' => MessageRepository::countUnreadMessages($user->id, $session->id),
 
             'first_message' => MessageTransformer::transform(MessageRepository::getFirstMessage($session->id)),
             'last_message' => MessageTransformer::transform(MessageRepository::getLastMessage($session->id)),
@@ -39,12 +39,4 @@ class SessionTransformer
         ];
 
     }
-
-    private static function getIsRead($session, $user): bool {
-        dd('not implemented .......(0)........');
-        if ($user->id == $session->sender_id) return $session->is_read_by_sender;
-        if ($user->id == $session->receiver_id) return $session->is_read_by_receiver;
-        return null;
-    }
-
 }
