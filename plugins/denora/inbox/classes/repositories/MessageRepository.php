@@ -28,8 +28,6 @@ class MessageRepository
         //  Update updated_at of session
         SessionRepository::updateUpdatedAtTimestamp($sessionId);
 
-        //  Make session's is_read false
-        SessionRepository::updateIsReadOnAdd($senderId, $sessionId);
         return $message;
     }
 

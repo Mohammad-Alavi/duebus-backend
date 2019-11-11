@@ -41,6 +41,7 @@ class SessionTransformer
     }
 
     private static function getIsRead($session, $user): bool {
+        dd('not implemented .......(0)........');
         if ($user->id == $session->sender_id) return $session->is_read_by_sender;
         if ($user->id == $session->receiver_id) return $session->is_read_by_receiver;
         return null;

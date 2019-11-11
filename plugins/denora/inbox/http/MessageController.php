@@ -73,9 +73,6 @@ class MessageController extends Controller
 
         $messages = MessageRepository::paginate($page, $session_id);
 
-        //  Make session's is_read true
-        SessionRepository::updateIsReadOnGet($user->id, $session_id);
-
         return new LengthAwarePaginator(
             MessagesTransformer::transform($messages),
             $messages->total(),

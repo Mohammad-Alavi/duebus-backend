@@ -72,23 +72,6 @@ class SessionRepository
         return Session::find($sessionId);
     }
 
-    static public function updateIsReadOnAdd(int $userId, int $session_id)
-    {
-        $session = self::findById($session_id);
-        if ($userId == $session->sender_id) $session->is_read_by_receiver = false;
-        if ($userId == $session->receiver_id) $session->is_read_by_sender = false;
-        $session->save();
-        return $session;
-    }
-
-    static public function updateIsReadOnGet(int $userId, int $session_id)
-    {
-        $session = self::findById($session_id);
-        if ($userId == $session->sender_id) $session->is_read_by_sender = true;
-        if ($userId == $session->receiver_id) $session->is_read_by_receiver = true;
-        $session->save();
-        return $session;
-    }
 
     /**
      *
