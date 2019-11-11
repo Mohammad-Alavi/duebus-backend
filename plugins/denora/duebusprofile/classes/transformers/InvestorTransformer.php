@@ -16,6 +16,7 @@ class InvestorTransformer {
             'id'                              => $investor->id,
             'range_of_investment'             => $investor->range_of_investment,
             'range_of_businesses_invested_in' => $investor->range_of_businesses_invested_in,
+            'invested_on_duebus'              => $investor->invested_on_duebus,
             'sectors'                         => SectorsTransformer::transform($investor->sectors) ? SectorsTransformer::transform($investor->sectors) : null,
 
             'viewed_businesses_count' => count($investor->viewed_businesses),
