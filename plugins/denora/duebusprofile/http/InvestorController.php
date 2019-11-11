@@ -87,20 +87,4 @@ class InvestorController extends Controller {
         return ProfileTransformer::transform($investor->user);
     }
 
-    /**
-     * @param $id
-     *
-     * @return mixed
-     * @throws \Exception
-     */
-    public function destroy($id) {
-        $investorRepository = new InvestorRepository();
-        $investor = $investorRepository->findById($id);
-        if (!$investor) return Response::make(['No element found'], 404);
-
-        if ($investor->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
-
-        $investorRepository->deleteInvestor($id);
-    }
-
 }

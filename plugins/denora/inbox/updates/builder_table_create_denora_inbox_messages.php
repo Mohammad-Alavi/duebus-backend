@@ -15,11 +15,12 @@ class BuilderTableCreateDenoraInboxMessages extends Migration
             $table->integer('session_id');
             $table->text('title')->nullable();
             $table->text('text');
+            $table->boolean('is_read');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
     }
-    
+
     public function down()
     {
         Schema::dropIfExists('denora_inbox_messages');

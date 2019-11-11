@@ -71,10 +71,7 @@ class MessageController extends Controller
         //  Check if the user owns the session
         if ($user->id != $session->sender_id && $user->id != $session->receiver_id) return Response::make(['You are not participating the session'], 400);
 
-        $messages = MessageRepository::paginate($page, $session_id);
-
-        //  Make session's is_read true
-        SessionRepository::updateIsReadOnGet($user->id, $session_id);
+        $messages = MessageRepository::paginate($page, $user->id, $session_id);
 
         return new LengthAwarePaginator(
             MessagesTransformer::transform($messages),
