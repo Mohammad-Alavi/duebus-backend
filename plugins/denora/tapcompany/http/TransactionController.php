@@ -58,6 +58,7 @@ class TransactionController extends Controller
             $business = (new BusinessRepository())->findById($chargeableId);
 
             // check if the business is not already viewed
+            BusinessRepository::removeExpiredViewed();
             $isOwned = $user->id == $business->entrepreneur->user->id;
             $isViewed = $user->investor->viewed_businesses->contains($business->id);
             $isViewable = $isOwned || $isViewed;

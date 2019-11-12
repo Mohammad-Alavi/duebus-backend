@@ -32,6 +32,7 @@ class Investor extends Model {
             'key'      => 'investor_id',
             'otherKey' => 'business_id',
             'timestamps' => true,
+            'softDelete' => true
         ],
         'revealed_businesses' => [
             'Denora\Duebusbusiness\Models\Business',
