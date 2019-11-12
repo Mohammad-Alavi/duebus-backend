@@ -1,7 +1,9 @@
 <?php namespace Denora\Duebusbusiness\Classes\Transformers;
 
+use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Models\Business;
 use Denora\Duebusprofile\Classes\Transformers\EntrepreneurTransformer;
+use Denora\Duebusprofile\Models\InvestorView;
 use Illuminate\Support\Carbon;
 use RainLab\User\Facades\Auth;
 
@@ -13,9 +15,13 @@ class BusinessTransformer {
      * @return array
      */
     static function transform($business) {
+        BusinessRepository::removeExpiredViewed();
         $user = Auth::user();
         $isOwned = ($user)? $user->id == $business->entrepreneur->user->id: false;
-        $isViewed = ($user && $user->investor)? $user->investor->viewed_businesses->contains($business->id): false;
+        $isViewed = ($user && $user->investor)? BusinessRepository::isBusinessViewed($user->investor, $business->id): false;
+        $viewExpiresAt = $isViewed?
+            Carbon::createFromTimeString(InvestorView::query()->where('investor_id', $user->investor->id)->where('business_id', $business->id)->first()['created_at'])->addHours(2)
+            :null;
         $isRevealed = ($user && $user->investor)? $user->investor->revealed_businesses->contains($business->id): false;
 
         $isBookmarked = ($user)? $user->bookmarked_businesses->contains($business->id): false;
@@ -49,6 +55,7 @@ class BusinessTransformer {
             'equity_holders' => json_decode($business->equity_holders),
 
             'is_viewed' => $isOwned || $isViewed,
+            'view_expires_in_seconds' => $viewExpiresAt? Carbon::now()->diffInSeconds($viewExpiresAt) :null,
             'is_revealed' => $isOwned || $isRevealed,
             'is_bookmarked' => $isBookmarked,
 

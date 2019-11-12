@@ -1,6 +1,7 @@
 <?php namespace Denora\Duebusprofile\Classes\Transformers;
 
 use Denora\Duebus\Classes\Transformers\SectorsTransformer;
+use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusprofile\Models\Investor;
 use Denora\Duebusverification\Classes\Transformers\InvestorVerificationTransformer;
 
@@ -12,6 +13,7 @@ class InvestorTransformer {
      * @return array
      */
     static function transform(Investor $investor) {
+        BusinessRepository::removeExpiredViewed();
         return [
             'id'                              => $investor->id,
             'range_of_investment'             => $investor->range_of_investment,

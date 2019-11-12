@@ -44,7 +44,7 @@ class AnalyzeEntrepreneurRepository
                 }
             case 'view':
                 {
-                    $query = InvestorView::query();
+                    $query = InvestorView::withTrashed();
                     break;
                 }
             case 'reveal':

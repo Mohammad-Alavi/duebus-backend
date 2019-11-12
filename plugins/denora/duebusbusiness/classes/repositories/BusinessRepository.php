@@ -2,8 +2,10 @@
 
 use Denora\Duebusbusiness\Models\Business;
 use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
+use Denora\Duebusprofile\Models\InvestorView;
 use Denora\Notification\Classes\Events\BusinessCreatedEvent;
 use Denora\Notification\Classes\Events\BusinessPublishedEvent;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class BusinessRepository
@@ -103,14 +105,6 @@ class BusinessRepository
         return $business;
     }
 
-    public function unPublishBusiness(int $businessId)
-    {
-        $business = $this->findById($businessId);
-        $business->is_published = false;
-        $business->save();
-
-        return $business;
-    }
     /**
      * @param int $businessId
      *
@@ -119,6 +113,15 @@ class BusinessRepository
     public function findById(int $businessId)
     {
         return Business::find($businessId);
+    }
+
+    public function unPublishBusiness(int $businessId)
+    {
+        $business = $this->findById($businessId);
+        $business->is_published = false;
+        $business->save();
+
+        return $business;
     }
 
     public function paginate(
@@ -133,12 +136,13 @@ class BusinessRepository
         $legalStructure,
         $allowReveal,
         $existingBusiness
-    ){
+    )
+    {
         $query = Business::query();
 
         if ($industry !== null) $query->whereIn('industry', json_decode($industry));
 
-        if ($representativeId !== null){
+        if ($representativeId !== null) {
             $representative = (new RepresentativeRepository())->findById($representativeId);
             $query->where('entrepreneur_id', $representative->user->entrepreneur->id);
         }
@@ -154,7 +158,7 @@ class BusinessRepository
         //  TODO: implement sponsor filtering
 
         if ($yearFounded !== null)
-            $query->where( DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded );
+            $query->where(DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded);
 
         if ($legalStructure !== null) $query->whereIn('legal_structure', json_decode($legalStructure));
 
@@ -223,12 +227,46 @@ class BusinessRepository
         $business->delete();
     }
 
-    public function viewBusiness($investor, int $businessId){
-        $investor->viewed_businesses()->syncWithoutDetaching($businessId);
+
+    public function paginateViewedBusinesses($investor, $page)
+    {
+        self::removeExpiredViewed();
+        return $investor->viewed_businesses()
+            ->whereNull('denora_duebus_investor_view.deleted_at')
+            ->paginate(10, $page);
     }
 
-    public function revealBusiness($investor, int $businessId){
+    static public function removeExpiredViewed()
+    {
+        InvestorView::query()
+            ->where('created_at', '<=', Carbon::now()->subHours(2))
+            ->delete();
+    }
+
+    public function viewBusiness($investor, int $businessId)
+    {
+        $investorView = new InvestorView();
+        $investorView->investor_id = $investor->id;
+        $investorView->business_id = $businessId;
+        $investorView->save();
+    }
+
+    public function revealBusiness($investor, int $businessId)
+    {
         $investor->revealed_businesses()->syncWithoutDetaching($businessId);
+    }
+
+    public static function isBusinessViewed($investor, int $businessId)
+    {
+        self::removeExpiredViewed();
+
+        $query = InvestorView::query();
+        $query->where('investor_id', $investor->id);
+        $query->where('business_id', $businessId);
+        //$query->whereDate('created_at', '>', Carbon::now()->subHours(2));
+
+        return $query->count() > 0;
+
     }
 
     /**

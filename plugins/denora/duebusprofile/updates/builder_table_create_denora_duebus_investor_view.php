@@ -7,10 +7,11 @@ class CreateInvestorViewTable extends Migration {
 
     public function up() {
         Schema::create('denora_duebus_investor_view', function ($table) {
+            $table->increments('id');
             $table->integer('investor_id')->unsigned();
             $table->integer('business_id')->unsigned();
-            $table->primary(['investor_id', 'business_id']);
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
