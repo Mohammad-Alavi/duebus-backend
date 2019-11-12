@@ -28,10 +28,9 @@ class ViewController extends Controller
         //  Stop user if it is not an investor
           if (!$user->investor) return Response::make(['You must be an investor'], 400);
 
-
         $page = Request::input('page', 1);
 
-        $businesses = $user->investor->viewed_businesses()->paginate(10, $page);
+        $businesses = (new BusinessRepository())->paginateViewedBusinesses($user->investor, $page);
 
         return new LengthAwarePaginator(
             BusinessesTransformer::transform($businesses),
@@ -61,8 +60,9 @@ class ViewController extends Controller
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->findById($businessId);
 
+        BusinessRepository::removeExpiredViewed();
         $isOwned = $user->id == $business->entrepreneur->user->id;
-        $isViewed = $user->investor->viewed_businesses->contains($businessId);
+        $isViewed = BusinessRepository::isBusinessViewed($user->investor, $businessId);
         $isViewable = $isOwned || $isViewed;
 
         //  View it free
