@@ -91,8 +91,6 @@ class RegisterController extends Controller {
             case 'representative':
                 {
                     (new RepresentativeRepository())->createRepresentative($user->id);
-                    (new InvestorRepository)->createInvestor($user->id);
-                    (new EntrepreneurRepository())->createEntrepreneur($user->id);
                     break;
                 }
         }

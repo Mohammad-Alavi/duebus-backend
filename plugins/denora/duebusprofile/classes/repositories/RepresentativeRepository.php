@@ -3,30 +3,32 @@
 use Denora\Duebusbusiness\Http\BusinessController;
 use Denora\Duebusprofile\Models\Representative;
 
-class RepresentativeRepository {
+class RepresentativeRepository
+{
 
     /**
      * @param int $representativeId
      *
      * @return Representative
      */
-    public function findById(int $representativeId) {
+    public function findById(int $representativeId)
+    {
         return Representative::find($representativeId);
     }
 
     /**
-     * @param int         $userId
+     * @param int $userId
      *
-     * @param string      $numberOfClients
-     * @param string      $interestedIn
+     * @param string $numberOfClients
+     * @param string $interestedIn
      *
      * @param string|null $range_of_investment
-     * @param string      $sectors
+     * @param string $sectors
      * @param string|null $businessName
      * @param string|null $yearFounded
      * @param string|null $website
      *
-     * @param array       $socialMedia
+     * @param array $socialMedia
      *
      * @return Representative
      */
@@ -40,7 +42,8 @@ class RepresentativeRepository {
         $yearFounded = null,
         string $website = null,
         array $socialMedia = []
-    ) {
+    )
+    {
 
         $representative = new Representative();
         $representative->user_id = $userId;
@@ -56,14 +59,18 @@ class RepresentativeRepository {
         $representative->sectors()->sync(json_decode($sectors));
 
         // Create investor profile if not existing
-        if (!$representative->user->investor){
+        if (!$representative->user->investor)
             (new InvestorRepository())->createInvestor(
                 $userId,
                 $range_of_investment,
                 null,
                 $sectors
             );
-        }
+
+        // Create entrepreneur profile if not existing
+        if (!$representative->user->entrepreneur)
+            (new EntrepreneurRepository())->createEntrepreneur($userId);
+
 
         return $representative;
     }
@@ -75,7 +82,8 @@ class RepresentativeRepository {
      * @param bool $updateInvestorToo
      * @return Representative
      */
-    public function updateRepresentative(int $representativeId, array $data, bool $updateInvestorToo = true) {
+    public function updateRepresentative(int $representativeId, array $data, bool $updateInvestorToo = true)
+    {
 
         $representative = $this->findById($representativeId);
 
@@ -113,7 +121,8 @@ class RepresentativeRepository {
      * @throws \Exception
      */
     public
-    function deleteRepresentative(int $representativeId) {
+    function deleteRepresentative(int $representativeId)
+    {
         $representative = $this->findById($representativeId);
         $representative->delete();
     }
