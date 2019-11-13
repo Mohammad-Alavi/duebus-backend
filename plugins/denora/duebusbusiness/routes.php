@@ -15,6 +15,7 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::get('my/business', function (){
                 return (new BusinessController())->myBusinesses();
             });
+            Route::resource('pay/business', 'Denora\Duebusbusiness\Http\PayBusinessController');
             Route::resource('view/business', 'Denora\Duebusbusiness\Http\ViewController');
             Route::resource('reveal/business', 'Denora\Duebusbusiness\Http\RevealController');
             Route::resource('bookmark/business', 'Denora\Duebusbusiness\Http\BookmarkController');

@@ -43,7 +43,7 @@ class TransactionController extends Controller
             $points = $package->points;
             $chargeableId = $user->id;
         } else if ($data['chargeable'] == 'business') {
-            $price = ConfigTransformer::transform()['prices']['business_price'];
+            $price = ConfigTransformer::transform()['prices']['business_price_with_no_package'];
             $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
