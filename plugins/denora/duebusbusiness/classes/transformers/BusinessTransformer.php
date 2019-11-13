@@ -61,6 +61,8 @@ class BusinessTransformer {
 
             'bookmarked_count' => count($business->bookmarked_users),
 
+            'completion_in_percent' => BusinessRepository::getPercentCompletion($business),
+
             'is_promoted' => Carbon::now()->lt($business->promotion_expire_date),
             'promotion_industry' => $business->promotion_industry,
             'promotion_expire_date' => $business->promotion_expire_date,
