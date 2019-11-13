@@ -52,7 +52,7 @@ class Transaction extends Model
                 break;
             }
             case 'business':{
-                $businessRepository->publishBusiness($this->chargeable_id);
+                $businessRepository->payBusiness($this->chargeable_id);
                 break;
             }
             case 'view':{
