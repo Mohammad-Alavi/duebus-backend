@@ -1,6 +1,7 @@
 <?php namespace Denora\Inbox\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Inbox\Classes\Repositories\MessageRepository;
 use Denora\Inbox\Classes\Repositories\SessionRepository;
@@ -56,9 +57,15 @@ class SessionController extends Controller
         if (!$business) return Response::make(['No element found'], 404);
         $receiverId = $business->entrepreneur->user->id;
 
-        //  TODO: uncomment it for production
+        //  Do not let the user open a session to itself
         if ($user->id == $receiverId) return Response::make(['You can not send a message to yourself'], 400);
 
+        //  If it is an inquiry, user has to  buy it!
+        if ($type == 'inquiry'){
+            $price = ConfigTransformer::transform()['prices']['inquiry_price_with_package'];
+            $price = count($messageTexts) * $price;
+            if (!$user->decreasePoints($price, 'inquiry')) return Response::make(['Not enough points'], 400);
+        }
 
         //  Return the session if exists and create a new one if not!
         $session = SessionRepository::find(
