@@ -51,6 +51,15 @@ class ConfigTransformer {
                 'interested_in'        => self::getValues($settings::get('interested_in_repeater')) ?: self::$default['interested_in'],
             ],
 
+            'inquiry_titles' => [
+                'investment proposal',
+                'founder and shareholders',
+                'latest operation performance',
+                'assets',
+                'liabilities',
+                'legals',
+            ],
+
             'business_fields' => [
                 'roles' => self::getValues($settings::get('roles_in_business_repeater')) ?: self::$default['roles_in_business'],
                 'legal_structures' => self::getValues($settings::get('legal_structures_repeater')) ?: self::$default['legal_structures'],
