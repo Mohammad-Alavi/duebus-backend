@@ -1,12 +1,71 @@
 <?php namespace Denora\Duebusbusiness\Classes\Repositories;
 
 use Denora\Duebusbusiness\Models\Business;
+use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
+use Denora\Duebusprofile\Models\InvestorView;
 use Denora\Notification\Classes\Events\BusinessCreatedEvent;
 use Denora\Notification\Classes\Events\BusinessPublishedEvent;
+use Denora\Notification\Classes\Events\BusinessRevealedEvent;
+use Denora\Notification\Classes\Events\BusinessViewedEvent;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class BusinessRepository
 {
+
+    public static function isBusinessViewed($investor, int $businessId)
+    {
+        self::removeExpiredViewed();
+
+        $query = InvestorView::query();
+        $query->where('investor_id', $investor->id);
+        $query->where('business_id', $businessId);
+        //$query->whereDate('created_at', '>', Carbon::now()->subHours(2));
+
+        return $query->count() > 0;
+
+    }
+
+    static public function removeExpiredViewed()
+    {
+        InvestorView::query()
+            ->where('created_at', '<=', Carbon::now()->subHours(2))
+            ->delete();
+    }
+
+    public static function getPercentCompletion(Business $business): int
+    {
+        $sum = 0;
+        $fields = [
+            'name',
+            'industry',
+            'year_founded',
+            'website',
+            'allow_reveal',
+            'existing_business',
+            'legal_structure',
+            'your_role_in_business',
+            'reason_of_selling_equity',
+            'business_value',
+            'equity_for_sale',
+            'asking_price',
+            'is_involved_in_any_proceedings',
+            'is_concern_with_business_employees',
+            'is_founder_or_holder_in_debt',
+        ];
+        foreach ($fields as $field) if ($business->$field !== null) $sum++;
+        /*--*/
+        $threeYearsStatement = json_decode($business->three_years_statement, true);
+        $values = array_merge(
+            $threeYearsStatement['latest_operating_performance'],
+            $threeYearsStatement['assets'],
+            $threeYearsStatement['liabilities']
+        );
+        foreach ($values as $value) if ($value !== null) $sum++;
+        /*--*/
+
+        return $sum / (count($fields) + count($values)) * 100;
+    }
 
     /**
      * @param int $entrepreneurId
@@ -102,14 +161,6 @@ class BusinessRepository
         return $business;
     }
 
-    public function unPublishBusiness(int $businessId)
-    {
-        $business = $this->findById($businessId);
-        $business->is_published = false;
-        $business->save();
-
-        return $business;
-    }
     /**
      * @param int $businessId
      *
@@ -120,8 +171,18 @@ class BusinessRepository
         return Business::find($businessId);
     }
 
+    public function unPublishBusiness(int $businessId)
+    {
+        $business = $this->findById($businessId);
+        $business->is_published = false;
+        $business->save();
+
+        return $business;
+    }
+
     public function paginate(
         int $page,
+        $representativeId,
         $entrepreneurId,
         $industry,
         $revenueFrom,
@@ -131,10 +192,16 @@ class BusinessRepository
         $legalStructure,
         $allowReveal,
         $existingBusiness
-    ){
+    )
+    {
         $query = Business::query();
 
         if ($industry !== null) $query->whereIn('industry', json_decode($industry));
+
+        if ($representativeId !== null) {
+            $representative = (new RepresentativeRepository())->findById($representativeId);
+            $query->where('entrepreneur_id', $representative->user->entrepreneur->id);
+        }
 
         if ($entrepreneurId !== null)
             $query->where('entrepreneur_id', $entrepreneurId);
@@ -147,7 +214,7 @@ class BusinessRepository
         //  TODO: implement sponsor filtering
 
         if ($yearFounded !== null)
-            $query->where( DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded );
+            $query->where(DB::raw('YEAR(year_founded)'), '=', (int)$yearFounded);
 
         if ($legalStructure !== null) $query->whereIn('legal_structure', json_decode($legalStructure));
 
@@ -155,7 +222,7 @@ class BusinessRepository
 
         if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
     /**
@@ -216,12 +283,29 @@ class BusinessRepository
         $business->delete();
     }
 
-    public function viewBusiness(int $investor, int $businessId){
-        $investor->viewed_businesses()->attach($businessId);
+    public function paginateViewedBusinesses($investor, $page)
+    {
+        self::removeExpiredViewed();
+        return $investor->viewed_businesses()
+            ->whereNull('denora_duebus_investor_view.deleted_at')
+            ->paginate(10, $page);
     }
 
-    public function revealBusiness(int $investor, int $businessId){
-        $investor->revealed_businesses()->attach($businessId);
+    public function viewBusiness($investor, int $businessId)
+    {
+        $investorView = new InvestorView();
+        $investorView->investor_id = $investor->id;
+        $investorView->business_id = $businessId;
+        $investorView->save();
+
+        new BusinessViewedEvent($investor->user->id, $businessId);
+    }
+
+    public function revealBusiness($investor, int $businessId)
+    {
+        $investor->revealed_businesses()->syncWithoutDetaching($businessId);
+
+        new BusinessRevealedEvent($investor->user->id, $businessId);
     }
 
     /**

@@ -58,8 +58,13 @@ class ConfigTransformer {
             ],
             'prices' => [
                 'business_price' => (int)$settings::get('business_price') ?: self::$default['business_price'],
-                'view_price' => (int)$settings::get('view_price') ?: self::$default['view_price'],
-                'reveal_price' => (int)$settings::get('reveal_price') ?: self::$default['reveal_price'],
+                'view_price_with_package' => (int)$settings::get('view_price_with_package') ?: self::$default['view_price_with_package'],
+                'view_price_with_no_package' => (int)$settings::get('view_price_with_no_package') ?: self::$default['view_price_with_no_package'],
+                'reveal_price_with_package' => (int)$settings::get('reveal_price_with_package') ?: self::$default['reveal_price_with_package'],
+                'reveal_price_with_no_package' => (int)$settings::get('reveal_price_with_no_package') ?: self::$default['reveal_price_with_no_package'],
+                'inquiry_price_with_package' => (int)$settings::get('inquiry_price_with_package') ?: self::$default['inquiry_price_with_package'],
+                'duebus_promotion_price' => (int)$settings::get('duebus_promotion_price') ?: self::$default['duebus_promotion_price'],
+                'industry_promotion_price' => (int)$settings::get('industry_promotion_price') ?: self::$default['industry_promotion_price'],
             ],
         ];
 
@@ -139,8 +144,13 @@ Once a fleeting idea, today this platform is called DueBus.'
             'Other',
         ],
         'business_price' => 20,
-        'view_price' => 10,
-        'reveal_price' => 5,
+        'view_price_with_package' => 5,
+        'view_price_with_no_package' => 10,
+        'reveal_price_with_package' => 1,
+        'reveal_price_with_no_package' => 5,
+        'inquiry_price_with_package' => 3,
+        'duebus_promotion_price' => 10,
+        'industry_promotion_price' => 5,
     ];
 
     private static function getValues($array) {

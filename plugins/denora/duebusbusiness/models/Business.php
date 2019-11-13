@@ -12,7 +12,7 @@ class Business extends Model {
 
     use \October\Rain\Database\Traits\SoftDelete;
 
-    protected $dates = ['year_founded', 'deleted_at'];
+    protected $dates = ['year_founded', 'deleted_at', 'promotion_expire_date'];
 
     protected $casts = [
         'allow_reveal' => 'boolean',
@@ -45,6 +45,7 @@ class Business extends Model {
             'key'      => 'business_id',
             'otherKey' => 'investor_id',
             'timestamps' => true,
+            'softDelete' => true,
         ],
         'revealed_investors' => [
             'Denora\Duebusprofile\Models\Investor',

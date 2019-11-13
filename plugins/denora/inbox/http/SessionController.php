@@ -1,6 +1,8 @@
 <?php namespace Denora\Inbox\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
+use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Inbox\Classes\Repositories\MessageRepository;
 use Denora\Inbox\Classes\Repositories\SessionRepository;
 use Denora\Inbox\Classes\Transformers\SessionsTransformer;
@@ -30,11 +32,11 @@ class SessionController extends Controller
         $data = Request::all();
 
         $validator = Validator::make($data, [
-            'receiver_id' => 'required|integer',
             'business_id' => 'required|integer',
-            'preferred_date' => 'required|date',
-            'message_title' => 'required|string',
-            'message_text' => 'required|string',
+            'preferred_date' => 'date',
+            'preferred_time' => 'string',
+            'message_title' => 'array',
+            'message_text' => 'required|array',
             'type' => [
                 'required',
                 Rule::in(['inquiry', 'meeting request']),
@@ -44,30 +46,51 @@ class SessionController extends Controller
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
-        //  TODO: uncomment it for production
-        if ($user->id == $data['receiver_id']) return Response::make(['You can not send a message to yourself'], 400);
+        $businessId = $data['business_id'];
+        $type = $data['type'];
+        $preferredDate = Request::input('preferred_date', null);
+        $preferredTime = Request::input('preferred_time', null);
+        $messageTitles = Request::input('message_title', []);
+        $messageTexts = Request::input('message_text', []);
+
+        $business = (new BusinessRepository())->findById($businessId);
+        if (!$business) return Response::make(['No element found'], 404);
+        $receiverId = $business->entrepreneur->user->id;
+
+        //  Do not let the user open a session to itself
+        if ($user->id == $receiverId) return Response::make(['You can not send a message to yourself'], 400);
+
+        //  If it is an inquiry, user has to  buy it!
+        if ($type == 'inquiry'){
+            $price = ConfigTransformer::transform()['prices']['inquiry_price_with_package'];
+            $price = count($messageTexts) * $price;
+            if (!$user->decreasePoints($price, 'inquiry')) return Response::make(['Not enough points'], 400);
+        }
 
         //  Return the session if exists and create a new one if not!
         $session = SessionRepository::find(
             $user->id,
-            $data['receiver_id'],
-            $data['business_id'],
-            $data['type']
+            $receiverId,
+            $businessId,
+            $type
         ) ?:
             SessionRepository::createSession(
                 $user->id,
-                $data['receiver_id'],
-                $data['business_id'],
-                $data['type'],
-                $data['preferred_date']
+                $receiverId,
+                $businessId,
+                $type,
+                $preferredDate,
+                $preferredTime
             );
 
-        $message = MessageRepository::createMessage(
-            $user->id,
-            $session->id,
-            $data['message_title'],
-            $data['message_text']
-        );
+        for ($i = 0; $i < count($messageTexts); $i++){
+            MessageRepository::createMessage(
+                $user->id,
+                $session->id,
+                empty($messageTitles[$i])?null:$messageTitles[$i],
+                $messageTexts[$i]
+            );
+        }
 
         $session = SessionRepository::findById($session->id);
         return SessionTransformer::transform($session, $user);
@@ -108,6 +131,8 @@ class SessionController extends Controller
         $user = Auth::user();
 
         $session = SessionRepository::findById($id);
+
+        if (!$session) return Response::make(['No session found!'], 404);
 
         if ($user->id != $session->sender_id && $user->id != $session->receiver_id)
             return Response::make(['You don\'t own the session'], 400);

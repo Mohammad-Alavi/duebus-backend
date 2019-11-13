@@ -15,38 +15,15 @@ class SessionRepository
         return $query->first();
     }
 
-    static public function findBySenderId(int $userId)
-    {
-        $query = Session::query();
-        $query->where('sender_id', '=', $userId);
-        return $query->get();
-    }
-
-    static public function findByReceiverId(int $userId)
-    {
-        $query = Session::query();
-        $query->where('receiver_id', '=', $userId);
-        return $query->get();
-    }
-
-    static public function countUnreadSessions($userId){
-        $query = Session::query();
-        $unreadAsSender = $query->where('sender_id', '=', $userId)->where('is_read_by_sender', '=', false)->count();
-        $unreadAsReceiver = $query->where('receiver_id', '=', $userId)->where('is_read_by_receiver', '=', false)->count();
-        return $unreadAsSender + $unreadAsReceiver;
-
-    }
-
-    static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate)
+    static public function createSession(int $senderId, int $receiverId, int $businessId, string $type, $preferredDate, $preferredTime)
     {
         $session = new Session();
         $session->sender_id = $senderId;
         $session->receiver_id = $receiverId;
         $session->business_id = $businessId;
         $session->type = $type;
-        $session->is_read_by_sender = true;
-        $session->is_read_by_receiver = false;
         $session->preferred_date = $preferredDate;
+        $session->preferred_time = $preferredTime;
 
         $session->save();
 
@@ -71,24 +48,6 @@ class SessionRepository
         return Session::find($sessionId);
     }
 
-    static public function updateIsReadOnAdd(int $userId, int $session_id)
-    {
-        $session = self::findById($session_id);
-        if ($userId == $session->sender_id) $session->is_read_by_receiver = false;
-        if ($userId == $session->receiver_id) $session->is_read_by_sender = false;
-        $session->save();
-        return $session;
-    }
-
-    static public function updateIsReadOnGet(int $userId, int $session_id)
-    {
-        $session = self::findById($session_id);
-        if ($userId == $session->sender_id) $session->is_read_by_sender = true;
-        if ($userId == $session->receiver_id) $session->is_read_by_receiver = true;
-        $session->save();
-        return $session;
-    }
-
     /**
      *
      * @param int $page
@@ -100,12 +59,12 @@ class SessionRepository
     static public function paginate(int $page, int $userId, $type = null, $business_id = null)
     {
         $query = Session::query();
-        $query->where('sender_id', '=', $userId)->orWhere('receiver_id', '=', $userId);
-        if ($type) $query->where('type', '=', $type);
-        if ($business_id) $query->where('business_id', '=', $business_id);
+        $query->where('sender_id', $userId)->orWhere('receiver_id', $userId);
+        if ($type) $query->where('type', $type);
+        if ($business_id) $query->where('business_id', $business_id);
         $query->orderByDesc('updated_at');
 
-        return $query->paginate(20, $page);
+        return $query->paginate(10, $page);
     }
 
 }

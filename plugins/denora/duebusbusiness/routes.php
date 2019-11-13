@@ -15,9 +15,10 @@ Route::group(['prefix' => 'api/v1'], function () {
             Route::get('my/business', function (){
                 return (new BusinessController())->myBusinesses();
             });
-            Route::resource('business/view', 'Denora\Duebusbusiness\Http\ViewController');
-            Route::resource('business/reveal', 'Denora\Duebusbusiness\Http\RevealController');
-            Route::resource('bookmark', 'Denora\Duebusbusiness\Http\BookmarkController');
+            Route::resource('view/business', 'Denora\Duebusbusiness\Http\ViewController');
+            Route::resource('reveal/business', 'Denora\Duebusbusiness\Http\RevealController');
+            Route::resource('bookmark/business', 'Denora\Duebusbusiness\Http\BookmarkController');
+            Route::resource('promotion', 'Denora\Duebusbusiness\Http\PromotionController');
         }
     );
 
