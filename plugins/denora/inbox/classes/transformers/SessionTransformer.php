@@ -31,6 +31,7 @@ class SessionTransformer
 
             'first_message' => MessageTransformer::transform(MessageRepository::getFirstMessage($session->id)),
             'last_message' => MessageTransformer::transform(MessageRepository::getLastMessage($session->id)),
+            'inquiry_messages' => MessagesTransformer::transform(MessageRepository::getInquiryMessages($session->id)),
 
             'preferred_date' => $session->preferred_date,
             'preferred_time' => $session->preferred_time,
