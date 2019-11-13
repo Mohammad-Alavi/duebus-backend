@@ -150,6 +150,17 @@ class BusinessRepository
         return $business;
     }
 
+    public function payBusiness(int $businessId)
+    {
+        $business = $this->findById($businessId);
+        $business->paid_at = Carbon::now();
+        $business->save();
+
+        $this->publishBusiness($businessId);
+
+        return $business;
+    }
+
     public function publishBusiness(int $businessId)
     {
         $business = $this->findById($businessId);

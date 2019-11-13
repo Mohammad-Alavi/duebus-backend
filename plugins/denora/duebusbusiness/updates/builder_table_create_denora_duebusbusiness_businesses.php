@@ -32,6 +32,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->string('promotion_industry')->nullable();
             $table->timestamp('promotion_expire_date')->nullable();
 
+            $table->timestamp('paid_at')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();
