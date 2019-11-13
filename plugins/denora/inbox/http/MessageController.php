@@ -38,6 +38,9 @@ class MessageController extends Controller
 
         //  Check if the user owns the session
         $session = SessionRepository::findById($data['session_id']);
+
+        if (!$session) return Response::make(['No session found!'], 404);
+
         if ($user->id != $session->sender_id && $user->id != $session->receiver_id) return Response::make(['You are not participating the session'], 400);
 
         $message = MessageRepository::createMessage($user->id, $data['session_id'], null, $data['text']);
@@ -62,14 +65,13 @@ class MessageController extends Controller
         $page = Request::input('page', 1);
         $session_id = Request::input('session_id');
 
-        //  Check if the user owns the session
         $session = SessionRepository::findById($data['session_id']);
+        if (!$session) return Response::make(['No session found!'], 404);
+
+        //  Check if the user owns the session
         if ($user->id != $session->sender_id && $user->id != $session->receiver_id) return Response::make(['You are not participating the session'], 400);
 
-        $messages = MessageRepository::paginate($page, $session_id);
-
-        //  Make session's is_read true
-        SessionRepository::updateIsReadOnGet($user->id, $session_id);
+        $messages = MessageRepository::paginate($page, $user->id, $session_id);
 
         return new LengthAwarePaginator(
             MessagesTransformer::transform($messages),

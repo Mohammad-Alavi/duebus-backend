@@ -5,7 +5,7 @@ tabs:
             span: auto
             placeholder: 'https://'
             type: text
-            comment: '** DO NOT USE ''/'' AN THE END OF THE URL **'
+            comment: '** DO NOT USE ''/'' AT THE END OF THE URL **'
             tab: 'General settings'
         title_section:
             label: Titles
@@ -250,15 +250,37 @@ tabs:
             required: 1
             type: number
             tab: Prices
-        view_price:
-            label: 'View price'
+        view_price_with_package:
+            label: 'View price with package'
+            span: left
+            required: 1
+            type: number
+            tab: Prices
+        view_price_with_no_package:
+            label: 'View price with no package'
             span: auto
             required: 1
             type: number
             tab: Prices
-        reveal_price:
-            label: 'Reveal price'
+        reveal_price_with_package:
+            label: 'Reveal price with package'
             span: auto
             required: 1
+            type: number
+            tab: Prices
+        reveal_price_with_no_package:
+            label: 'Reveal price with no package'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        duebus_promotion_price:
+            label: 'Duebus Promotion price'
+            span: left
+            type: number
+            tab: Prices
+        industry_promotion_price:
+            label: 'Industry Promotion price'
+            span: right
             type: number
             tab: Prices

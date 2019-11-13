@@ -44,12 +44,37 @@ class TransactionController extends Controller
             $chargeableId = $user->id;
         } else if ($data['chargeable'] == 'business') {
             $price = ConfigTransformer::transform()['prices']['business_price'];
-            $points = 22;
+            $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
 
-            // check if the business is already paid
+            // check if the business is not already paid
             if ($business->is_published) return Response::make(['The business has been already paid'], 409);
+        } else if ($data['chargeable'] == 'view') {
+            if (!$user->investor) return Response::make(['You must be an investor'], 400);
+            $price = ConfigTransformer::transform()['prices']['view_price_with_no_package'];
+            $points = 0;
+            $chargeableId = $data['business_id'];
+            $business = (new BusinessRepository())->findById($chargeableId);
+
+            // check if the business is not already viewed
+            BusinessRepository::removeExpiredViewed();
+            $isOwned = $user->id == $business->entrepreneur->user->id;
+            $isViewed = $user->investor->viewed_businesses->contains($business->id);
+            $isViewable = $isOwned || $isViewed;
+            if ($isViewable) return Response::make(['The business has been already viewed'], 409);
+        }else if ($data['chargeable'] == 'reveal') {
+            if (!$user->investor) return Response::make(['You must be an investor'], 400);
+            $price = ConfigTransformer::transform()['prices']['reveal_price_with_no_package'];
+            $points = 0;
+            $chargeableId = $data['business_id'];
+            $business = (new BusinessRepository())->findById($chargeableId);
+
+            // check if the business is not already revealed
+            $isOwned = $user->id == $business->entrepreneur->user->id;
+            $isRevealed = $user->investor->revealed_businesses->contains($business->id);
+            $isRevealable = $isOwned || $isRevealed;
+            if ($isRevealable) return Response::make(['The business has been already revealed'], 409);
         } else {
             return Response::make(['Chargeable is not recognized'], 400);
         }
@@ -64,12 +89,15 @@ class TransactionController extends Controller
 
         $transactionRepository = new TransactionRepository();
         $transaction = $transactionRepository->createTransaction(
+            $user->id,
             $data['chargeable'],
             $chargeableId,
             $chargeId,
             $transactionUrl,
             $price,
-            $points
+            $points,
+            $data['redirect_url'],
+            ''
         );
 
         return TransactionTransformer::transform($transaction);
@@ -88,10 +116,11 @@ class TransactionController extends Controller
             //  General data
             'chargeable' => [
                 'required',
-                Rule::in(['wallet', 'business']),
+                Rule::in(['wallet', 'business', 'view', 'reveal']),
             ],
-            "business_id" => 'required_if:chargeable,==,business',
-            "package_id" => 'required_if:chargeable,==,wallet'
+            "business_id" => 'required_if:chargeable,business|required_if:chargeable,view|required_if:chargeable,reveal',
+            "package_id" => 'required_if:chargeable,==,wallet',
+            "redirect_url" => 'required',
         ]);
     }
 

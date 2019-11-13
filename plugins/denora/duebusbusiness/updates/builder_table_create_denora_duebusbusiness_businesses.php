@@ -28,6 +28,10 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->json('social_media');
             $table->json('equity_holders');
             $table->boolean('is_published');
+
+            $table->string('promotion_industry')->nullable();
+            $table->timestamp('promotion_expire_date')->nullable();
+
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

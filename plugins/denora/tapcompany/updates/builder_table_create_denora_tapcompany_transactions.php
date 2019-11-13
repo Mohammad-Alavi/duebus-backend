@@ -10,6 +10,7 @@ class BuilderTableCreateDenoraTapcompanyTransactions extends Migration {
         Schema::create('denora_tapcompany_transactions', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('chargeable');
             $table->integer('chargeable_id');
             $table->string('charge_id')->unique();
@@ -17,6 +18,7 @@ class BuilderTableCreateDenoraTapcompanyTransactions extends Migration {
             $table->integer('price');
             $table->integer('points');
             $table->text('description')->nullable();
+            $table->text('redirect_url');
 
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('created_at')->nullable();

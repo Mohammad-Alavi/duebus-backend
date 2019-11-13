@@ -49,25 +49,29 @@ class TransactionRepository {
     }
 
     /**
+     * @param int $userId
      * @param string $chargeable
-     * @param int    $chargeableId
+     * @param int $chargeableId
      * @param string $chargeId
      * @param string $paymentUrl
-     * @param int    $price
-     * @param int    $points
+     * @param int $price
+     * @param int $points
+     * @param string $redirectUrl
      * @param string $description
      *
      * @return Transaction
      */
-    function createTransaction(string $chargeable, int $chargeableId, string $chargeId, string $paymentUrl, int $price, int $points, string $description = '') {
+    function createTransaction(int $userId, string $chargeable, int $chargeableId, string $chargeId, string $paymentUrl, int $price, int $points, string $redirectUrl, string $description = '') {
 
         $transaction = new Transaction();
+        $transaction->user_id = $userId;
         $transaction->chargeable = $chargeable;
         $transaction->chargeable_id = $chargeableId;
         $transaction->charge_id = $chargeId;
         $transaction->payment_url = $paymentUrl;
         $transaction->price = $price;
         $transaction->points = $points;
+        $transaction->redirect_url = $redirectUrl;
         $transaction->description = $description;
 
         $transaction->save();

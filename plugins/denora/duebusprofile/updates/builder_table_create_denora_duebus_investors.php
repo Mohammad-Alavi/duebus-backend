@@ -12,6 +12,7 @@ class BuilderTableCreateDenoraDuebusInvestors extends Migration {
             $table->string('range_of_businesses_invested_in')->nullable();
             $table->string('range_of_investment')->nullable();
             $table->integer('user_id')->unique();
+            $table->float('invested_on_duebus')->default(0);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

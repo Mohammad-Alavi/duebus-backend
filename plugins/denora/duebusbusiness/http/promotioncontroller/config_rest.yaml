@@ -4,8 +4,10 @@
 
 # Allowed Rest Actions
 allowedActions:
+  index:
+      pageSize: 20
   store:
-  update:
+  show:
 
 # Model Class name
-modelClass: Denora\Duebusprofile\Models\Investor
+modelClass: Denora\Duebusbusiness\Models\PromotionRepository

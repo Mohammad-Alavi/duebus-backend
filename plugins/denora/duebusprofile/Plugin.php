@@ -16,11 +16,14 @@ class Plugin extends PluginBase {
     public function boot() {
         parent::boot();
 
-        //  Relate user to [Investor, Entrepreneur, Representative, Bookmarked Businesses] objects
+        //  Relate user to [Investor, Entrepreneur, Representative, Transaction, Bookmarked Businesses] objects
         UserModel::extend(function ($model) {
             $model->hasOne['investor'] = ['Denora\Duebusprofile\Models\Investor'];
             $model->hasOne['entrepreneur'] = ['Denora\Duebusprofile\Models\Entrepreneur'];
             $model->hasOne['representative'] = ['Denora\Duebusprofile\Models\Representative'];
+
+            $model->hasOne['transaction'] = ['Denora\Tapcompany\Models\Transaction'];
+
             $model->belongsToMany['bookmarked_businesses'] = [
                 'Denora\Duebusbusiness\Models\Business',
                 'table'    => 'denora_duebus_user_bookmark',
