@@ -49,6 +49,14 @@ class MessageRepository
         return $query->first();
     }
 
+    static public function getInquiryMessages(int $sessionId)
+    {
+        $query = Message::query();
+        $query->where('session_id', '=', $sessionId);
+        $query->whereNotNull('title');
+        return $query->get();
+    }
+
     /**
      *
      * @param int $page
