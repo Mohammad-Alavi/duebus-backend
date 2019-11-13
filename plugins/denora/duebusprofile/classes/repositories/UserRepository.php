@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
+use Denora\Notification\Classes\Events\WalletChargedEvent;
 use RainLab\User\Models\User;
 
 class UserRepository {
@@ -54,6 +55,7 @@ class UserRepository {
         $user = $this->findById($userId);
         $user->point = $user->point + $points;
         $user->save();
+        new WalletChargedEvent($userId, $points);
     }
 
 }

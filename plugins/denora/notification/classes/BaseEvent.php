@@ -14,8 +14,10 @@ abstract class BaseEvent
     static $ACTION_TYPE_BUSINESS_PUBLISHED = 'business_published';
     static $ACTION_TYPE_BUSINESS_VIEWED = 'business_viewed';
     static $ACTION_TYPE_BUSINESS_REVEALED = 'business_revealed';
+    static $ACTION_TYPE_WALLET_CHARGED = 'wallet_charged';
 
     static $OBJECT_TYPE_BUSINESS = 'business';
+    static $OBJECT_TYPE_WALLET  = 'wallet';
 
     public $receiverUser;
     public $doerType = null;

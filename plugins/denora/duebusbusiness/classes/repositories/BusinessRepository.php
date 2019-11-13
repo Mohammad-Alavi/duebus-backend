@@ -5,6 +5,8 @@ use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Denora\Duebusprofile\Models\InvestorView;
 use Denora\Notification\Classes\Events\BusinessCreatedEvent;
 use Denora\Notification\Classes\Events\BusinessPublishedEvent;
+use Denora\Notification\Classes\Events\BusinessRevealedEvent;
+use Denora\Notification\Classes\Events\BusinessViewedEvent;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -249,11 +251,15 @@ class BusinessRepository
         $investorView->investor_id = $investor->id;
         $investorView->business_id = $businessId;
         $investorView->save();
+
+        new BusinessViewedEvent($investor->user->id, $businessId);
     }
 
     public function revealBusiness($investor, int $businessId)
     {
         $investor->revealed_businesses()->syncWithoutDetaching($businessId);
+
+        new BusinessRevealedEvent($investor->user->id, $businessId);
     }
 
     public static function isBusinessViewed($investor, int $businessId)

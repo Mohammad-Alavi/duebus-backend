@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Denora\Duebus\Classes\Repositories\PackageRepository;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
+use Denora\Notification\Classes\Events\WalletChargedEvent;
 use Model;
 use RainLab\User\Models\User;
 
@@ -14,7 +15,7 @@ use RainLab\User\Models\User;
 class Transaction extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    
+
     protected $dates = ['paid_at'];
 
     /**
