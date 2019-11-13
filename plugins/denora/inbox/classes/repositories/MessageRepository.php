@@ -32,22 +32,20 @@ class MessageRepository
         return $message;
     }
 
-    /**
-     * @param int $sessionId
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
-     */
-    static public function getLastMessage(int $sessionId)
-    {
-        $query = Message::query();
-        $query->where('session_id', '=', $sessionId)
-            ->latest();
-        return $query->first();
-    }
 
     static public function getFirstMessage(int $sessionId)
     {
         $query = Message::query();
-        $query->where('session_id', '=', $sessionId);
+        $query->where('session_id', '=', $sessionId)
+            ->orderBy('id');
+        return $query->first();
+    }
+
+    static public function getLastMessage(int $sessionId)
+    {
+        $query = Message::query();
+        $query->where('session_id', '=', $sessionId)
+            ->orderByDesc('id');
         return $query->first();
     }
 

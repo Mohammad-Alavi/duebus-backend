@@ -34,8 +34,8 @@ class SessionController extends Controller
             'business_id' => 'required|integer',
             'preferred_date' => 'date',
             'preferred_time' => 'string',
-            'message_title' => 'string',
-            'message_text' => 'required|string',
+            'message_title' => 'array',
+            'message_text' => 'required|array',
             'type' => [
                 'required',
                 Rule::in(['inquiry', 'meeting request']),
@@ -49,8 +49,8 @@ class SessionController extends Controller
         $type = $data['type'];
         $preferredDate = Request::input('preferred_date', null);
         $preferredTime = Request::input('preferred_time', null);
-        $messageTitle = Request::input('message_title', null);
-        $messageText = $data['message_text'];
+        $messageTitles = Request::input('message_title', []);
+        $messageTexts = Request::input('message_text', []);
 
         $business = (new BusinessRepository())->findById($businessId);
         if (!$business) return Response::make(['No element found'], 404);
@@ -76,12 +76,14 @@ class SessionController extends Controller
                 $preferredTime
             );
 
-        $message = MessageRepository::createMessage(
-            $user->id,
-            $session->id,
-            $messageTitle,
-            $messageText
-        );
+        for ($i = 0; $i < count($messageTexts); $i++){
+            MessageRepository::createMessage(
+                $user->id,
+                $session->id,
+                empty($messageTitles[$i])?null:$messageTitles[$i],
+                $messageTexts[$i]
+            );
+        }
 
         $session = SessionRepository::findById($session->id);
         return SessionTransformer::transform($session, $user);
