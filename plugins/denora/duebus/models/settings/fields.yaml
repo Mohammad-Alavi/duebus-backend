@@ -274,6 +274,12 @@ tabs:
             required: 1
             type: number
             tab: Prices
+        inquiry_price_with_package:
+            label: 'Inquiry price with package'
+            span: left
+            required: 1
+            type: number
+            tab: Prices
         duebus_promotion_price:
             label: 'Duebus Promotion price'
             span: left
