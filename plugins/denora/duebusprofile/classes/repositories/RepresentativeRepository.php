@@ -114,17 +114,12 @@ class RepresentativeRepository
         return $representative;
     }
 
-
-    /**
-     * @param int $representativeId
-     *
-     * @throws \Exception
-     */
-    public
-    function deleteRepresentative(int $representativeId)
+    static public function paginate(int $page)
     {
-        $representative = $this->findById($representativeId);
-        $representative->delete();
+        $query = Representative::query();
+
+        return $query->paginate(100, $page);
     }
+
 
 }
