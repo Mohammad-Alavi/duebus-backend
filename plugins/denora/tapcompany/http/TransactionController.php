@@ -60,7 +60,7 @@ class TransactionController extends Controller
             // check if the business is not already viewed
             BusinessRepository::removeExpiredViewed();
             $isOwned = $user->id == $business->entrepreneur->user->id;
-            $isViewed = $user->investor->viewed_businesses->contains($business->id);
+            $isViewed = BusinessRepository::isBusinessViewed($user->investor, $business->id);
             $isViewable = $isOwned || $isViewed;
             if ($isViewable) return Response::make(['The business has been already viewed'], 409);
         }else if ($data['chargeable'] == 'reveal') {
