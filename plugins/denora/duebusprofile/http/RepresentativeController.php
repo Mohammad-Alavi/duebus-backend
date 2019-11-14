@@ -6,6 +6,8 @@ use Denora\Duebusbusiness\Http\BusinessController;
 use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Denora\Duebusprofile\Classes\Transformers\ProfileTransformer;
+use Denora\Duebusprofile\Classes\Transformers\RepresentativesTransformer;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -23,68 +25,82 @@ class RepresentativeController extends Controller {
 
     public $restConfig = 'config_rest.yaml';
 
-/*    public function store() {
-        $representativeRepository = new RepresentativeRepository();
-        $user = Auth::user();
 
-        if ($user->representative) return Response::make(['You already are a representative'], 400);
+    public function index() {
+        $page = Request::input('page', 1);
 
-        $data = Request::all();
+        $representatives = RepresentativeRepository::paginate($page);
 
-        $validator = Validator::make($data, [
-            'number_of_clients'      => [
-                'required',
-                Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_clients']),
-            ],
-            'interested_in'          => [
-                'required',
-                'json',
-            ],
-            'range_of_investment'    => [
-                'required',
-                Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
-            ],
-            'sectors'                => [
-                'required'
-            ],
-            'business_name'          => 'required|min:3',
-            'year_founded'           => 'required|date',
-            'website'                => 'url',
-
-            //  Social Media
-            'social_media.instagram' => 'min:3',
-            'social_media.facebook'  => 'min:3',
-            'social_media.linked_in' => 'min:3',
-            'social_media.youtube'   => 'min:3',
-
-        ]);
-
-        if ($validator->fails())
-            return Response::make($validator->messages(), 400);
-
-        //  Validate interested_in json
-        $hasInterestedIn = array_has($data, 'interested_in');
-        if ($hasInterestedIn) {
-            $interestedIn = $data['interested_in'];
-            $interestedInValidation = $this->validateInterestedInJson($interestedIn);
-            if ($interestedInValidation->fails()) return Response::make($interestedInValidation->messages(), 400);
-        }
-
-        $representative = $representativeRepository->createRepresentative(
-            $user->id,
-            Request::input('number_of_clients', null),
-            Request::input('interested_in', '[]'),
-            Request::input('range_of_investment', null),
-            Request::input('sectors', '[]'),
-            Request::input('business_name', null),
-            Request::input('year_founded', null),
-            Request::input('website', null),
-            BusinessController::generateSocialMedia($data)
+        return new LengthAwarePaginator(
+            RepresentativesTransformer::transform($representatives),
+            $representatives->total(),
+            $representatives->perPage()
         );
+    }
 
-        $user = (new UserRepository())->findById($representative->user->id);
-        return ProfileTransformer::transform($user);
-    }*/
+
+    /*    public function store() {
+            $representativeRepository = new RepresentativeRepository();
+            $user = Auth::user();
+
+            if ($user->representative) return Response::make(['You already are a representative'], 400);
+
+            $data = Request::all();
+
+            $validator = Validator::make($data, [
+                'number_of_clients'      => [
+                    'required',
+                    Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_clients']),
+                ],
+                'interested_in'          => [
+                    'required',
+                    'json',
+                ],
+                'range_of_investment'    => [
+                    'required',
+                    Rule::in(ConfigTransformer::transform()['registration_fields']['range_of_investments']),
+                ],
+                'sectors'                => [
+                    'required'
+                ],
+                'business_name'          => 'required|min:3',
+                'year_founded'           => 'required|date',
+                'website'                => 'url',
+
+                //  Social Media
+                'social_media.instagram' => 'min:3',
+                'social_media.facebook'  => 'min:3',
+                'social_media.linked_in' => 'min:3',
+                'social_media.youtube'   => 'min:3',
+
+            ]);
+
+            if ($validator->fails())
+                return Response::make($validator->messages(), 400);
+
+            //  Validate interested_in json
+            $hasInterestedIn = array_has($data, 'interested_in');
+            if ($hasInterestedIn) {
+                $interestedIn = $data['interested_in'];
+                $interestedInValidation = $this->validateInterestedInJson($interestedIn);
+                if ($interestedInValidation->fails()) return Response::make($interestedInValidation->messages(), 400);
+            }
+
+            $representative = $representativeRepository->createRepresentative(
+                $user->id,
+                Request::input('number_of_clients', null),
+                Request::input('interested_in', '[]'),
+                Request::input('range_of_investment', null),
+                Request::input('sectors', '[]'),
+                Request::input('business_name', null),
+                Request::input('year_founded', null),
+                Request::input('website', null),
+                BusinessController::generateSocialMedia($data)
+            );
+
+            $user = (new UserRepository())->findById($representative->user->id);
+            return ProfileTransformer::transform($user);
+        }*/
 
     public function update($id) {
         $representativeRepository = new RepresentativeRepository();
