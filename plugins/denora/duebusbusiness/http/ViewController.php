@@ -72,7 +72,7 @@ class ViewController extends Controller
         $price = ConfigTransformer::transform()['prices']['view_price_with_package'];
         if ($user->decreasePoints($price, 'view')){
             //  Add new relation
-            $businessRepository->viewBusiness($user->investor, $businessId);
+            $businessRepository->viewBusiness($user->investor, $businessId, $price);
             //  Show the business
             $business = $businessRepository->findById($businessId);
             return BusinessTransformer::transform($business);
