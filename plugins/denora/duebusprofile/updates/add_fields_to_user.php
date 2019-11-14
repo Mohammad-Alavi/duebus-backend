@@ -9,6 +9,7 @@ class AddFieldsToUser extends Migration {
         Schema::table('users', function ($table) {
 
             $table->integer('point')->default(0);
+            $table->timestamp('point_expires_at')->nullable();
 
         });
     }
@@ -18,6 +19,11 @@ class AddFieldsToUser extends Migration {
         if (Schema::hasColumn('users', 'point')) {
             Schema::table('users', function ($table) {
                 $table->dropColumn('point');
+            });
+        }
+        if (Schema::hasColumn('users', 'point_expires_at')) {
+            Schema::table('users', function ($table) {
+                $table->dropColumn('point_expires_at');
             });
         }
     }

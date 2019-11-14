@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
+use Carbon\Carbon;
 use Denora\Notification\Classes\Events\WalletChargedEvent;
 use RainLab\User\Models\User;
 
@@ -53,7 +54,8 @@ class UserRepository {
      */
     public function chargeWallet(int $userId, int $points) {
         $user = $this->findById($userId);
-        $user->point = $user->point + $points;
+        $user->point = $user->points + $points;
+        $user->point_expires_at = Carbon::now()->addMonths(12);
         $user->save();
         new WalletChargedEvent($userId, $points);
     }
