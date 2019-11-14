@@ -49,7 +49,7 @@ class PayBusinessController extends Controller
         $price = ConfigTransformer::transform()['prices']['business_price_with_package'];
         if ($user->decreasePoints($price, 'pay business')){
             //  Pay business
-            $businessRepository->payBusiness($businessId);
+            $businessRepository->payBusiness($businessId, $price);
             //  Show the business
             $business = $businessRepository->findById($businessId);
             return BusinessTransformer::transform($business);

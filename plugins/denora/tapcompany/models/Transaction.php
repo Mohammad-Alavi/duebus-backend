@@ -3,6 +3,7 @@
 use Backend\Controllers\Auth;
 use Carbon\Carbon;
 use Denora\Duebus\Classes\Repositories\PackageRepository;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
 use Denora\Notification\Classes\Events\WalletChargedEvent;
@@ -52,15 +53,18 @@ class Transaction extends Model
                 break;
             }
             case 'business':{
-                $businessRepository->payBusiness($this->chargeable_id);
+                $price = ConfigTransformer::transform()['prices']['business_price_with_no_package'];
+                $businessRepository->payBusiness($this->chargeable_id, $price);
                 break;
             }
             case 'view':{
-                $businessRepository->viewBusiness($this->user->investor, $this->chargeable_id);
+                $price = ConfigTransformer::transform()['prices']['view_price_with_no_package'];
+                $businessRepository->viewBusiness($this->user->investor, $this->chargeable_id, $price);
                 break;
             }
             case 'reveal':{
-                $businessRepository->revealBusiness($this->user->investor, $this->chargeable_id);
+                $price = ConfigTransformer::transform()['prices']['reveal_price_with_no_package'];
+                $businessRepository->revealBusiness($this->user->investor, $this->chargeable_id, $price);
                 break;
             }
         }

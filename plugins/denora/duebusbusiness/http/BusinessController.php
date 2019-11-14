@@ -351,7 +351,8 @@ class BusinessController extends Controller
             null,
             null,
             null,
-            null
+            null,
+            10000
         );
 
         return new LengthAwarePaginator(

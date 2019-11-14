@@ -150,24 +150,13 @@ class BusinessRepository
         return $business;
     }
 
-    public function payBusiness(int $businessId)
+    public function payBusiness(int $businessId, float $price)
     {
         $business = $this->findById($businessId);
         $business->paid_at = Carbon::now();
         $business->save();
 
-        $this->publishBusiness($businessId);
-
-        return $business;
-    }
-
-    public function publishBusiness(int $businessId)
-    {
-        $business = $this->findById($businessId);
-        $business->is_published = true;
-        $business->save();
-
-        new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id);
+        $this->publishBusiness($businessId, $price);
 
         return $business;
     }
@@ -180,6 +169,17 @@ class BusinessRepository
     public function findById(int $businessId)
     {
         return Business::find($businessId);
+    }
+
+    public function publishBusiness(int $businessId, float $price)
+    {
+        $business = $this->findById($businessId);
+        $business->is_published = true;
+        $business->save();
+
+        new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id, $price);
+
+        return $business;
     }
 
     public function unPublishBusiness(int $businessId)
@@ -202,7 +202,8 @@ class BusinessRepository
         $yearFounded,
         $legalStructure,
         $allowReveal,
-        $existingBusiness
+        $existingBusiness,
+        $perPage = 10
     )
     {
         $query = Business::query();
@@ -233,7 +234,7 @@ class BusinessRepository
 
         if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
 
-        return $query->paginate(10, $page);
+        return $query->paginate($perPage, $page);
     }
 
     /**
@@ -302,21 +303,21 @@ class BusinessRepository
             ->paginate(10, $page);
     }
 
-    public function viewBusiness($investor, int $businessId)
+    public function viewBusiness($investor, int $businessId, float $price)
     {
         $investorView = new InvestorView();
         $investorView->investor_id = $investor->id;
         $investorView->business_id = $businessId;
         $investorView->save();
 
-        new BusinessViewedEvent($investor->user->id, $businessId);
+        new BusinessViewedEvent($investor->user->id, $businessId, $price);
     }
 
-    public function revealBusiness($investor, int $businessId)
+    public function revealBusiness($investor, int $businessId, float $price)
     {
         $investor->revealed_businesses()->syncWithoutDetaching($businessId);
 
-        new BusinessRevealedEvent($investor->user->id, $businessId);
+        new BusinessRevealedEvent($investor->user->id, $businessId, $price);
     }
 
     /**
