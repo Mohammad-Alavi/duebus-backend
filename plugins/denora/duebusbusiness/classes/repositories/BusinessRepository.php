@@ -161,6 +161,16 @@ class BusinessRepository
         return $business;
     }
 
+    /**
+     * @param int $businessId
+     *
+     * @return Business
+     */
+    public function findById(int $businessId)
+    {
+        return Business::find($businessId);
+    }
+
     public function publishBusiness(int $businessId)
     {
         $business = $this->findById($businessId);
@@ -170,16 +180,6 @@ class BusinessRepository
         new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id);
 
         return $business;
-    }
-
-    /**
-     * @param int $businessId
-     *
-     * @return Business
-     */
-    public function findById(int $businessId)
-    {
-        return Business::find($businessId);
     }
 
     public function unPublishBusiness(int $businessId)
@@ -202,7 +202,8 @@ class BusinessRepository
         $yearFounded,
         $legalStructure,
         $allowReveal,
-        $existingBusiness
+        $existingBusiness,
+        $perPage = 10
     )
     {
         $query = Business::query();
@@ -233,7 +234,7 @@ class BusinessRepository
 
         if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
 
-        return $query->paginate(10, $page);
+        return $query->paginate($perPage, $page);
     }
 
     /**
