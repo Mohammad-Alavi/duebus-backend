@@ -20,7 +20,8 @@ class ProfileTransformer {
             'email'        => $user->email,
             'avatar'       => $user->avatar ? $user->avatar->path : null,
             'is_activated' => $user->is_activated,
-            'point'        => $user->point,
+            'point'        => $user->points,
+            'point_expires_at'        => $user->point_expires_at,
             'unread_messages' => MessageRepository::countUnreadMessages($user->id),
             //'is_superuser' => $user->is_superuser,
 

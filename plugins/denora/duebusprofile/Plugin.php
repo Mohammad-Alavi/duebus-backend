@@ -1,5 +1,6 @@
 <?php namespace Denora\Duebusprofile;
 
+use Carbon\Carbon;
 use RainLab\User\Models\User as UserModel;
 use System\Classes\PluginBase;
 
@@ -18,6 +19,8 @@ class Plugin extends PluginBase {
 
         //  Relate user to [Investor, Entrepreneur, Representative, Transaction, Bookmarked Businesses] objects
         UserModel::extend(function ($model) {
+            $model->addDateAttribute('point_expires_at');
+
             $model->hasOne['investor'] = ['Denora\Duebusprofile\Models\Investor'];
             $model->hasOne['entrepreneur'] = ['Denora\Duebusprofile\Models\Entrepreneur'];
             $model->hasOne['representative'] = ['Denora\Duebusprofile\Models\Representative'];
@@ -35,9 +38,16 @@ class Plugin extends PluginBase {
 
         //  Add methods to user
         UserModel::extend(function($model) {
-            $model->addDynamicMethod('decreasePoints', function($point, $description = '') use ($model) {
-                if ($point > $model->point) return false;
-                $model->point = $model->point - $point;
+            $model->addDynamicMethod('getPointsAttribute', function() use ($model) {
+                if (Carbon::now()->gt($model->point_expires_at)){
+                    $model->point = 0;
+                    $model->save();
+                }
+                return (int)$model->point;
+            });
+            $model->addDynamicMethod('decreasePoints', function($points, $description = '') use ($model) {
+                if ($points > $model->points) return false;
+                $model->point = $model->points - $points;
                 $model->save();
                 return true;
             });
