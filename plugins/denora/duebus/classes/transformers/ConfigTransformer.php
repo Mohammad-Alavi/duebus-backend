@@ -73,6 +73,7 @@ class ConfigTransformer {
                 'reveal_price_with_package' => (int)$settings::get('reveal_price_with_package') ?: self::$default['reveal_price_with_package'],
                 'reveal_price_with_no_package' => (int)$settings::get('reveal_price_with_no_package') ?: self::$default['reveal_price_with_no_package'],
                 'inquiry_price_with_package' => (int)$settings::get('inquiry_price_with_package') ?: self::$default['inquiry_price_with_package'],
+                'inquiry_price_with_no_package' => (int)$settings::get('inquiry_price_with_no_package') ?: self::$default['inquiry_price_with_no_package'],
                 'duebus_promotion_price' => (int)$settings::get('duebus_promotion_price') ?: self::$default['duebus_promotion_price'],
                 'industry_promotion_price' => (int)$settings::get('industry_promotion_price') ?: self::$default['industry_promotion_price'],
             ],
@@ -160,6 +161,7 @@ Once a fleeting idea, today this platform is called DueBus.'
         'reveal_price_with_package' => 1,
         'reveal_price_with_no_package' => 5,
         'inquiry_price_with_package' => 3,
+        'inquiry_price_with_no_package' => 5,
         'duebus_promotion_price' => 10,
         'industry_promotion_price' => 5,
     ];
