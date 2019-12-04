@@ -1,14 +1,12 @@
 <?php namespace Denora\TapCompany\Models;
 
-use Backend\Controllers\Auth;
 use Carbon\Carbon;
-use Denora\Duebus\Classes\Repositories\PackageRepository;
 use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusprofile\Classes\Repositories\UserRepository;
-use Denora\Notification\Classes\Events\WalletChargedEvent;
+use Denora\Inbox\Classes\Repositories\MessageRepository;
+use Denora\Inbox\Classes\Repositories\SessionRepository;
 use Model;
-use RainLab\User\Models\User;
 
 /**
  * Model
@@ -65,6 +63,40 @@ class Transaction extends Model
             case 'reveal':{
                 $price = ConfigTransformer::transform()['prices']['reveal_price_with_no_package'];
                 $businessRepository->revealBusiness($this->user->investor, $this->chargeable_id, $price);
+                break;
+            }
+            case 'inquiry':{
+                $payload = $this->inquiry_payload;
+                $messages = json_decode($payload, true);
+                $businessId = $this->chargeable_id;
+                $business = (new BusinessRepository())->findById($businessId);
+                $receiverId = $business->entrepreneur->user->id;
+
+                //  Return the session if exists and create a new one if not!
+                $session = SessionRepository::find(
+                    $this->user_id,
+                    $receiverId,
+                    $businessId,
+                    'inquiry'
+                ) ?:
+                    SessionRepository::createSession(
+                        $this->user_id,
+                        $receiverId,
+                        $businessId,
+                        'inquiry',
+                        null,
+                        null
+                    );
+
+                //  Create messages
+                foreach ($messages as $message){
+                    MessageRepository::createMessage(
+                        $this->user_id,
+                        $session->id,
+                        $message['title'],
+                        $message['text']
+                    );
+                }
                 break;
             }
         }

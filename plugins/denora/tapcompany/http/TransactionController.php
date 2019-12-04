@@ -31,11 +31,20 @@ class TransactionController extends Controller
         $data = Request::all();
 
         $validator = $this->getStoreValidator($data);
+        if ($validator->fails()) return Response::make($validator->messages(), 400);
 
-        if ($validator->fails())
-            return Response::make($validator->messages(), 400);
+        //  Validate inquiry_payload json
+        $hasInquiryPayload = array_has($data, 'inquiry_payload');
+        if ($hasInquiryPayload) {
+            $inquiryPayload = $data['inquiry_payload'];
+            $inquiryPayloadValidation = $this->validateInquiryPayloadJson($inquiryPayload);
+            if ($inquiryPayloadValidation->fails()) return Response::make($inquiryPayloadValidation->messages(), 400);
+        }
+
 
         $helper = new TapCompanyHelper();
+
+        $inquiryPayload = null;
         if ($data['chargeable'] == 'wallet') {
             $packageRepository = new PackageRepository();
             $package = $packageRepository->findById($data['package_id']);
@@ -63,7 +72,7 @@ class TransactionController extends Controller
             $isViewed = BusinessRepository::isBusinessViewed($user->investor, $business->id);
             $isViewable = $isOwned || $isViewed;
             if ($isViewable) return Response::make(['The business has been already viewed'], 409);
-        }else if ($data['chargeable'] == 'reveal') {
+        } else if ($data['chargeable'] == 'reveal') {
             if (!$user->investor) return Response::make(['You must be an investor'], 400);
             $price = ConfigTransformer::transform()['prices']['reveal_price_with_no_package'];
             $points = 0;
@@ -75,6 +84,18 @@ class TransactionController extends Controller
             $isRevealed = $user->investor->revealed_businesses->contains($business->id);
             $isRevealable = $isOwned || $isRevealed;
             if ($isRevealable) return Response::make(['The business has been already revealed'], 409);
+        } else if ($data['chargeable'] == 'inquiry') {
+            if (!$user->investor) return Response::make(['You must be an investor'], 400);
+            $inquiryPayload = $data['inquiry_payload'];
+            $price = ConfigTransformer::transform()['prices']['inquiry_price_with_no_package'];
+            $price = $price * count(json_decode($inquiryPayload));
+            $points = 0;
+            $chargeableId = $data['business_id'];
+            $business = (new BusinessRepository())->findById($chargeableId);
+
+            // check if the business is not owned
+            $isOwned = $user->id == $business->entrepreneur->user->id;
+            if ($isOwned) return Response::make(['You can not inquiry on your own business'], 409);
         } else {
             return Response::make(['Chargeable is not recognized'], 400);
         }
@@ -92,6 +113,7 @@ class TransactionController extends Controller
             $user->id,
             $data['chargeable'],
             $chargeableId,
+            $inquiryPayload,
             $chargeId,
             $transactionUrl,
             $price,
@@ -116,12 +138,25 @@ class TransactionController extends Controller
             //  General data
             'chargeable' => [
                 'required',
-                Rule::in(['wallet', 'business', 'view', 'reveal']),
+                Rule::in(['wallet', 'business', 'view', 'reveal', 'inquiry']),
             ],
-            "business_id" => 'required_if:chargeable,business|required_if:chargeable,view|required_if:chargeable,reveal',
+            "business_id" => 'required_if:chargeable,business|required_if:chargeable,view|required_if:chargeable,reveal|required_if:chargeable,inquiry',
+            "inquiry_payload" => 'required_if:chargeable,inquiry|json',
             "package_id" => 'required_if:chargeable,==,wallet',
             "redirect_url" => 'required',
         ]);
     }
+
+    private function validateInquiryPayloadJson($json)
+    {
+        $data = ['data' => json_decode($json, true)];
+
+        return Validator::make($data, [
+                'data.*.title' => 'required|string',
+                'data.*.text' => 'required|string',
+            ]
+        );
+    }
+
 
 }

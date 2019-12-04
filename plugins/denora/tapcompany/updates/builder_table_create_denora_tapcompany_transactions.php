@@ -13,6 +13,7 @@ class BuilderTableCreateDenoraTapcompanyTransactions extends Migration {
             $table->integer('user_id');
             $table->string('chargeable');
             $table->integer('chargeable_id');
+            $table->json('inquiry_payload')->nullable();
             $table->string('charge_id')->unique();
             $table->text('payment_url');
             $table->integer('price');
