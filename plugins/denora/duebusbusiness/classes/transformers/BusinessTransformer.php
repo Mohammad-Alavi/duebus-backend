@@ -66,6 +66,7 @@ class BusinessTransformer {
             'is_promoted' => Carbon::now()->lt($business->promotion_expire_date),
             'promotion_industry' => $business->promotion_industry,
             'promotion_expire_date' => $business->promotion_expire_date,
+            'promotion_expires_in_seconds' => self::getTimeDifferenceTillNowInSeconds($business->promotion_expire_date),
 
             'entrepreneur' => EntrepreneurTransformer::transform($business->entrepreneur),
 
@@ -73,5 +74,15 @@ class BusinessTransformer {
             'updated_at' => $business->updated_at,
         ];
 
+    }
+
+    private static function getTimeDifferenceTillNowInSeconds($dateTime): int {
+        if (!$dateTime) return 0;
+
+        $dateTime = Carbon::createFromTimeString($dateTime);
+
+        if (Carbon::now()->gt($dateTime)) return 0;
+
+        return Carbon::now()->diffInSeconds($dateTime);
     }
 }
