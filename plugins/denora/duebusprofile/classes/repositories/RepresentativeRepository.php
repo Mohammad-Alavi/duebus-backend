@@ -118,7 +118,7 @@ class RepresentativeRepository
     {
         $query = Representative::query();
 
-        return $query->paginate(100, $page);
+        return $query->paginate(1000, $page);
     }
 
 
