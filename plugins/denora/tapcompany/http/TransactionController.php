@@ -33,6 +33,14 @@ class TransactionController extends Controller
         $validator = $this->getStoreValidator($data);
         if ($validator->fails()) return Response::make($validator->messages(), 400);
 
+        //  Validate wallet_payload json
+        $hasWalletPayload = array_has($data, 'wallet_payload');
+        if ($hasWalletPayload) {
+            $walletPayload = $data['wallet_payload'];
+            $walletPayloadValidation = $this->validateWalletPayloadJson($walletPayload);
+            if ($walletPayloadValidation->fails()) return Response::make($walletPayloadValidation->messages(), 400);
+        }
+
         //  Validate inquiry_payload json
         $hasInquiryPayload = array_has($data, 'inquiry_payload');
         if ($hasInquiryPayload) {
@@ -44,8 +52,10 @@ class TransactionController extends Controller
 
         $helper = new TapCompanyHelper();
 
+        $walletPayload = null;
         $inquiryPayload = null;
         if ($data['chargeable'] == 'wallet') {
+            $walletPayload = Request::input('wallet_payload', null);
             $packageRepository = new PackageRepository();
             $package = $packageRepository->findById($data['package_id']);
             $price = $package->price;
@@ -113,6 +123,7 @@ class TransactionController extends Controller
             $user->id,
             $data['chargeable'],
             $chargeableId,
+            $walletPayload,
             $inquiryPayload,
             $chargeId,
             $transactionUrl,
@@ -141,6 +152,7 @@ class TransactionController extends Controller
                 Rule::in(['wallet', 'business', 'view', 'reveal', 'inquiry']),
             ],
             "business_id" => 'required_if:chargeable,business|required_if:chargeable,view|required_if:chargeable,reveal|required_if:chargeable,inquiry',
+            "wallet_payload" => 'json',
             "inquiry_payload" => 'required_if:chargeable,inquiry|json',
             "package_id" => 'required_if:chargeable,==,wallet',
             "redirect_url" => 'required',
@@ -154,6 +166,17 @@ class TransactionController extends Controller
         return Validator::make($data, [
                 'data.*.title' => 'required|string',
                 'data.*.text' => 'required|string',
+            ]
+        );
+    }
+
+    private function validateWalletPayloadJson($json)
+    {
+        $data = ['data' => json_decode($json, true)];
+
+        return Validator::make($data, [
+                'data.chargeable_type' => 'required|string',
+                'data.chargeable_id' => 'required|int',
             ]
         );
     }
