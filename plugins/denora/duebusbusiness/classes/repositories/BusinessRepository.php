@@ -72,6 +72,7 @@ class BusinessRepository
      * @param             $logo
      * @param string $name
      *
+     * @param string $businessBrief
      * @param string $industry
      * @param int $yearFounded
      * @param string|null $website
@@ -100,6 +101,7 @@ class BusinessRepository
         int $entrepreneurId,
         $logo,
         string $name,
+        string $businessBrief,
         string $industry,
         $yearFounded,
         $website,
@@ -124,6 +126,7 @@ class BusinessRepository
         $business->entrepreneur_id = $entrepreneurId;
         $business->logo = $logo;
         $business->name = $name;
+        $business->business_brief = $businessBrief;
         $business->industry = $industry;
         $business->year_founded = $yearFounded;
         $business->website = $website;
