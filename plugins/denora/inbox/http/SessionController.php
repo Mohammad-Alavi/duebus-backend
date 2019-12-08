@@ -105,6 +105,7 @@ class SessionController extends Controller
         $validator = Validator::make($data, [
             'page' => 'integer',
             'business_id' => 'integer',
+            'is_read' => 'boolean',
             'type' => [
                 Rule::in(['inquiry', 'meeting request']),
             ],
@@ -116,7 +117,8 @@ class SessionController extends Controller
         $page = Request::input('page', 1);
         $type = Request::input('type', null);
         $business_id = Request::input('business_id', null);
-        $sessions = SessionRepository::paginate($page, $user->id, $type, $business_id);
+        $isRead = Request::input('is_read', null);
+        $sessions = SessionRepository::paginate($page, $user->id, $type, $business_id, $isRead);
 
         return new LengthAwarePaginator(
             SessionsTransformer::transform($sessions, $user),

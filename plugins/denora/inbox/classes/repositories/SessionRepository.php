@@ -54,9 +54,10 @@ class SessionRepository
      * @param int $userId
      * @param null $type
      * @param null $business_id
+     * @param null $isRead
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    static public function paginate(int $page, int $userId, $type = null, $business_id = null)
+    static public function paginate(int $page, int $userId, $type = null, $business_id = null, $isRead = null)
     {
         $query = Session::query();
         $query->where(function ($query) use ($userId) {
@@ -65,6 +66,11 @@ class SessionRepository
         });
         if ($type) $query->where('type', $type);
         if ($business_id) $query->where('business_id', $business_id);
+        if ($isRead !== null)
+            $query->whereHas('messages', function ($q) use ($userId, $isRead) {
+                $q->where('is_read', $isRead);
+            });
+
         $query->orderByDesc('updated_at');
 
         return $query->paginate(10, $page);
