@@ -13,6 +13,7 @@ class BuilderTableCreateDenoraDuebusInvestors extends Migration {
             $table->string('range_of_investment')->nullable();
             $table->integer('user_id')->unique();
             $table->float('invested_on_duebus')->default(0);
+            $table->string('invested_on_duebus_currency_symbol')->default('KWD');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

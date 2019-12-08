@@ -63,6 +63,8 @@ class InvestorRepository {
             $investor->range_of_businesses_invested_in = $data['range_of_businesses_invested_in'];
         if (array_has($data, 'invested_on_duebus'))
             $investor->invested_on_duebus = $data['invested_on_duebus'];
+        if (array_has($data, 'invested_on_duebus_currency_symbol'))
+            $investor->invested_on_duebus_currency_symbol = $data['invested_on_duebus_currency_symbol'];
         if (array_has($data, 'sectors'))
             $investor->sectors()->sync(json_decode($data['sectors']));
 
