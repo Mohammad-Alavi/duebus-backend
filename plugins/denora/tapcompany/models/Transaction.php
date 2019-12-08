@@ -49,6 +49,7 @@ class Transaction extends Model
                 $user = $userRepository->findById($this->chargeable_id);
                 $userRepository->chargeWallet($user->id, $this->points);
                 //  Publish the business if exists
+                $user = $userRepository->findById($this->chargeable_id);
                 $payload = $this->wallet_payload;
                 if ($payload != null) {
                     $payload = json_decode($payload, true);
@@ -56,8 +57,8 @@ class Transaction extends Model
                         case 'business':
                         {
                             $price = ConfigTransformer::transform()['prices']['business_price_with_package'];
-                            $user->decreasePoints($price, 'pay business');
-                            $businessRepository->payBusiness($payload['chargeable_id'], $price);
+                            if ($user->decreasePoints($price, 'pay business'))
+                                $businessRepository->payBusiness($payload['chargeable_id'], $price);
                             break;
                         }
                     }
