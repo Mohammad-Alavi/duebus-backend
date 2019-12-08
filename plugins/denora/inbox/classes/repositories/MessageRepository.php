@@ -32,7 +32,6 @@ class MessageRepository
         return $message;
     }
 
-
     static public function getFirstMessage(int $sessionId)
     {
         $query = Message::query();
@@ -84,12 +83,16 @@ class MessageRepository
         $query->update(['is_read' => true]);
     }
 
-    static public function countUnreadMessages(int $userId, $sessionId = null)
+    static public function countUnreadMessages(int $userId, $sessionId = null, $type = null)
     {
         $query = Message::query();
         $query->where('sender_id', '!=', $userId);
         if ($sessionId !== null) $query->where('session_id', $sessionId);
         $query->where('is_read', false);
+        if ($type !== null)
+            $query->whereHas('session', function ($q) use($type){
+                $q->where('type', $type);
+            });
 
         return $query->count();
     }
