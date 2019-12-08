@@ -30,6 +30,7 @@ class BusinessTransformer {
             'id'                                 => $business->id,
             'logo'                               => $business->logo ? $business->logo->path : null,
             'name'                               => $business->name,
+            'business_brief'                     => $business->business_brief,
             'industry'                           => $business->industry,
             'year_founded'                       => $business->year_founded,
             'website'                            => $business->website,

@@ -119,6 +119,7 @@ class BusinessController extends Controller
             $user->entrepreneur->id,
             array_has($data, 'logo') ? $data['logo'] : null,
             $data['name'],
+            $data['business_brief'],
             $data['industry'],
             $data['year_founded'],
             Request::input('website', null),
@@ -171,6 +172,7 @@ class BusinessController extends Controller
             //  General data
             'logo' => 'nullable|image|max:4096',  //  Size validator is in KB
             'name' => 'required|min:3',
+            'business_brief' => 'required|min:3',
             'industry' => 'required|min:3',
             'year_founded' => 'required|date',
             'website' => 'nullable|url',

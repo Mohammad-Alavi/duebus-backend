@@ -10,6 +10,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->increments('id');
             $table->integer('entrepreneur_id');
             $table->string('name');
+            $table->string('business_brief');
             $table->string('industry');
             $table->date('year_founded');
             $table->string('website')->nullable();
