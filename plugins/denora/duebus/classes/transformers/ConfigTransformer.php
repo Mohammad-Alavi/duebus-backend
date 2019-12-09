@@ -64,6 +64,7 @@ class ConfigTransformer {
                 'roles' => self::getValues($settings::get('roles_in_business_repeater')) ?: self::$default['roles_in_business'],
                 'legal_structures' => self::getValues($settings::get('legal_structures_repeater')) ?: self::$default['legal_structures'],
                 'reasons_of_selling_equity' => self::getValues($settings::get('reasons_of_selling_equity_repeater')) ?: self::$default['reasons_of_selling_equity'],
+                'revenue_ranges' => $settings::get('revenue_ranges_repeater') ?: self::$default['revenue_ranges'],
             ],
             'prices' => [
                 'business_price_with_package' => (int)$settings::get('business_price_with_package') ?: self::$default['business_price_with_package'],
@@ -154,6 +155,33 @@ Once a fleeting idea, today this platform is called DueBus.'
             'Legal',
             'Other',
         ],
+        'revenue_ranges'    => [
+            [
+                'from' => null,
+                'to'  => 1000
+            ],
+            [
+                'from' => 1000,
+                'to'  => 2500
+            ],
+            [
+                'from' => 2500,
+                'to'  => 5000
+            ],
+            [
+                'from' => 5000,
+                'to'  => 10000
+            ],
+            [
+                'from' => 10000,
+                'to'  => 25000
+            ],
+            [
+                'from' => 25000,
+                'to'  => null
+            ],
+        ],
+
         'business_price_with_package' => 15,
         'business_price_with_no_package' => 20,
         'view_price_with_package' => 5,
