@@ -30,6 +30,7 @@ class BusinessTransformer {
             'id'                                 => $business->id,
             'logo'                               => $business->logo ? $business->logo->path : null,
             'name'                               => $business->name,
+            'business_brief'                     => $business->business_brief,
             'industry'                           => $business->industry,
             'year_founded'                       => $business->year_founded,
             'website'                            => $business->website,
@@ -61,9 +62,12 @@ class BusinessTransformer {
 
             'bookmarked_count' => count($business->bookmarked_users),
 
+            'completion_in_percent' => BusinessRepository::getPercentCompletion($business),
+
             'is_promoted' => Carbon::now()->lt($business->promotion_expire_date),
             'promotion_industry' => $business->promotion_industry,
             'promotion_expire_date' => $business->promotion_expire_date,
+            'promotion_expires_in_seconds' => self::getTimeDifferenceTillNowInSeconds($business->promotion_expire_date),
 
             'entrepreneur' => EntrepreneurTransformer::transform($business->entrepreneur),
 
@@ -71,5 +75,15 @@ class BusinessTransformer {
             'updated_at' => $business->updated_at,
         ];
 
+    }
+
+    private static function getTimeDifferenceTillNowInSeconds($dateTime): int {
+        if (!$dateTime) return 0;
+
+        $dateTime = Carbon::createFromTimeString($dateTime);
+
+        if (Carbon::now()->gt($dateTime)) return 0;
+
+        return Carbon::now()->diffInSeconds($dateTime);
     }
 }

@@ -1,6 +1,7 @@
 <?php namespace Denora\Inbox\Http;
 
 use Backend\Classes\Controller;
+use Denora\Duebus\Classes\Transformers\ConfigTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Inbox\Classes\Repositories\MessageRepository;
 use Denora\Inbox\Classes\Repositories\SessionRepository;
@@ -34,8 +35,8 @@ class SessionController extends Controller
             'business_id' => 'required|integer',
             'preferred_date' => 'date',
             'preferred_time' => 'string',
-            'message_title' => 'string',
-            'message_text' => 'required|string',
+            'message_title' => 'array',
+            'message_text' => 'required|array',
             'type' => [
                 'required',
                 Rule::in(['inquiry', 'meeting request']),
@@ -49,16 +50,22 @@ class SessionController extends Controller
         $type = $data['type'];
         $preferredDate = Request::input('preferred_date', null);
         $preferredTime = Request::input('preferred_time', null);
-        $messageTitle = Request::input('message_title', null);
-        $messageText = $data['message_text'];
+        $messageTitles = Request::input('message_title', []);
+        $messageTexts = Request::input('message_text', []);
 
         $business = (new BusinessRepository())->findById($businessId);
         if (!$business) return Response::make(['No element found'], 404);
         $receiverId = $business->entrepreneur->user->id;
 
-        //  TODO: uncomment it for production
+        //  Do not let the user open a session to itself
         if ($user->id == $receiverId) return Response::make(['You can not send a message to yourself'], 400);
 
+        //  If it is an inquiry, user has to  buy it!
+        if ($type == 'inquiry'){
+            $price = ConfigTransformer::transform()['prices']['inquiry_price_with_package'];
+            $price = count($messageTexts) * $price;
+            if (!$user->decreasePoints($price, 'inquiry')) return Response::make(['Not enough points'], 400);
+        }
 
         //  Return the session if exists and create a new one if not!
         $session = SessionRepository::find(
@@ -76,12 +83,14 @@ class SessionController extends Controller
                 $preferredTime
             );
 
-        $message = MessageRepository::createMessage(
-            $user->id,
-            $session->id,
-            $messageTitle,
-            $messageText
-        );
+        for ($i = 0; $i < count($messageTexts); $i++){
+            MessageRepository::createMessage(
+                $user->id,
+                $session->id,
+                empty($messageTitles[$i])?null:$messageTitles[$i],
+                $messageTexts[$i]
+            );
+        }
 
         $session = SessionRepository::findById($session->id);
         return SessionTransformer::transform($session, $user);
@@ -96,6 +105,7 @@ class SessionController extends Controller
         $validator = Validator::make($data, [
             'page' => 'integer',
             'business_id' => 'integer',
+            'is_read' => 'boolean',
             'type' => [
                 Rule::in(['inquiry', 'meeting request']),
             ],
@@ -107,7 +117,8 @@ class SessionController extends Controller
         $page = Request::input('page', 1);
         $type = Request::input('type', null);
         $business_id = Request::input('business_id', null);
-        $sessions = SessionRepository::paginate($page, $user->id, $type, $business_id);
+        $isRead = Request::input('is_read', null);
+        $sessions = SessionRepository::paginate($page, $user->id, $type, $business_id, $isRead);
 
         return new LengthAwarePaginator(
             SessionsTransformer::transform($sessions, $user),

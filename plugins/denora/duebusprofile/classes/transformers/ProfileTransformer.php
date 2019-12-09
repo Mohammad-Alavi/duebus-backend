@@ -20,8 +20,12 @@ class ProfileTransformer {
             'email'        => $user->email,
             'avatar'       => $user->avatar ? $user->avatar->path : null,
             'is_activated' => $user->is_activated,
-            'point'        => $user->point,
-            'unread_messages' => MessageRepository::countUnreadMessages($user->id),
+            'point'        => $user->points,
+            'point_expires_at'        => $user->point_expires_at,
+
+            'unread_all_messages_count' => MessageRepository::countUnreadMessages($user->id),
+            'unread_inquiry_messages_count' => MessageRepository::countUnreadMessages($user->id, null, 'inquiry'),
+            'unread_meeting_request_messages_count' => MessageRepository::countUnreadMessages($user->id, null, 'meeting request'),
             //'is_superuser' => $user->is_superuser,
 
             'entrepreneur_profile'   => $user->entrepreneur ? EntrepreneurTransformer::transform($user->entrepreneur) : null,

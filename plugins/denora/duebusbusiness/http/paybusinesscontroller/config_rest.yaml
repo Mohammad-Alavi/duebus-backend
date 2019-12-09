@@ -4,8 +4,7 @@
 
 # Allowed Rest Actions
 allowedActions:
-  index:
-  update:
+  store:
 
 # Model Class name
-modelClass: Denora\Duebusprofile\Models\Representative
+modelClass: Denora\Duebusbusiness\Models\Business

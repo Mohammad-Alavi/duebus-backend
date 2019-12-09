@@ -77,7 +77,8 @@ class InvestorController extends Controller {
             'range_of_businesses_invested_in' => [
                 Rule::in(ConfigTransformer::transform()['registration_fields']['number_of_businesses']),
             ],
-            'invested_on_duebus' => 'numeric'
+            'invested_on_duebus' => 'numeric',
+            'invested_on_duebus_currency_symbol' => 'string'
         ]);
 
         if ($validator->fails())

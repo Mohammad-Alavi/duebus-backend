@@ -10,6 +10,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->increments('id');
             $table->integer('entrepreneur_id');
             $table->string('name');
+            $table->string('business_brief');
             $table->string('industry');
             $table->date('year_founded');
             $table->string('website')->nullable();
@@ -32,6 +33,7 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->string('promotion_industry')->nullable();
             $table->timestamp('promotion_expire_date')->nullable();
 
+            $table->timestamp('paid_at')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

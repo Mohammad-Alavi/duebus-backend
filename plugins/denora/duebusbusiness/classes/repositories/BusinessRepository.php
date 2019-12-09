@@ -13,11 +13,66 @@ use Illuminate\Support\Facades\DB;
 class BusinessRepository
 {
 
+    public static function isBusinessViewed($investor, int $businessId)
+    {
+        self::removeExpiredViewed();
+
+        $query = InvestorView::query();
+        $query->where('investor_id', $investor->id);
+        $query->where('business_id', $businessId);
+        //$query->whereDate('created_at', '>', Carbon::now()->subHours(2));
+
+        return $query->count() > 0;
+
+    }
+
+    static public function removeExpiredViewed()
+    {
+        InvestorView::query()
+            ->where('created_at', '<=', Carbon::now()->subHours(2))
+            ->delete();
+    }
+
+    public static function getPercentCompletion(Business $business): int
+    {
+        $sum = 0;
+        $fields = [
+            'name',
+            'industry',
+            'year_founded',
+            'website',
+            'allow_reveal',
+            'existing_business',
+            'legal_structure',
+            'your_role_in_business',
+            'reason_of_selling_equity',
+            'business_value',
+            'equity_for_sale',
+            'asking_price',
+            'is_involved_in_any_proceedings',
+            'is_concern_with_business_employees',
+            'is_founder_or_holder_in_debt',
+        ];
+        foreach ($fields as $field) if ($business->$field !== null) $sum++;
+        /*--*/
+        $threeYearsStatement = json_decode($business->three_years_statement, true);
+        $values = array_merge(
+            $threeYearsStatement['latest_operating_performance'],
+            $threeYearsStatement['assets'],
+            $threeYearsStatement['liabilities']
+        );
+        foreach ($values as $value) if ($value !== null) $sum++;
+        /*--*/
+
+        return $sum / (count($fields) + count($values)) * 100;
+    }
+
     /**
      * @param int $entrepreneurId
      * @param             $logo
      * @param string $name
      *
+     * @param string $businessBrief
      * @param string $industry
      * @param int $yearFounded
      * @param string|null $website
@@ -46,6 +101,7 @@ class BusinessRepository
         int $entrepreneurId,
         $logo,
         string $name,
+        string $businessBrief,
         string $industry,
         $yearFounded,
         $website,
@@ -70,6 +126,7 @@ class BusinessRepository
         $business->entrepreneur_id = $entrepreneurId;
         $business->logo = $logo;
         $business->name = $name;
+        $business->business_brief = $businessBrief;
         $business->industry = $industry;
         $business->year_founded = $yearFounded;
         $business->website = $website;
@@ -96,13 +153,13 @@ class BusinessRepository
         return $business;
     }
 
-    public function publishBusiness(int $businessId)
+    public function payBusiness(int $businessId, float $price)
     {
         $business = $this->findById($businessId);
-        $business->is_published = true;
+        $business->paid_at = Carbon::now();
         $business->save();
 
-        new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id);
+        $this->publishBusiness($businessId, $price);
 
         return $business;
     }
@@ -115,6 +172,17 @@ class BusinessRepository
     public function findById(int $businessId)
     {
         return Business::find($businessId);
+    }
+
+    public function publishBusiness(int $businessId, float $price)
+    {
+        $business = $this->findById($businessId);
+        $business->is_published = true;
+        $business->save();
+
+        new BusinessPublishedEvent($business->entrepreneur->user->id, $business->id, $price);
+
+        return $business;
     }
 
     public function unPublishBusiness(int $businessId)
@@ -137,7 +205,8 @@ class BusinessRepository
         $yearFounded,
         $legalStructure,
         $allowReveal,
-        $existingBusiness
+        $existingBusiness,
+        $perPage = 10
     )
     {
         $query = Business::query();
@@ -168,7 +237,7 @@ class BusinessRepository
 
         if ($existingBusiness !== null) $query->where('existing_business', $existingBusiness);
 
-        return $query->paginate(10, $page);
+        return $query->paginate($perPage, $page);
     }
 
     /**
@@ -229,7 +298,6 @@ class BusinessRepository
         $business->delete();
     }
 
-
     public function paginateViewedBusinesses($investor, $page)
     {
         self::removeExpiredViewed();
@@ -238,41 +306,21 @@ class BusinessRepository
             ->paginate(10, $page);
     }
 
-    static public function removeExpiredViewed()
-    {
-        InvestorView::query()
-            ->where('created_at', '<=', Carbon::now()->subHours(2))
-            ->delete();
-    }
-
-    public function viewBusiness($investor, int $businessId)
+    public function viewBusiness($investor, int $businessId, float $price)
     {
         $investorView = new InvestorView();
         $investorView->investor_id = $investor->id;
         $investorView->business_id = $businessId;
         $investorView->save();
 
-        new BusinessViewedEvent($investor->user->id, $businessId);
+        new BusinessViewedEvent($investor->user->id, $businessId, $price);
     }
 
-    public function revealBusiness($investor, int $businessId)
+    public function revealBusiness($investor, int $businessId, float $price)
     {
         $investor->revealed_businesses()->syncWithoutDetaching($businessId);
 
-        new BusinessRevealedEvent($investor->user->id, $businessId);
-    }
-
-    public static function isBusinessViewed($investor, int $businessId)
-    {
-        self::removeExpiredViewed();
-
-        $query = InvestorView::query();
-        $query->where('investor_id', $investor->id);
-        $query->where('business_id', $businessId);
-        //$query->whereDate('created_at', '>', Carbon::now()->subHours(2));
-
-        return $query->count() > 0;
-
+        new BusinessRevealedEvent($investor->user->id, $businessId, $price);
     }
 
     /**

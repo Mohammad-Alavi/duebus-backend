@@ -244,8 +244,14 @@ tabs:
                         span: left
                         required: 1
                         type: text
-        business_price:
-            label: 'Business price'
+        business_price_with_package:
+            label: 'Business price with package'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        business_price_with_no_package:
+            label: 'Business price with no package'
             span: auto
             required: 1
             type: number
@@ -270,6 +276,18 @@ tabs:
             tab: Prices
         reveal_price_with_no_package:
             label: 'Reveal price with no package'
+            span: auto
+            required: 1
+            type: number
+            tab: Prices
+        inquiry_price_with_package:
+            label: 'Inquiry price with package'
+            span: left
+            required: 1
+            type: number
+            tab: Prices
+        inquiry_price_with_no_package:
+            label: 'Inquiry price with no package'
             span: auto
             required: 1
             type: number

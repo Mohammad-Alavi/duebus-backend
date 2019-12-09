@@ -72,7 +72,7 @@ class RevealController extends Controller
         $price = ConfigTransformer::transform()['prices']['reveal_price_with_package'];
         if ($user->decreasePoints($price, 'reveal')){
             //  Add new relation
-            $businessRepository->revealBusiness($user->investor, $businessId);
+            $businessRepository->revealBusiness($user->investor, $businessId, $price);
             //  Show the business
             $business = $businessRepository->findById($businessId);
             return BusinessTransformer::transform($business);

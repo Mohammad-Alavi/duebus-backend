@@ -12,7 +12,7 @@ class Business extends Model {
 
     use \October\Rain\Database\Traits\SoftDelete;
 
-    protected $dates = ['year_founded', 'deleted_at', 'promotion_expire_date'];
+    protected $dates = ['year_founded', 'deleted_at', 'promotion_expire_date', 'paid_at'];
 
     protected $casts = [
         'allow_reveal' => 'boolean',
@@ -70,11 +70,5 @@ class Business extends Model {
     public $attachOne = [
         'logo' => 'System\Models\File'
     ];
-
-    public function getPaidAtAttribute(){
-        $transactionRepository = new TransactionRepository();
-        $transaction = $transactionRepository->findBusinessTransaction($this->id);
-        return $transaction?$transaction->paid_at:null;
-    }
 
 }

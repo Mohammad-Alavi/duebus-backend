@@ -32,23 +32,28 @@ class MessageRepository
         return $message;
     }
 
-    /**
-     * @param int $sessionId
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
-     */
+    static public function getFirstMessage(int $sessionId)
+    {
+        $query = Message::query();
+        $query->where('session_id', '=', $sessionId)
+            ->orderBy('id');
+        return $query->first();
+    }
+
     static public function getLastMessage(int $sessionId)
     {
         $query = Message::query();
         $query->where('session_id', '=', $sessionId)
-            ->latest();
+            ->orderByDesc('id');
         return $query->first();
     }
 
-    static public function getFirstMessage(int $sessionId)
+    static public function getInquiryMessages(int $sessionId)
     {
         $query = Message::query();
         $query->where('session_id', '=', $sessionId);
-        return $query->first();
+        $query->whereNotNull('title');
+        return $query->get();
     }
 
     /**
@@ -78,12 +83,16 @@ class MessageRepository
         $query->update(['is_read' => true]);
     }
 
-    static public function countUnreadMessages(int $userId, $sessionId = null)
+    static public function countUnreadMessages(int $userId, $sessionId = null, $type = null)
     {
         $query = Message::query();
         $query->where('sender_id', '!=', $userId);
         if ($sessionId !== null) $query->where('session_id', $sessionId);
         $query->where('is_read', false);
+        if ($type !== null)
+            $query->whereHas('session', function ($q) use($type){
+                $q->where('type', $type);
+            });
 
         return $query->count();
     }
