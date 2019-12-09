@@ -244,6 +244,30 @@ tabs:
                         span: left
                         required: 1
                         type: text
+        section2:
+            label: 'Filters'
+            span: full
+            type: section
+            tab: 'Business fields'
+        revenue_ranges_repeater:
+            label: 'Revenue range'
+            prompt: 'Add new range'
+            span: full
+            type: repeater
+            tab: 'Business fields'
+            form:
+                fields:
+                    revenue_range_from:
+                        label: From
+                        span: auto
+                        required: 1
+                        type: number
+                    revenue_range_to:
+                        label: To
+                        size: large
+                        span: auto
+                        required: 1
+                        type: number
         business_price_with_package:
             label: 'Business price with package'
             span: auto

@@ -15,6 +15,8 @@ class Settings extends Model {
     public $settingsFields = 'fields.yaml';
 
     public $rules = [
+        'revenue_range_from' => 'nullable|number',
+        'revenue_range_to' => 'nullable|number',
 //        'site_title'                 => 'required',
 //        'site_footer_title'          => 'required',
 //        'home_page_heading_author_1' => 'required',
