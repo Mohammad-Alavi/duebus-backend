@@ -12,6 +12,7 @@ class ItemableTransformer {
 
             'image'       => $itemable->image ? $itemable->image->path : null,
             'description' => $itemable->details->description,
+            'admin_message' => $itemable->details->admin_message,
             'is_verified' => $itemable->details->is_verified === null ? null : (boolean)$itemable->details->is_verified,
             //'details' => ItemTransformer::transform($itemable->details),
 

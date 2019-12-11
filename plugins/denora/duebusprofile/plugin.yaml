@@ -4,3 +4,13 @@ plugin:
     author: Denora
     icon: icon-address-card-o
     homepage: ''
+navigation:
+    verification-menu:
+        label: Verification
+        url: denora/duebusprofile/verifyinvestor
+        icon: icon-life-ring
+        sideMenu:
+            verification-investor-menu:
+                label: 'Verify Investor'
+                url: denora/duebusprofile/verifyinvestor
+                icon: icon-sitemap
