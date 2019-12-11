@@ -25,7 +25,6 @@ class PromotionController extends Controller
     public $restConfig = 'config_rest.yaml';
 
     public function index(){
-        $user = Auth::user();
         $industry = Request::input('industry', null);
         $page = Request::input('page', 1);
 
