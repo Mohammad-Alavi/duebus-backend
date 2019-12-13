@@ -140,6 +140,65 @@ tabs:
                         span: auto
                         required: 1
                         type: textarea
+        section3:
+            label: 'Our Story'
+            span: full
+            type: section
+            tab: 'About Us'
+        our_story_title:
+            label: Title
+            span: full
+            type: text
+            tab: 'About Us'
+        our_story_text:
+            label: Text
+            size: small
+            span: full
+            type: textarea
+            tab: 'About Us'
+        section4:
+            label: Mission
+            span: full
+            type: section
+            tab: 'About Us'
+        mission_title:
+            label: Title
+            span: full
+            type: text
+            tab: 'About Us'
+        mission_text:
+            label: Text
+            size: small
+            span: full
+            type: textarea
+            tab: 'About Us'
+        section5:
+            label: Vision
+            span: full
+            type: section
+            tab: 'About Us'
+        vision_title:
+            label: Title
+            span: full
+            type: text
+            tab: 'About Us'
+        vision_text:
+            label: Text
+            size: small
+            span: full
+            type: textarea
+            tab: 'About Us'
+        section6:
+            label: 'Privacy Policy'
+            span: full
+            type: section
+            tab: 'About Us'
+        privacy_policy_text:
+            label: Text
+            size: small
+            span: full
+            type: textarea
+            tab: 'About Us'
         range_of_investments_repeater:
             label: 'Range of investments'
             prompt: 'Add new range'
@@ -245,7 +304,7 @@ tabs:
                         required: 1
                         type: text
         section2:
-            label: 'Filters'
+            label: Filters
             span: full
             type: section
             tab: 'Business fields'

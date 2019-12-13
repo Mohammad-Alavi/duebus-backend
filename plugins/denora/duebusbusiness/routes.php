@@ -1,11 +1,16 @@
 <?php
 
 use Denora\Duebusbusiness\Http\BusinessController;
+use Denora\Duebusbusiness\Http\PromotionController;
 
 Route::group(['prefix' => 'api/v1'], function () {
 
     Route::get('guest/business', function (){
         return (new BusinessController())->index();
+    });
+
+    Route::get('guest/promotion', function (){
+        return (new PromotionController())->index();
     });
 
 
