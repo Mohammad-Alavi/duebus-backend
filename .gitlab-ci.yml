@@ -59,8 +59,8 @@ build:
 permissions:
   stage: permissions
   script:
-    - sudo chmod -R 775 $SITE_DIR
-    - sudo chown -R admin:admin $SITE_DIR
+#    - sudo chmod -R 775 $SITE_DIR
+    - sudo chown -R admin $SITE_DIR
 #    - sudo chmod -R 775 $SITE_DIR/storage
 #    - sudo chown -R admin:admin $SITE_DIR/storage
   only:
