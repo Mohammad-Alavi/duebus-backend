@@ -385,3 +385,228 @@ tabs:
             span: right
             type: number
             tab: Prices
+        section7:
+            label: 'Become Investor'
+            span: full
+            type: section
+            tab: Hints
+        hint_investor_interested_in_sectors:
+            label: 'Sectors you are interested in'
+            span: full
+            type: text
+            tab: Hints
+        hint_investor_range_of_investment:
+            label: 'Range of investment'
+            span: full
+            type: text
+            tab: Hints
+        hint_businesses_invested_in:
+            label: 'Number of businesses invested in'
+            span: full
+            type: text
+            tab: Hints
+        section8:
+            label: 'Become Entrepreneur'
+            span: full
+            type: section
+            tab: Hints
+        hint_experience:
+            label: Experience
+            span: full
+            type: text
+            tab: Hints
+        hint_education:
+            label: Education
+            span: full
+            type: text
+            tab: Hints
+        section9:
+            label: 'Become Representative'
+            span: full
+            type: section
+            tab: Hints
+        hint_representative_interested_in_sectors:
+            label: 'Sectors you are interested in'
+            span: full
+            type: text
+            tab: Hints
+        hint_client_represent:
+            label: 'Number of clients you represent'
+            span: full
+            type: text
+            tab: Hints
+        hint_interested_in:
+            label: 'Interested in'
+            span: full
+            type: text
+            tab: Hints
+        hint_representative_range_of_investment:
+            label: 'Range of investment'
+            span: full
+            type: text
+            tab: Hints
+        section10:
+            label: 'Add Business'
+            span: full
+            type: section
+            tab: Hints
+        hint_business_name:
+            label: 'Business name'
+            span: full
+            type: text
+            tab: Hints
+        hint_industry:
+            label: 'Industry'
+            span: full
+            type: text
+            tab: Hints
+        hint_year_founded:
+            label: 'Year founded'
+            span: full
+            type: text
+            tab: Hints
+        hint_website:
+            label: 'Website'
+            span: full
+            type: text
+            tab: Hints
+        hint_social_media:
+            label: 'Social media accounts'
+            span: full
+            type: text
+            tab: Hints
+        hint_allow_reveal_name:
+            label: 'Allow to reveal name'
+            span: full
+            type: text
+            tab: Hints
+        hint_equity_holders:
+            label: 'Equity holders'
+            span: full
+            type: text
+            tab: Hints
+        hint_business_value:
+            label: 'Business value'
+            span: full
+            type: text
+            tab: Hints
+        hint_equity_for_sale:
+            label: 'Equity for sale'
+            span: full
+            type: text
+            tab: Hints
+        hint_legal_proceedings:
+            label: 'Legal proceedings'
+            span: full
+            type: text
+            tab: Hints
+        hint_concern_with_business_employees:
+            label: 'Concern with business employees'
+            span: full
+            type: text
+            tab: Hints
+        hint_inequity_holder_in_debt:
+            label: 'Inequity holder in debt '
+            span: full
+            type: text
+            tab: Hints
+        section11:
+            label: 'Add Business / Latest operation performance'
+            span: full
+            type: section
+            tab: Hints
+        hint_revenue:
+            label: 'Revenue'
+            span: full
+            type: text
+            tab: Hints
+        hint_cogs:
+            label: 'Cogs'
+            span: full
+            type: text
+            tab: Hints
+        hint_salaries:
+            label: 'Salaries'
+            span: full
+            type: text
+            tab: Hints
+        hint_Operating_expenses:
+            label: 'Operating expenses'
+            span: full
+            type: text
+            tab: Hints
+        hint_ebitda:
+            label: 'Ebitda'
+            span: full
+            type: text
+            tab: Hints
+        hint_ebit:
+            label: 'Ebit'
+            span: full
+            type: text
+            tab: Hints
+        hint_net_profit:
+            label: 'Net profit'
+            span: full
+            type: text
+            tab: Hints
+        section12:
+            label: 'Add Business / Assets'
+            span: full
+            type: section
+            tab: Hints
+        hint_cash_and_equivalents:
+            label: 'Cash and equivalents'
+            span: full
+            type: text
+            tab: Hints
+        hint_account_receivable:
+            label: 'Account receivable'
+            span: full
+            type: text
+            tab: Hints
+        hint_inventory:
+            label: 'Inventory'
+            span: full
+            type: text
+            tab: Hints
+        hint_tangible_assets:
+            label: 'Tangible assets'
+            span: full
+            type: text
+            tab: Hints
+        hint_intangible_assets:
+            label: 'Intangible assets'
+            span: full
+            type: text
+            tab: Hints
+        hint_financial_assets:
+            label: 'Financial assets'
+            span: full
+            type: text
+            tab: Hints
+        section13:
+            label: 'Add Business / Liabilities'
+            span: full
+            type: section
+            tab: Hints
+        hint_account_payable:
+            label: 'Account payable'
+            span: full
+            type: text
+            tab: Hints
+        hint_other_current_liabilities:
+            label: 'Other current liabilities'
+            span: full
+            type: text
+            tab: Hints
+        hint_long_term_liabilities:
+            label: 'Long term liabilities(DEBT)'
+            span: full
+            type: text
+            tab: Hints
+        hint_equity:
+            label: 'Equity'
+            span: full
+            type: text
+            tab: Hints
