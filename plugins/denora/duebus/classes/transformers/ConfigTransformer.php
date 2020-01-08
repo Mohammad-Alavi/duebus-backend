@@ -136,6 +136,8 @@ Once a fleeting idea, today this platform is called DueBus.'
         'inquiry_price_with_no_package' => 5,
         'duebus_promotion_price' => 10,
         'industry_promotion_price' => 5,
+
+        'hint' => 'This hint helps you enter the data'
     ];
 
     /**
@@ -226,6 +228,60 @@ Once a fleeting idea, today this platform is called DueBus.'
                 'inquiry_price_with_no_package' => (int)$settings::get('inquiry_price_with_no_package') ?: self::$default['inquiry_price_with_no_package'],
                 'duebus_promotion_price' => (int)$settings::get('duebus_promotion_price') ?: self::$default['duebus_promotion_price'],
                 'industry_promotion_price' => (int)$settings::get('industry_promotion_price') ?: self::$default['industry_promotion_price'],
+            ],
+            'hints' => [
+                'become_investor' => [
+                    'interested_in_sectors' => $settings::get('hint_investor_interested_in_sectors') ?: self::$default['hint'],
+                    'range_of_investment' => $settings::get('hint_investor_range_of_investment') ?: self::$default['hint'],
+                    'business_invested_in' => $settings::get('hint_businesses_invested_in') ?: self::$default['hint'],
+                ],
+                'become_entrepreneur' => [
+                    'experience' => $settings::get('hint_experience') ?: self::$default['hint'],
+                    'education' => $settings::get('hint_education') ?: self::$default['hint'],
+                ],
+                'become_representative' => [
+                    'interested_in_sectors' => $settings::get('hint_representative_interested_in_sectors') ?: self::$default['hint'],
+                    'client_represent' => $settings::get('hint_client_represent') ?: self::$default['hint'],
+                    'interested_in' => $settings::get('hint_interested_in') ?: self::$default['hint'],
+                    'range_of_investment' => $settings::get('hint_representative_range_of_investment') ?: self::$default['hint'],
+                ],
+                'add_business' => [
+                    'business_name' => $settings::get('hint_business_name') ?: self::$default['hint'],
+                    'industry' => $settings::get('hint_industry') ?: self::$default['hint'],
+                    'year_founded' => $settings::get('hint_year_founded') ?: self::$default['hint'],
+                    'website' => $settings::get('hint_website') ?: self::$default['hint'],
+                    'social_media' => $settings::get('hint_social_media') ?: self::$default['hint'],
+                    'allow_reveal_name' => $settings::get('hint_allow_reveal_name') ?: self::$default['hint'],
+                    'equity_holders' => $settings::get('hint_equity_holders') ?: self::$default['hint'],
+                    'business_value' => $settings::get('hint_business_value') ?: self::$default['hint'],
+                    'equity_for_sale' => $settings::get('hint_equity_for_sale') ?: self::$default['hint'],
+                    'legal_proceedings' => $settings::get('hint_legal_proceedings') ?: self::$default['hint'],
+                    'concern_with_business_employees' => $settings::get('hint_concern_with_business_employees') ?: self::$default['hint'],
+                    'inequity_holder_in_debt' => $settings::get('hint_inequity_holder_in_debt') ?: self::$default['hint'],
+                    'latest_operation_performance' => [
+                        'revenue' => $settings::get('hint_revenue') ?: self::$default['hint'],
+                        'cogs' => $settings::get('hint_cogs') ?: self::$default['hint'],
+                        'salaries' => $settings::get('hint_salaries') ?: self::$default['hint'],
+                        'operating_expenses' => $settings::get('hint_operating_expenses') ?: self::$default['hint'],
+                        'ebitda' => $settings::get('hint_ebitda') ?: self::$default['hint'],
+                        'ebit' => $settings::get('hint_ebit') ?: self::$default['hint'],
+                        'net_profit' => $settings::get('hint_net_profit') ?: self::$default['hint'],
+                    ],
+                    'assets' => [
+                        'cash_and_equivalents' => $settings::get('hint_cash_and_equivalents') ?: self::$default['hint'],
+                        'account_receivable' => $settings::get('hint_account_receivable') ?: self::$default['hint'],
+                        'inventory' => $settings::get('hint_inventory') ?: self::$default['hint'],
+                        'tangible_assets' => $settings::get('hint_tangible_assets') ?: self::$default['hint'],
+                        'intangible_assets' => $settings::get('hint_intangible_assets') ?: self::$default['hint'],
+                        'financial_assets' => $settings::get('hint_financial_assets') ?: self::$default['hint'],
+                    ],
+                    'liabilities' => [
+                        'account_payable' => $settings::get('hint_account_payable') ?: self::$default['hint'],
+                        'other_current_liabilities' => $settings::get('hint_other_current_liabilities') ?: self::$default['hint'],
+                        'long_term_liabilities' => $settings::get('hint_long_term_liabilities') ?: self::$default['hint'],
+                        'equity' => $settings::get('hint_equity') ?: self::$default['hint'],
+                    ],
+                ],
             ],
         ];
 
