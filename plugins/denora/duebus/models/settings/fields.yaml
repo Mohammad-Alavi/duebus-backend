@@ -530,7 +530,7 @@ tabs:
             span: full
             type: text
             tab: Hints
-        hint_Operating_expenses:
+        hint_operating_expenses:
             label: 'Operating expenses'
             span: full
             type: text
