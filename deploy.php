@@ -48,8 +48,8 @@ task('october:up', function () {
 after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
-before('deploy:symlink', 'artisan:migrate');
+before('deploy:symlink', 'october:up');
 
 // Migrate using OctoberCMS up command after Laravel migrate
-after('artisan:migrate', 'october:up');
+//after('artisan:migrate', 'october:up');
 
