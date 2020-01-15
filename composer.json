@@ -39,14 +39,15 @@
         "october/cms": "~1.0",
         "laravel/framework": "5.5.*",
         "wikimedia/composer-merge-plugin": "dev-master",
-        "laravel/homestead": "^7.20",
         "ext-json": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.7",
         "phpunit/phpunit": "~5.7",
         "phpunit/phpunit-selenium": "~1.2",
-        "meyfa/phpunit-assert-gd": "1.1.0"
+        "meyfa/phpunit-assert-gd": "1.1.0",
+        "deployer/deployer": "^6.7",
+        "laravel/homestead": "^7.20"
     },
     "autoload-dev": {
         "classmap": [
