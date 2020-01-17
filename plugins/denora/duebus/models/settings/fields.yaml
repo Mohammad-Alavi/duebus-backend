@@ -264,6 +264,22 @@ tabs:
             span: full
             type: section
             tab: 'Business fields'
+        industries_repeater:
+            label: Industries
+            prompt: 'Add new industry'
+            span: full
+            type: repeater
+            tab: 'Business fields'
+            form:
+                fields:
+                    label:
+                        label: Label
+                        span: auto
+                        type: text
+                    color:
+                        label: Color
+                        span: auto
+                        type: colorpicker
         roles_in_business_repeater:
             label: 'Roles in business'
             prompt: 'Add new role'
@@ -456,7 +472,7 @@ tabs:
             type: text
             tab: Hints
         hint_industry:
-            label: 'Industry'
+            label: Industry
             span: full
             type: text
             tab: Hints
@@ -466,7 +482,7 @@ tabs:
             type: text
             tab: Hints
         hint_website:
-            label: 'Website'
+            label: Website
             span: full
             type: text
             tab: Hints
@@ -516,17 +532,17 @@ tabs:
             type: section
             tab: Hints
         hint_revenue:
-            label: 'Revenue'
+            label: Revenue
             span: full
             type: text
             tab: Hints
         hint_cogs:
-            label: 'Cogs'
+            label: Cogs
             span: full
             type: text
             tab: Hints
         hint_salaries:
-            label: 'Salaries'
+            label: Salaries
             span: full
             type: text
             tab: Hints
@@ -536,12 +552,12 @@ tabs:
             type: text
             tab: Hints
         hint_ebitda:
-            label: 'Ebitda'
+            label: Ebitda
             span: full
             type: text
             tab: Hints
         hint_ebit:
-            label: 'Ebit'
+            label: Ebit
             span: full
             type: text
             tab: Hints
@@ -566,7 +582,7 @@ tabs:
             type: text
             tab: Hints
         hint_inventory:
-            label: 'Inventory'
+            label: Inventory
             span: full
             type: text
             tab: Hints
@@ -606,7 +622,7 @@ tabs:
             type: text
             tab: Hints
         hint_equity:
-            label: 'Equity'
+            label: Equity
             span: full
             type: text
             tab: Hints
