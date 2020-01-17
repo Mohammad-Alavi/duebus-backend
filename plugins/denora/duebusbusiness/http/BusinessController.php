@@ -173,7 +173,10 @@ class BusinessController extends Controller
             'logo' => 'nullable|image|max:4096',  //  Size validator is in KB
             'name' => 'required|min:3',
             'business_brief' => 'required|min:3',
-            'industry' => 'required|min:3',
+            'industry' => [
+                'required',
+                Rule::in(array_column(ConfigTransformer::transform()['business_fields']['industries'], 'label'))
+            ],
             'year_founded' => 'required|date',
             'website' => 'nullable|url',
             'allow_reveal' => 'required|boolean',

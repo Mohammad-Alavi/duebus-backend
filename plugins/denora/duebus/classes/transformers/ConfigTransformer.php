@@ -82,6 +82,28 @@ Once a fleeting idea, today this platform is called DueBus.'
             'Investing',
             'Funding/Selling a Business',
         ],
+        'industries' => [
+            [
+                'label' => "Industry 1",
+                'color' => "#1abc9c"
+            ],
+            [
+                'label' => "Industry 2",
+                'color' => "#2b3e50"
+            ],
+            [
+                'label' => "Industry 3",
+                'color' => "#f1c40f"
+            ],
+            [
+                'label' => "Industry 4",
+                'color' => "#2980b9"
+            ],
+            [
+                'label' => "Industry 5",
+                'color' => "#c0392b"
+            ],
+        ],
         'roles_in_business' => [
             'Founder',
             'Co-Founder',
@@ -212,6 +234,7 @@ Once a fleeting idea, today this platform is called DueBus.'
             ],
 
             'business_fields' => [
+                'industries' => $settings::get('industries_repeater') ?: self::$default['industries'],
                 'roles' => self::getValues($settings::get('roles_in_business_repeater')) ?: self::$default['roles_in_business'],
                 'legal_structures' => self::getValues($settings::get('legal_structures_repeater')) ?: self::$default['legal_structures'],
                 'reasons_of_selling_equity' => self::getValues($settings::get('reasons_of_selling_equity_repeater')) ?: self::$default['reasons_of_selling_equity'],
