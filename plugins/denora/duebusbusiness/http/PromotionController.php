@@ -25,10 +25,19 @@ class PromotionController extends Controller
     public $restConfig = 'config_rest.yaml';
 
     public function index(){
+
+        $validator = Validator::make(Request::all(), [
+            'existing' => 'boolean',
+        ]);
+
+        if ($validator->fails()) return Response::make($validator->messages(), 400);
+
+
         $industry = Request::input('industry', null);
         $page = Request::input('page', 1);
+        $existing = Request::input('existing', null);
 
-        $businesses = PromotionRepository::paginate($page, $industry);
+        $businesses = PromotionRepository::paginate($page, $industry, $existing);
 
         return new LengthAwarePaginator(
             BusinessesTransformer::transform($businesses),
