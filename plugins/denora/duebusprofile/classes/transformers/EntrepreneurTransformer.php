@@ -16,6 +16,8 @@ class EntrepreneurTransformer {
             'educations'  => $entrepreneur->educations ?json_decode($entrepreneur->educations): [],
             'experiences' => $entrepreneur->experiences ?json_decode($entrepreneur->experiences): [],
 
+            'is_verified' => $entrepreneur->businesses()->count() - $entrepreneur->businesses()->unverified()->count() > 0
+
             //'created_at' => $entrepreneur->created_at,
             //'updated_at' => $entrepreneur->updated_at,
         ];
