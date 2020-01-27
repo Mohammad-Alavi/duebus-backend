@@ -1,0 +1,73 @@
+fields:
+    user:
+        label: 'Investor Name'
+        nameFrom: name
+        descriptionFrom: description
+        select: name
+        span: auto
+        readOnly: 1
+        type: relation
+    section1:
+        label: 'ID Card'
+        span: full
+        type: section
+    'verification[identification][image]':
+        label: image
+        mode: image
+        imageWidth: '200'
+        imageHeight: '200'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: fileupload
+    'verification[identification][details][description]':
+        label: 'Description user set for this document'
+        span: auto
+        disabled: 0
+        readOnly: 1
+        type: text
+    'verification[identification][details][admin_message]':
+        label: 'Admin message (usually why this document was not verified)'
+        size: small
+        span: right
+        type: textarea
+    'verification[identification][details][is_verified]':
+        label: 'is ID Card verified?'
+        span: left
+        type: switch
+    section2:
+        label: Passport
+        span: full
+        type: section
+    'verification[passport][image]':
+        label: image
+        mode: image
+        imageWidth: '200'
+        imageHeight: '200'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: fileupload
+    'verification[passport][details][description]':
+        label: 'Description user set for this document'
+        span: right
+        disabled: 0
+        readOnly: 1
+        type: text
+    'verification[passport][details][admin_message]':
+        label: 'Admin message (usually why this document was not verified)'
+        size: small
+        span: right
+        type: textarea
+    'verification[passport][details][is_verified]':
+        label: 'is Passport verified?'
+        span: left
+        type: switch

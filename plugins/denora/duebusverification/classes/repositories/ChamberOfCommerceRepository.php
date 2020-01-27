@@ -16,37 +16,37 @@ class ChamberOfCommerceRepository
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      *
      * @return mixed
      */
     static public function createChamberOfCommerce(
-        $entrepreneurVerification
+        $businessVerification
     )
     {
         $chamberOfCommerce = new ChamberOfCommerce();
-        $entrepreneurVerification->chamber_of_commerce()->save($chamberOfCommerce);
+        $businessVerification->chamber_of_commerce()->save($chamberOfCommerce);
 
         //  Create an Item(details) and attach to this model
         ItemRepository::createItem($chamberOfCommerce);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      * @param $image
      * @param $description
      *
      * @return mixed
      */
-    static public function updateChamberOfCommerce($entrepreneurVerification, $image, $description)
+    static public function updateChamberOfCommerce($businessVerification, $image, $description)
     {
-        $chamberOfCommerce = $entrepreneurVerification->chamber_of_commerce;
+        $chamberOfCommerce = $businessVerification->chamber_of_commerce;
         $chamberOfCommerce->image = $image;
-        $entrepreneurVerification->chamber_of_commerce()->save($chamberOfCommerce);
+        $businessVerification->chamber_of_commerce()->save($chamberOfCommerce);
         ItemRepository::updateItem($chamberOfCommerce, $description);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 }

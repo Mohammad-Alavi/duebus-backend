@@ -1,6 +1,5 @@
 <?php namespace Denora\Duebusverification\Classes\Repositories;
 
-
 use Denora\Duebusverification\Models\ManagingPartnerID;
 
 class ManagingPartnerIDRepository
@@ -17,37 +16,37 @@ class ManagingPartnerIDRepository
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      *
      * @return mixed
      */
     static public function createManagingPartnerID(
-        $entrepreneurVerification
+        $businessVerification
     )
     {
         $managingPartnerID = new ManagingPartnerID();
-        $entrepreneurVerification->id_of_managing_partner()->save($managingPartnerID);
+        $businessVerification->id_of_managing_partner()->save($managingPartnerID);
 
         //  Create an Item(details) and attach to this model
         ItemRepository::createItem($managingPartnerID);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      * @param $image
      * @param $description
      *
      * @return mixed
      */
-    static public function updateManagingPartnerID($entrepreneurVerification, $image, $description)
+    static public function updateManagingPartnerID($businessVerification, $image, $description)
     {
-        $managingPartnerID = $entrepreneurVerification->id_of_managing_partner;
+        $managingPartnerID = $businessVerification->id_of_managing_partner;
         $managingPartnerID->image = $image;
-        $entrepreneurVerification->id_of_managing_partner()->save($managingPartnerID);
+        $businessVerification->id_of_managing_partner()->save($managingPartnerID);
         ItemRepository::updateItem($managingPartnerID, $description);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 }

@@ -1,0 +1,10 @@
+name: VerifyInvestor
+form: $/denora/duebusprofile/models/investor/fields.yaml
+modelClass: Denora\Duebusprofile\Models\Investor
+defaultRedirect: denora/duebusprofile/verifyinvestor
+create:
+    redirect: 'denora/duebusprofile/verifyinvestor/update/:id'
+    redirectClose: denora/duebusprofile/verifyinvestor
+update:
+    redirect: denora/duebusprofile/verifyinvestor
+    redirectClose: denora/duebusprofile/verifyinvestor

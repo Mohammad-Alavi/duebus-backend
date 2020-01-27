@@ -1,0 +1,17 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    investor_user:
+        label: name
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: user
+    'verification[is_verified]':
+        label: 'is verified'
+        type: switch
+        sortable: true
