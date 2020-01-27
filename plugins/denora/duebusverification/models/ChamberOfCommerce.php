@@ -30,7 +30,7 @@ class ChamberOfCommerce extends Model {
     ];
 
     public $belongsTo = [
-        'entrepreneur_verification' => 'Denora\Duebusverification\Models\EntrepreneurVerification'
+        'business_verification' => 'Denora\Duebusverification\Models\BusinessVerification'
     ];
 
 }

@@ -7,4 +7,4 @@ allowedActions:
     store:
 
 # Model Class name
-modelClass: Denora\Duebusverification\Models\EntrepreneurVerification
+modelClass: Denora\Duebusverification\Models\BusinessVerification

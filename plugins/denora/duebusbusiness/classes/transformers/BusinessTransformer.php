@@ -4,6 +4,7 @@ use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Models\Business;
 use Denora\Duebusprofile\Classes\Transformers\EntrepreneurTransformer;
 use Denora\Duebusprofile\Models\InvestorView;
+use Denora\Duebusverification\Classes\Transformers\BusinessVerificationTransformer;
 use Illuminate\Support\Carbon;
 use RainLab\User\Facades\Auth;
 
@@ -70,6 +71,9 @@ class BusinessTransformer {
             'promotion_expires_in_seconds' => self::getTimeDifferenceTillNowInSeconds($business->promotion_expire_date),
 
             'entrepreneur' => EntrepreneurTransformer::transform($business->entrepreneur),
+
+            'verification' => BusinessVerificationTransformer::transform($business->verification),
+            'is_verified'  => $business->verification->is_verified,
 
             'created_at' => $business->created_at,
             'updated_at' => $business->updated_at,

@@ -16,37 +16,37 @@ class CommercialLicenseRepository
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      *
      * @return mixed
      */
     static public function createCommercialLicense(
-        $entrepreneurVerification
+        $businessVerification
     )
     {
         $commercialLicense = new CommercialLicense();
-        $entrepreneurVerification->commercial_license()->save($commercialLicense);
+        $businessVerification->commercial_license()->save($commercialLicense);
 
         //  Create an Item(details) and attach to this model
         ItemRepository::createItem($commercialLicense);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      * @param $image
      * @param $description
      *
      * @return mixed
      */
-    static public function updateCommercialLicense($entrepreneurVerification, $image, $description)
+    static public function updateCommercialLicense($businessVerification, $image, $description)
     {
-        $commercialLicense = $entrepreneurVerification->commercial_license;
+        $commercialLicense = $businessVerification->commercial_license;
         $commercialLicense->image = $image;
-        $entrepreneurVerification->commercial_license()->save($commercialLicense);
+        $businessVerification->commercial_license()->save($commercialLicense);
         ItemRepository::updateItem($commercialLicense, $description);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 }

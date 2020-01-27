@@ -3,6 +3,7 @@
 use Denora\Duebusbusiness\Models\Business;
 use Denora\Duebusprofile\Classes\Repositories\RepresentativeRepository;
 use Denora\Duebusprofile\Models\InvestorView;
+use Denora\Duebusverification\Classes\Repositories\BusinessVerificationRepository;
 use Denora\Notification\Classes\Events\BusinessCreatedEvent;
 use Denora\Notification\Classes\Events\BusinessPublishedEvent;
 use Denora\Notification\Classes\Events\BusinessRevealedEvent;
@@ -147,6 +148,9 @@ class BusinessRepository
         $business->is_published = $isPublished;
 
         $business->save();
+
+        //  Create a verification model attached to business
+        BusinessVerificationRepository::createBusinessVerification($business);
 
         new BusinessCreatedEvent($business->entrepreneur->user->id, $business->id);
 

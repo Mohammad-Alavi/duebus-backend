@@ -16,37 +16,37 @@ class AssociationArticleRepository
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      *
      * @return mixed
      */
     static public function createAssociationArticle(
-        $entrepreneurVerification
+        $businessVerification
     )
     {
         $associationArticle = new AssociationArticle();
-        $entrepreneurVerification->article_of_association()->save($associationArticle);
+        $businessVerification->article_of_association()->save($associationArticle);
 
         //  Create an Item(details) and attach to this model
         ItemRepository::createItem($associationArticle);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 
     /**
-     * @param $entrepreneurVerification
+     * @param $businessVerification
      * @param $image
      * @param $description
      *
      * @return mixed
      */
-    static public function updateAssociationArticle($entrepreneurVerification, $image, $description)
+    static public function updateAssociationArticle($businessVerification, $image, $description)
     {
-        $associationArticle = $entrepreneurVerification->article_of_association;
+        $associationArticle = $businessVerification->article_of_association;
         $associationArticle->image = $image;
-        $entrepreneurVerification->article_of_association()->save($associationArticle);
+        $businessVerification->article_of_association()->save($associationArticle);
         ItemRepository::updateItem($associationArticle, $description);
 
-        return $entrepreneurVerification;
+        return $businessVerification;
     }
 }

@@ -38,6 +38,10 @@ class Business extends Model {
     public $rules = [
     ];
 
+    public $hasOne = [
+        'verification' => ['Denora\Duebusverification\Models\BusinessVerification',]
+    ];
+
     public $belongsToMany = [
         'viewed_investors' => [
             'Denora\Duebusprofile\Models\Investor',
