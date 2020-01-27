@@ -18,7 +18,7 @@ class PromotionRepository
         if ($existing !== null)
             $query->where('existing_business', $existing);
 
-        return $query->paginate(10, $page);
+        return $query->inRandomOrder()->paginate(10, $page);
     }
 
     static private function getAllPromotions($industry = null)
