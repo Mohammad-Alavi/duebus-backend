@@ -11,12 +11,12 @@ class BuilderTableCreateDenoraDuebusverificationChamberOfCommerces extends Migra
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('entrepreneur_verification_id');
+            $table->integer('business_verification_id');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
     }
-    
+
     public function down()
     {
         Schema::dropIfExists('denora_duebusverification_chamber_of_commerces');

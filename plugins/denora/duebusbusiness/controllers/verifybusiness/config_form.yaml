@@ -1,0 +1,10 @@
+name: VerifyBusiness
+form: $/denora/duebusbusiness/models/business/fields.yaml
+modelClass: Denora\Duebusbusiness\Models\Business
+defaultRedirect: denora/duebusbusiness/verifybusiness
+create:
+    redirect: 'denora/duebusbusiness/verifybusiness/update/:id'
+    redirectClose: denora/duebusbusiness/verifybusiness
+update:
+    redirect: denora/duebusbusiness/verifybusiness
+    redirectClose: denora/duebusbusiness/verifybusiness

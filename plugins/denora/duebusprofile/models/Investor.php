@@ -50,4 +50,18 @@ class Investor extends Model {
     public $hasOne = [
         'verification' => ['Denora\Duebusverification\Models\InvestorVerification',]
     ];
+
+    public function scopeUnverified($query)
+    {
+        return
+            $query
+                ->whereHas('verification.passport.details', function ($q) {
+                    $q->where('is_verified', false);
+                })
+                ->orWhereHas('verification.identification.details', function ($q) {
+                    $q->where('is_verified', false);
+                })
+            ;
+    }
+
 }

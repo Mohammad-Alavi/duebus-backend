@@ -12,6 +12,7 @@ class BuilderTableCreateDenoraDuebusverificationItems extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->text('description')->nullable();
+            $table->text('admin_message')->nullable();
             $table->boolean('is_verified')->nullable()->default(0);
             $table->integer('itemable_id');
             $table->string('itemable_type');
@@ -19,7 +20,7 @@ class BuilderTableCreateDenoraDuebusverificationItems extends Migration
             $table->timestamp('updated_at')->nullable();
         });
     }
-    
+
     public function down()
     {
         Schema::dropIfExists('denora_duebusverification_items');

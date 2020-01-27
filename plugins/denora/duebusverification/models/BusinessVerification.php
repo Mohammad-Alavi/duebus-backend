@@ -6,7 +6,7 @@ use October\Rain\Database\Traits\Validation;
 /**
  * Model
  */
-class EntrepreneurVerification extends Model {
+class BusinessVerification extends Model {
 
     use Validation;
 
@@ -14,7 +14,7 @@ class EntrepreneurVerification extends Model {
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'denora_duebusverification_entrepreneurverification';
+    public $table = 'denora_duebusverification_businessverification';
 
     /**
      * @var array Validation rules
@@ -23,7 +23,7 @@ class EntrepreneurVerification extends Model {
     ];
 
     public $belongsTo = [
-        'entrepreneur' => ['Denora\Duebusprofile\Models\Entrepreneur'],
+        'business' => ['Denora\Duebusbusiness\Models\Business'],
     ];
 
     public $hasOne = [

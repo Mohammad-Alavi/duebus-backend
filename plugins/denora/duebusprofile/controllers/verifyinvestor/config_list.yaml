@@ -1,0 +1,13 @@
+list: $/denora/duebusprofile/models/investor/columns.yaml
+filter: config_filter.yaml
+modelClass: Denora\Duebusprofile\Models\Investor
+title: VerifyInvestor
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: false
+recordsPerPage: 20
+toolbar:
+#    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'denora/duebusprofile/verifyinvestor/update/:id'

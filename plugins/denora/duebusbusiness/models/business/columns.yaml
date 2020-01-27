@@ -1,0 +1,15 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    name:
+        label: name
+        type: text
+        searchable: true
+        sortable: true
+    'verification[is_verified]':
+        label: 'is verified'
+        type: switch
+        sortable: true
