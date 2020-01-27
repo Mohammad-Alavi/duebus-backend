@@ -61,7 +61,8 @@ class PromotionController extends Controller
         if ($validator->fails()) return Response::make($validator->messages(), 400);
 
         $existingPromotionsCount = PromotionRepository::getPromotionsCount($industry);
-        if ($existingPromotionsCount >= 6) return Response::make(['No more empty slots for this industry'], 409);
+        $promotionsCountMax =  ConfigTransformer::transform()['promotions_count_max'];
+        if ($existingPromotionsCount >= $promotionsCountMax) return Response::make(['No more empty slots for this industry'], 409);
 
         if (!$user->entrepreneur) return Response::make(['You are not an entrepreneur'], 400);
 
@@ -87,8 +88,9 @@ class PromotionController extends Controller
 
     public function show($industry){
         if ($industry == 'duebus') $industry = null;
+        $promotionsCountMax =  ConfigTransformer::transform()['promotions_count_max'];
         $count = PromotionRepository::getPromotionsCount($industry);
-        $remaining = 6 - $count;
+        $remaining = $promotionsCountMax - $count;
 
         return Response::make(['count' => $count, 'remaining' => $remaining], 200);
     }
