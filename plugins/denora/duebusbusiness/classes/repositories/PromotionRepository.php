@@ -10,13 +10,15 @@ class PromotionRepository
         return count(self::getAllPromotions($industry));
     }
 
-    static public function paginate(int $page, $industry = null)
+    static public function paginate(int $page, $industry = null, $existing = null)
     {
         $query = Business::query();
         $query->whereDate('promotion_expire_date', '>', Carbon::now());
         $query->where('promotion_industry', $industry);
+        if ($existing !== null)
+            $query->where('existing_business', $existing);
 
-        return $query->paginate(10, $page);
+        return $query->inRandomOrder()->paginate(10, $page);
     }
 
     static private function getAllPromotions($industry = null)

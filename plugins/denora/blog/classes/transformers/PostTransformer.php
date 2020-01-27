@@ -13,7 +13,7 @@ class PostTransformer {
         return [
             'id'              => $post->id,
             'title'           => $post->title,
-            'text'            => $post->title,
+            'text'            => $post->text,
             'categories'      => $post->categories,
             'cover_thumbnail' => $post->cover ? $post->cover->getThumb(500, 0, ['mode' => 'auto']) : self::getDefaultImage(),
             'cover_original'  => $post->cover ? $post->cover->path : self::getDefaultImage(),

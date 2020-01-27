@@ -1,6 +1,12 @@
 <?php
 
+use Denora\Duebusprofile\Http\RepresentativeController;
+
 Route::group(['prefix' => 'api/v1'], function () {
+
+    Route::get('guest/representative', function (){
+        return (new RepresentativeController())->index();
+    });
 
     Route::middleware(['jwt.auth'])->group(
         function () {
