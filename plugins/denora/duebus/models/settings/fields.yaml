@@ -626,3 +626,9 @@ tabs:
             span: full
             type: text
             tab: Hints
+        promotions_count_max:
+            label: 'Max promotions count'
+            span: auto
+            type: number
+            comment: 'Maximum number of promotions simultaneously in each industry'
+            tab: Promotion

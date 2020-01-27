@@ -23,6 +23,8 @@ class ConfigTransformer
 
         'currency_symbol' => 'KWD',
 
+        'promotions_count_max' => 6,
+
         'about_us' => [
             'sections' => [
                 [
@@ -197,6 +199,7 @@ Once a fleeting idea, today this platform is called DueBus.'
             ],
 
             'businesses_count' => (new BusinessRepository)->countAll(),
+            'promotions_count_max' => (int)$settings::get('promotions_count_max') ?: self::$default['promotions_count_max'],
 
             'about_us' => [
                 'sections' =>  $settings::get('about_us_repeater') ?: self::$default['about_us']['sections'],
