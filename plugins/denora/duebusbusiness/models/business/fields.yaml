@@ -1,0 +1,142 @@
+fields:
+    'entrepreneur[user]':
+        label: 'User Name'
+        nameFrom: name
+        descriptionFrom: description
+        select: name
+        span: auto
+        readOnly: 1
+        type: relation
+    name:
+        label: 'Business Name'
+        span: auto
+        readOnly: 1
+        type: text
+    section1:
+        label: 'ID of managing partner'
+        span: full
+        type: section
+    'verification[id_of_managing_partner][image]':
+        label: 'image'
+        mode: image
+        imageWidth: '200'
+        imageHeight: '200'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: fileupload
+    'verification[id_of_managing_partner][details][description]':
+        label: 'Description user set for this document'
+        span: auto
+        disabled: 0
+        readOnly: 1
+        type: text
+    'verification[id_of_managing_partner][details][admin_message]':
+        label: 'Admin message (usually why this document was not verified)'
+        size: small
+        span: right
+        type: textarea
+    'verification[id_of_managing_partner][details][is_verified]':
+        label: 'is ID of managing partner verified?'
+        span: left
+        type: switch
+    section2:
+        label: 'Article of association'
+        span: full
+        type: section
+    'verification[article_of_association][image]':
+        label: 'image'
+        mode: image
+        imageWidth: '200'
+        imageHeight: '200'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: fileupload
+    'verification[article_of_association][details][description]':
+        label: 'Description user set for this document'
+        span: auto
+        disabled: 0
+        readOnly: 1
+        type: text
+    'verification[article_of_association][details][admin_message]':
+        label: 'Admin message (usually why this document was not verified)'
+        size: small
+        span: right
+        type: textarea
+    'verification[article_of_association][details][is_verified]':
+        label: 'is Article of association verified?'
+        span: left
+        type: switch
+    section3:
+        label: 'Commercial license'
+        span: full
+        type: section
+    'verification[commercial_license][image]':
+        label: 'image'
+        mode: image
+        imageWidth: '200'
+        imageHeight: '200'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: fileupload
+    'verification[commercial_license][details][description]':
+        label: 'Description user set for this document'
+        span: auto
+        disabled: 0
+        readOnly: 1
+        type: text
+    'verification[commercial_license][details][admin_message]':
+        label: 'Admin message (usually why this document was not verified)'
+        size: small
+        span: right
+        type: textarea
+    'verification[commercial_license][details][is_verified]':
+        label: 'is Commercial license verified?'
+        span: left
+        type: switch
+    section4:
+        label: 'Chamber of commerce'
+        span: full
+        type: section
+    'verification[chamber_of_commerce][image]':
+        label: 'image'
+        mode: image
+        imageWidth: '200'
+        imageHeight: '200'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: left
+        disabled: 1
+        readOnly: 1
+        type: fileupload
+    'verification[chamber_of_commerce][details][description]':
+        label: 'Description user set for this document'
+        span: auto
+        disabled: 0
+        readOnly: 1
+        type: text
+    'verification[chamber_of_commerce][details][admin_message]':
+        label: 'Admin message (usually why this document was not verified)'
+        size: small
+        span: right
+        type: textarea
+    'verification[chamber_of_commerce][details][is_verified]':
+        label: 'is Chamber of commerce verified?'
+        span: left
+        type: switch

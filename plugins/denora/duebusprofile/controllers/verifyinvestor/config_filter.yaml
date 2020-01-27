@@ -1,0 +1,10 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    'verified':
+        label: 'Hide Verified investors'
+        type: checkbox
+        default: 0
+        scope: unverified

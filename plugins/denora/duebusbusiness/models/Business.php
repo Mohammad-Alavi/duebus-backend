@@ -1,6 +1,5 @@
 <?php namespace Denora\Duebusbusiness\Models;
 
-use Denora\TapCompany\Classes\Repositories\TransactionRepository;
 use Model;
 
 /**
@@ -74,5 +73,24 @@ class Business extends Model {
     public $attachOne = [
         'logo' => 'System\Models\File'
     ];
+
+    public function scopeUnverified($query)
+    {
+        return
+            $query
+                ->whereHas('verification.id_of_managing_partner.details', function ($q) {
+                    $q->where('is_verified', false);
+                })
+                ->orWhereHas('verification.article_of_association.details', function ($q) {
+                    $q->where('is_verified', false);
+                })
+                ->orWhereHas('verification.commercial_license.details', function ($q) {
+                    $q->where('is_verified', false);
+                })
+                ->orWhereHas('verification.chamber_of_commerce.details', function ($q) {
+                    $q->where('is_verified', false);
+                })
+            ;
+    }
 
 }

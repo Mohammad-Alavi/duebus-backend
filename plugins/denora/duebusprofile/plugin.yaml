@@ -8,9 +8,13 @@ navigation:
     verification-menu:
         label: Verification
         url: denora/duebusprofile/verifyinvestor
-        icon: icon-life-ring
+        icon: oc-icon-check-circle
         sideMenu:
             verification-investor-menu:
                 label: 'Verify Investor'
                 url: denora/duebusprofile/verifyinvestor
-                icon: icon-sitemap
+                icon: oc-icon-check-circle
+            verification-business-menu:
+                label: 'Verify Business'
+                url: denora/duebusbusiness/verifybusiness
+                icon: oc-icon-check-circle

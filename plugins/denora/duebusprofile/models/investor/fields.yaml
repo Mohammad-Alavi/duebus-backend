@@ -12,7 +12,7 @@ fields:
         span: full
         type: section
     'verification[identification][image]':
-        label: 'ID Card'
+        label: image
         mode: image
         imageWidth: '200'
         imageHeight: '200'
@@ -44,7 +44,7 @@ fields:
         span: full
         type: section
     'verification[passport][image]':
-        label: Passport
+        label: image
         mode: image
         imageWidth: '200'
         imageHeight: '200'

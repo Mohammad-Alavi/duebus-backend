@@ -1,7 +1,7 @@
-list: $/denora/duebusprofile/models/investor/columns.yaml
+list: $/denora/duebusbusiness/models/business/columns.yaml
 filter: config_filter.yaml
-modelClass: Denora\Duebusprofile\Models\Investor
-title: VerifyInvestor
+modelClass: Denora\Duebusbusiness\Models\Business
+title: VerifyBusiness
 noRecordsMessage: 'backend::lang.list.no_records'
 showSetup: true
 showCheckboxes: false
@@ -10,4 +10,4 @@ toolbar:
 #    buttons: list_toolbar
     search:
         prompt: 'backend::lang.list.search_prompt'
-recordUrl: 'denora/duebusprofile/verifyinvestor/update/:id'
+recordUrl: 'denora/duebusbusiness/verifybusiness/update/:id'

@@ -4,13 +4,11 @@ columns:
         type: number
         searchable: true
         sortable: true
-    investor_user:
+    name:
         label: name
         type: text
         searchable: true
         sortable: true
-        select: name
-        relation: user
     'verification[is_verified]':
         label: 'is verified'
         type: switch
