@@ -142,24 +142,28 @@ class BusinessController extends Controller
         return BusinessTransformer::transform($business);
     }
 
-    /*    public function update($id) {
-            $businessRepository = new BusinessRepository();
-            $business = $businessRepository->findById($id);
-            if (!$business) return Response::make(['No element found'], 404);
+    public function update($id)
+    {
+        $businessRepository = new BusinessRepository();
+        $business = $businessRepository->findById($id);
 
-            if ($business->user->id != Auth::user()->id) return Response::make(['You must be the owner of the object'], 400);
+        if (!$business)
+            return Response::make(['No element found'], 404);
 
-            $data = Request::all();
+        if ($business->entrepreneur->user->id != Auth::user()->id)
+            return Response::make(['You must be the owner of the object'], 400);
 
-            $validator = $this->getUpdateValidator($data);
+        $data = Request::all();
 
-            if ($validator->fails())
-                return Response::make($validator->messages(), 400);
+        $validator = $this->getUpdateValidator($data);
 
-            $business = $businessRepository->updateBusiness($id, $data);
+        if ($validator->fails())
+            return Response::make($validator->messages(), 400);
 
-            return BusinessTransformer::transform($business);
-        }*/
+        $business = $businessRepository->updateBusiness($id, $data);
+
+        return BusinessTransformer::transform($business);
+    }
 
     /**
      * @param $data
@@ -202,6 +206,74 @@ class BusinessController extends Controller
 
             //  3-Years Statement
             'latest_operating_performance.revenue' => 'required|numeric',
+            'latest_operating_performance.cost_of_goods_sold' => 'nullable|numeric',
+            'latest_operating_performance.salaries' => 'nullable|numeric',
+            'latest_operating_performance.operating_expenses' => 'nullable|numeric',
+            'latest_operating_performance.ebitda' => 'nullable|numeric',
+            'latest_operating_performance.ebit' => 'nullable|numeric',
+            'latest_operating_performance.net_profit' => 'nullable|numeric',
+
+            'assets.cash_and_equivalents' => 'nullable|numeric',
+            'assets.accounts_receivable' => 'nullable|numeric',
+            'assets.inventory' => 'nullable|numeric',
+            'assets.tangible_assets' => 'nullable|numeric',
+            'assets.intangible_assets' => 'nullable|numeric',
+            'assets.financial_assets' => 'nullable|numeric',
+
+            'liabilities.accounts_payable' => 'nullable|numeric',
+            'liabilities.other_current_liabilities' => 'nullable|numeric',
+            'liabilities.long_term_liabilities' => 'nullable|numeric',
+            'liabilities.equity' => 'nullable|numeric',
+
+            //  Social Media
+            'social_media.instagram' => 'nullable|min:3',
+            'social_media.facebook' => 'nullable|min:3',
+            'social_media.linked_in' => 'nullable|min:3',
+            'social_media.youtube' => 'nullable|min:3',
+
+            //  Equity Holders
+            'equity_holders' => 'nullable|json',
+
+        ]);
+    }
+
+    /**
+     * @param $data
+     *
+     * @return
+     */
+    private function getUpdateValidator($data)
+    {
+        return Validator::make($data, [
+            //  General data
+            'logo' => 'nullable|image|max:4096',  //  Size validator is in KB
+            'name' => 'min:3',
+            'business_brief' => 'min:3',
+            'industry' => [
+                Rule::in(array_column(ConfigTransformer::transform()['business_fields']['industries'], 'label'))
+            ],
+            'year_founded' => 'date',
+            'website' => 'nullable|url',
+            'allow_reveal' => 'boolean',
+            'existing_business' => 'boolean',
+            'legal_structure' => [
+                Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
+            ],
+            'your_role_in_business' => [
+                Rule::in(ConfigTransformer::transform()['business_fields']['roles'])
+            ],
+            'reason_of_selling_equity' => [
+                Rule::in(ConfigTransformer::transform()['business_fields']['reasons_of_selling_equity'])
+            ],
+            'business_value' => 'numeric',
+            'equity_for_sale' => 'numeric',
+            'asking_price' => 'numeric',
+            'is_involved_in_any_proceedings' => 'nullable|boolean',
+            'is_concern_with_business_employees' => 'nullable|boolean',
+            'is_founder_or_holder_in_debt' => 'nullable|boolean',
+
+            //  3-Years Statement
+            'latest_operating_performance.revenue' => 'numeric',
             'latest_operating_performance.cost_of_goods_sold' => 'nullable|numeric',
             'latest_operating_performance.salaries' => 'nullable|numeric',
             'latest_operating_performance.operating_expenses' => 'nullable|numeric',
