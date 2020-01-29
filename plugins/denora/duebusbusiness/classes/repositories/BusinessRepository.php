@@ -259,6 +259,8 @@ class BusinessRepository
             $business->logo = $data['logo'];
         if (array_has($data, 'name'))
             $business->name = $data['name'];
+        if (array_has($data, 'business_brief'))
+            $business->business_brief = $data['business_brief'];
         if (array_has($data, 'industry'))
             $business->industry = $data['industry'];
         if (array_has($data, 'year_founded'))
@@ -279,12 +281,20 @@ class BusinessRepository
             $business->business_value = $data['business_value'];
         if (array_has($data, 'equity_for_sale'))
             $business->equity_for_sale = $data['equity_for_sale'];
+        if (array_has($data, 'asking_price'))
+            $business->equity_for_sale = $data['asking_price'];
         if (array_has($data, 'is_involved_in_any_proceedings'))
             $business->is_involved_in_any_proceedings = $data['is_involved_in_any_proceedings'];
         if (array_has($data, 'is_concern_with_business_employees'))
             $business->is_concern_with_business_employees = $data['is_concern_with_business_employees'];
         if (array_has($data, 'is_founder_or_holder_in_debt'))
             $business->is_founder_or_holder_in_debt = $data['is_founder_or_holder_in_debt'];
+        if (array_has($data, 'three_years_statement'))
+            $business->three_years_statement = json_encode($data['three_years_statement']);
+        if (array_has($data, 'social_media'))
+            $business->social_media = json_encode($data['social_media']);
+        if (array_has($data, 'equity_holders'))
+            $business->equity_holders = json_encode($data['equity_holders']);
 
         $business->save();
 
