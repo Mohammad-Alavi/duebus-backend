@@ -171,11 +171,15 @@ class BusinessRepository
     /**
      * @param int $businessId
      *
+     * @param bool $includeDeleted
      * @return Business
      */
-    public function findById(int $businessId)
+    public function findById(int $businessId, bool $includeDeleted = false)
     {
-        return Business::find($businessId);
+        if ($includeDeleted)
+            return Business::withTrashed()->find($businessId);
+        else
+            return Business::find($businessId);
     }
 
     public function publishBusiness(int $businessId, float $price)

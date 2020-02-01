@@ -46,7 +46,7 @@ class NotificationTransformer
         if (!$notification->object_type || !$notification->object_id) return null;
 
         if ($notification->object_type == BaseEvent::$OBJECT_TYPE_BUSINESS){
-            $business = (new BusinessRepository())->findById($notification->object_id);
+            $business = (new BusinessRepository())->findById($notification->object_id, true);
             return $business->name;
         }
 
