@@ -113,7 +113,6 @@ class BusinessController extends Controller
             if ($equityHoldersValidation->fails()) return Response::make($equityHoldersValidation->messages(), 400);
         }
 
-
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->createBusiness(
             $user->entrepreneur->id,
@@ -159,6 +158,14 @@ class BusinessController extends Controller
 
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
+
+        //  Validate equity_holders json
+        $hasEquityHolders = array_has($data, 'equity_holders');
+        if ($hasEquityHolders) {
+            $equityHolders = $data['equity_holders'];
+            $equityHoldersValidation = $this->validateEquityHoldersJson($equityHolders);
+            if ($equityHoldersValidation->fails()) return Response::make($equityHoldersValidation->messages(), 400);
+        }
 
         $business = $businessRepository->updateBusiness($id, $data);
 
@@ -311,7 +318,7 @@ class BusinessController extends Controller
 
         return Validator::make($data, [
             'data.*.name' => 'required|string|min:2',
-            'data.*.email' => 'email|nullable',
+            'data.*.mobile' => 'nullable',
             'data.*.equity' => 'required|numeric',
             'data.*.role' => [
                 'nullable',
@@ -383,7 +390,7 @@ class BusinessController extends Controller
                 array_push($equityHolders, [
                     'name' => $equityHolder->name,
                     'equity' => $equityHolder->equity,
-                    'email' => $equityHolder->email,
+                    'mobile' => $equityHolder->mobile,
                     'role' => $equityHolder->role,
                 ]);
             }
