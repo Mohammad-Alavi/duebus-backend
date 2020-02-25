@@ -37,6 +37,8 @@ class BusinessTransformer {
             'website'                            => $business->website,
             'allow_reveal'                       => $business->allow_reveal,
             'existing_business'                  => $business->existing_business,
+            'has_commercial_license'             => $business->has_commercial_license,
+            'jurisdiction_of_commercial_license' => $business->jurisdiction_of_commercial_license?json_decode($business->jurisdiction_of_commercial_license): [],
             'legal_structure'                    => $business->legal_structure,
             'your_role_in_business'              => $business->your_role_in_business,
             'reason_of_selling_equity'           => $business->reason_of_selling_equity,

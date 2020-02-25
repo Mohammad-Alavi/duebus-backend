@@ -2,6 +2,7 @@
 
 use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Transformers\ConfigTransformer;
+use Denora\Duebus\Classes\Transformers\CountryTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessesTransformer;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
@@ -113,6 +114,14 @@ class BusinessController extends Controller
             if ($equityHoldersValidation->fails()) return Response::make($equityHoldersValidation->messages(), 400);
         }
 
+        //  Validate jurisdiction_of_commercial_license json
+        $hasJurisdictionOfCommercialLicense = array_has($data, 'jurisdiction_of_commercial_license');
+        if ($hasJurisdictionOfCommercialLicense) {
+            $jurisdictionOfCommercialLicense = $data['jurisdiction_of_commercial_license'];
+            $jurisdictionOfCommercialLicenseValidation = $this->validateJurisdictionCommercialLicenseJson($jurisdictionOfCommercialLicense);
+            if ($jurisdictionOfCommercialLicenseValidation->fails()) return Response::make($jurisdictionOfCommercialLicenseValidation->messages(), 400);
+        }
+
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->createBusiness(
             $user->entrepreneur->id,
@@ -124,6 +133,8 @@ class BusinessController extends Controller
             Request::input('website', null),
             $data['allow_reveal'],
             $data['existing_business'],
+            $data['has_commercial_license'],
+            Request::input('jurisdiction_of_commercial_license', "[]"),
             Request::input('legal_structure', null),
             $data['your_role_in_business'],
             $data['reason_of_selling_equity'],
@@ -170,6 +181,14 @@ class BusinessController extends Controller
             if ($equityHoldersValidation->fails()) return Response::make($equityHoldersValidation->messages(), 400);
         }
 
+        //  Validate jurisdiction_of_commercial_license json
+        $hasJurisdictionOfCommercialLicense = array_has($data, 'jurisdiction_of_commercial_license');
+        if ($hasJurisdictionOfCommercialLicense) {
+            $jurisdictionOfCommercialLicense = $data['jurisdiction_of_commercial_license'];
+            $jurisdictionOfCommercialLicenseValidation = $this->validateJurisdictionCommercialLicenseJson($jurisdictionOfCommercialLicense);
+            if ($jurisdictionOfCommercialLicenseValidation->fails()) return Response::make($jurisdictionOfCommercialLicenseValidation->messages(), 400);
+        }
+
         $business = $businessRepository->updateBusiness($id, $data);
 
         return BusinessTransformer::transform($business);
@@ -195,6 +214,11 @@ class BusinessController extends Controller
             'website' => 'nullable|url',
             'allow_reveal' => 'required|boolean',
             'existing_business' => 'required|boolean',
+            'has_commercial_license' => 'required|boolean',
+            'jurisdiction_of_commercial_license' => [
+                'required_if:has_commercial_license,==,1',
+                'json'
+            ],
             'legal_structure' => [
                 'required_if:existing_business,==,1',
                 Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
@@ -269,6 +293,8 @@ class BusinessController extends Controller
             'website' => 'nullable|url',
             'allow_reveal' => 'boolean',
             'existing_business' => 'boolean',
+            'has_commercial_license' => 'boolean',
+            'jurisdiction_of_commercial_license' => 'json',
             'legal_structure' => [
                 Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
             ],
@@ -334,6 +360,19 @@ class BusinessController extends Controller
                 Rule::in(ConfigTransformer::transform()['business_fields']['roles'])],
         ]);
     }
+
+    private function validateJurisdictionCommercialLicenseJson($json) {
+        $data = ['data' => json_decode($json, true)];
+
+        return Validator::make($data, [
+            'data.*' => [
+                'string',
+                'required',
+                Rule::in(CountryTransformer::transform()),
+            ],
+        ]);
+    }
+
 
     /**
      * @param $data

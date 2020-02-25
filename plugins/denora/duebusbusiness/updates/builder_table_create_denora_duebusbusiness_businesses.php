@@ -16,6 +16,8 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->string('website')->nullable();
             $table->boolean('allow_reveal');
             $table->boolean('existing_business');
+            $table->boolean('has_commercial_license');
+            $table->json('jurisdiction_of_commercial_license');
             $table->string('legal_structure')->nullable();
             $table->string('your_role_in_business');
             $table->string('reason_of_selling_equity');
