@@ -131,8 +131,11 @@ class BusinessController extends Controller
             $data['equity_for_sale'],
             $data['asking_price'],
             Request::input('is_involved_in_any_proceedings', null),
+            Request::input('is_involved_in_any_proceedings_description', null),
             Request::input('is_concern_with_business_employees', null),
+            Request::input('is_concern_with_business_employees_description', null),
             Request::input('is_founder_or_holder_in_debt', null),
+            Request::input('is_founder_or_holder_in_debt_description', null),
             $this->generateThreeYearsStatement($data),
             $this->generateSocialMedia($data),
             $this->generateEquityHolders($data)
@@ -208,8 +211,11 @@ class BusinessController extends Controller
             'equity_for_sale' => 'required|numeric',
             'asking_price' => 'required|numeric',
             'is_involved_in_any_proceedings' => 'nullable|boolean',
+            'is_involved_in_any_proceedings_description' => 'nullable|string',
             'is_concern_with_business_employees' => 'nullable|boolean',
+            'is_concern_with_business_employees_description' => 'nullable|string',
             'is_founder_or_holder_in_debt' => 'nullable|boolean',
+            'is_founder_or_holder_in_debt_description' => 'nullable|string',
 
             //  3-Years Statement
             'latest_operating_performance.revenue' => 'required|numeric',
@@ -276,8 +282,11 @@ class BusinessController extends Controller
             'equity_for_sale' => 'numeric',
             'asking_price' => 'numeric',
             'is_involved_in_any_proceedings' => 'nullable|boolean',
+            'is_involved_in_any_proceedings_description' => 'nullable|string',
             'is_concern_with_business_employees' => 'nullable|boolean',
+            'is_concern_with_business_employees_description' => 'nullable|string',
             'is_founder_or_holder_in_debt' => 'nullable|boolean',
+            'is_founder_or_holder_in_debt_description' => 'nullable|string',
 
             //  3-Years Statement
             'latest_operating_performance.revenue' => 'numeric',

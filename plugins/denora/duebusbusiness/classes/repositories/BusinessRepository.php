@@ -86,9 +86,12 @@ class BusinessRepository
      * @param float $equityForSale
      * @param float $askingPrice
      * @param bool $isInvolvedInAnyProceedings
+     * @param $isInvolvedInAnyProceedingsDescription
      * @param bool $isConcernWithBusinessEmployees
+     * @param $isConcernWithBusinessEmployeesDescription
      * @param bool $isFounderOrHolderInDebt
      *
+     * @param $isFounderOrHolderInDebtDescription
      * @param array $threeYearsStatement
      *
      * @param array $socialMedia
@@ -115,8 +118,11 @@ class BusinessRepository
         float $equityForSale,
         float $askingPrice,
         $isInvolvedInAnyProceedings,
+        $isInvolvedInAnyProceedingsDescription,
         $isConcernWithBusinessEmployees,
+        $isConcernWithBusinessEmployeesDescription,
         $isFounderOrHolderInDebt,
+        $isFounderOrHolderInDebtDescription,
         array $threeYearsStatement,
         array $socialMedia,
         array $equityHolders,
@@ -140,8 +146,11 @@ class BusinessRepository
         $business->equity_for_sale = $equityForSale;
         $business->asking_price = $askingPrice;
         $business->is_involved_in_any_proceedings = $isInvolvedInAnyProceedings;
+        $business->is_involved_in_any_proceedings_description = $isInvolvedInAnyProceedingsDescription;
         $business->is_concern_with_business_employees = $isConcernWithBusinessEmployees;
+        $business->is_concern_with_business_employees_description = $isConcernWithBusinessEmployeesDescription;
         $business->is_founder_or_holder_in_debt = $isFounderOrHolderInDebt;
+        $business->is_founder_or_holder_in_debt_description = $isFounderOrHolderInDebtDescription;
         $business->three_years_statement = json_encode($threeYearsStatement);
         $business->social_media = json_encode($socialMedia);
         $business->equity_holders = json_encode($equityHolders);
@@ -289,10 +298,16 @@ class BusinessRepository
             $business->equity_for_sale = $data['asking_price'];
         if (array_has($data, 'is_involved_in_any_proceedings'))
             $business->is_involved_in_any_proceedings = $data['is_involved_in_any_proceedings'];
+        if (array_has($data, 'is_involved_in_any_proceedings_description'))
+            $business->is_involved_in_any_proceedings_description = $data['is_involved_in_any_proceedings_description'];
         if (array_has($data, 'is_concern_with_business_employees'))
             $business->is_concern_with_business_employees = $data['is_concern_with_business_employees'];
+        if (array_has($data, 'is_concern_with_business_employees_description'))
+            $business->is_concern_with_business_employees_description = $data['is_concern_with_business_employees_description'];
         if (array_has($data, 'is_founder_or_holder_in_debt'))
             $business->is_founder_or_holder_in_debt = $data['is_founder_or_holder_in_debt'];
+        if (array_has($data, 'is_founder_or_holder_in_debt_description'))
+            $business->is_founder_or_holder_in_debt_description = $data['is_founder_or_holder_in_debt_description'];
         if (array_has($data, 'three_years_statement'))
             $business->three_years_statement = json_encode($data['three_years_statement']);
         if (array_has($data, 'social_media'))
