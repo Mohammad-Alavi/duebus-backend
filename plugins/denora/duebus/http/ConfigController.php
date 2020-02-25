@@ -2,6 +2,7 @@
 
 use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Transformers\ConfigTransformer;
+use Denora\Duebus\Classes\Transformers\CountryTransformer;
 use Denora\Duebus\Models\Settings;
 
 /**
@@ -14,6 +15,11 @@ class ConfigController extends Controller
     ];
 
     public $restConfig = 'config_rest.yaml';
+
+    public function show($section){
+        if ($section == 'country')
+            return CountryTransformer::transform();
+    }
 
     public function index() {
         return ConfigTransformer::transform();
