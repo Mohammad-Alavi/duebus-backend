@@ -2,6 +2,7 @@
 
 use Backend\Classes\Controller;
 use Denora\Duebus\Classes\Transformers\ConfigTransformer;
+use Denora\Duebus\Classes\Transformers\CountryTransformer;
 use Denora\Duebusbusiness\Classes\Repositories\BusinessRepository;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessesTransformer;
 use Denora\Duebusbusiness\Classes\Transformers\BusinessTransformer;
@@ -113,6 +114,13 @@ class BusinessController extends Controller
             if ($equityHoldersValidation->fails()) return Response::make($equityHoldersValidation->messages(), 400);
         }
 
+        //  Validate jurisdiction_of_commercial_license json
+        $hasJurisdictionOfCommercialLicense = array_has($data, 'jurisdiction_of_commercial_license');
+        if ($hasJurisdictionOfCommercialLicense) {
+            $jurisdictionOfCommercialLicense = $data['jurisdiction_of_commercial_license'];
+            $jurisdictionOfCommercialLicenseValidation = $this->validateJurisdictionCommercialLicenseJson($jurisdictionOfCommercialLicense);
+            if ($jurisdictionOfCommercialLicenseValidation->fails()) return Response::make($jurisdictionOfCommercialLicenseValidation->messages(), 400);
+        }
 
         $businessRepository = new BusinessRepository();
         $business = $businessRepository->createBusiness(
@@ -125,6 +133,8 @@ class BusinessController extends Controller
             Request::input('website', null),
             $data['allow_reveal'],
             $data['existing_business'],
+            $data['has_commercial_license'],
+            Request::input('jurisdiction_of_commercial_license', "[]"),
             Request::input('legal_structure', null),
             $data['your_role_in_business'],
             $data['reason_of_selling_equity'],
@@ -132,8 +142,11 @@ class BusinessController extends Controller
             $data['equity_for_sale'],
             $data['asking_price'],
             Request::input('is_involved_in_any_proceedings', null),
+            Request::input('is_involved_in_any_proceedings_description', null),
             Request::input('is_concern_with_business_employees', null),
+            Request::input('is_concern_with_business_employees_description', null),
             Request::input('is_founder_or_holder_in_debt', null),
+            Request::input('is_founder_or_holder_in_debt_description', null),
             $this->generateThreeYearsStatement($data),
             $this->generateSocialMedia($data),
             $this->generateEquityHolders($data)
@@ -160,6 +173,22 @@ class BusinessController extends Controller
         if ($validator->fails())
             return Response::make($validator->messages(), 400);
 
+        //  Validate equity_holders json
+        $hasEquityHolders = array_has($data, 'equity_holders');
+        if ($hasEquityHolders) {
+            $equityHolders = $data['equity_holders'];
+            $equityHoldersValidation = $this->validateEquityHoldersJson($equityHolders);
+            if ($equityHoldersValidation->fails()) return Response::make($equityHoldersValidation->messages(), 400);
+        }
+
+        //  Validate jurisdiction_of_commercial_license json
+        $hasJurisdictionOfCommercialLicense = array_has($data, 'jurisdiction_of_commercial_license');
+        if ($hasJurisdictionOfCommercialLicense) {
+            $jurisdictionOfCommercialLicense = $data['jurisdiction_of_commercial_license'];
+            $jurisdictionOfCommercialLicenseValidation = $this->validateJurisdictionCommercialLicenseJson($jurisdictionOfCommercialLicense);
+            if ($jurisdictionOfCommercialLicenseValidation->fails()) return Response::make($jurisdictionOfCommercialLicenseValidation->messages(), 400);
+        }
+
         $business = $businessRepository->updateBusiness($id, $data);
 
         return BusinessTransformer::transform($business);
@@ -185,6 +214,11 @@ class BusinessController extends Controller
             'website' => 'nullable|url',
             'allow_reveal' => 'required|boolean',
             'existing_business' => 'required|boolean',
+            'has_commercial_license' => 'required|boolean',
+            'jurisdiction_of_commercial_license' => [
+                'required_if:has_commercial_license,==,1',
+                'json'
+            ],
             'legal_structure' => [
                 'required_if:existing_business,==,1',
                 Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
@@ -201,8 +235,11 @@ class BusinessController extends Controller
             'equity_for_sale' => 'required|numeric',
             'asking_price' => 'required|numeric',
             'is_involved_in_any_proceedings' => 'nullable|boolean',
+            'is_involved_in_any_proceedings_description' => 'nullable|string',
             'is_concern_with_business_employees' => 'nullable|boolean',
+            'is_concern_with_business_employees_description' => 'nullable|string',
             'is_founder_or_holder_in_debt' => 'nullable|boolean',
+            'is_founder_or_holder_in_debt_description' => 'nullable|string',
 
             //  3-Years Statement
             'latest_operating_performance.revenue' => 'required|numeric',
@@ -256,6 +293,8 @@ class BusinessController extends Controller
             'website' => 'nullable|url',
             'allow_reveal' => 'boolean',
             'existing_business' => 'boolean',
+            'has_commercial_license' => 'boolean',
+            'jurisdiction_of_commercial_license' => 'json',
             'legal_structure' => [
                 Rule::in(ConfigTransformer::transform()['business_fields']['legal_structures'])
             ],
@@ -269,8 +308,11 @@ class BusinessController extends Controller
             'equity_for_sale' => 'numeric',
             'asking_price' => 'numeric',
             'is_involved_in_any_proceedings' => 'nullable|boolean',
+            'is_involved_in_any_proceedings_description' => 'nullable|string',
             'is_concern_with_business_employees' => 'nullable|boolean',
+            'is_concern_with_business_employees_description' => 'nullable|string',
             'is_founder_or_holder_in_debt' => 'nullable|boolean',
+            'is_founder_or_holder_in_debt_description' => 'nullable|string',
 
             //  3-Years Statement
             'latest_operating_performance.revenue' => 'numeric',
@@ -311,13 +353,26 @@ class BusinessController extends Controller
 
         return Validator::make($data, [
             'data.*.name' => 'required|string|min:2',
-            'data.*.email' => 'email|nullable',
+            'data.*.mobile' => 'nullable',
             'data.*.equity' => 'required|numeric',
             'data.*.role' => [
                 'nullable',
                 Rule::in(ConfigTransformer::transform()['business_fields']['roles'])],
         ]);
     }
+
+    private function validateJurisdictionCommercialLicenseJson($json) {
+        $data = ['data' => json_decode($json, true)];
+
+        return Validator::make($data, [
+            'data.*' => [
+                'string',
+                'required',
+                Rule::in(CountryTransformer::transform()),
+            ],
+        ]);
+    }
+
 
     /**
      * @param $data
@@ -383,7 +438,7 @@ class BusinessController extends Controller
                 array_push($equityHolders, [
                     'name' => $equityHolder->name,
                     'equity' => $equityHolder->equity,
-                    'email' => $equityHolder->email,
+                    'mobile' => $equityHolder->mobile,
                     'role' => $equityHolder->role,
                 ]);
             }

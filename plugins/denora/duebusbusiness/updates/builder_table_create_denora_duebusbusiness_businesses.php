@@ -16,6 +16,8 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->string('website')->nullable();
             $table->boolean('allow_reveal');
             $table->boolean('existing_business');
+            $table->boolean('has_commercial_license');
+            $table->json('jurisdiction_of_commercial_license');
             $table->string('legal_structure')->nullable();
             $table->string('your_role_in_business');
             $table->string('reason_of_selling_equity');
@@ -23,8 +25,11 @@ class BuilderTableCreateDenoraDuebusbusinessBusinesses extends Migration {
             $table->double('equity_for_sale');
             $table->double('asking_price');
             $table->boolean('is_involved_in_any_proceedings')->nullable();
+            $table->string('is_involved_in_any_proceedings_description')->nullable();
             $table->boolean('is_concern_with_business_employees')->nullable();
+            $table->string('is_concern_with_business_employees_description')->nullable();
             $table->boolean('is_founder_or_holder_in_debt')->nullable();
+            $table->string('is_founder_or_holder_in_debt_description')->nullable();
             $table->json('three_years_statement');
             $table->json('social_media');
             $table->json('equity_holders');

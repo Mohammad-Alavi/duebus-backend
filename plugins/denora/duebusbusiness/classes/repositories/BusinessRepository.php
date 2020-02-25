@@ -79,6 +79,8 @@ class BusinessRepository
      * @param string|null $website
      * @param bool $allowReveal
      * @param bool $existingBusiness
+     * @param bool $hasCommercialLicense
+     * @param $jurisdictionOfCommercialLicense
      * @param string $legalStructure
      * @param string $yourRoleInBusiness
      * @param string $reasonOfSellingEquity
@@ -86,9 +88,12 @@ class BusinessRepository
      * @param float $equityForSale
      * @param float $askingPrice
      * @param bool $isInvolvedInAnyProceedings
+     * @param $isInvolvedInAnyProceedingsDescription
      * @param bool $isConcernWithBusinessEmployees
+     * @param $isConcernWithBusinessEmployeesDescription
      * @param bool $isFounderOrHolderInDebt
      *
+     * @param $isFounderOrHolderInDebtDescription
      * @param array $threeYearsStatement
      *
      * @param array $socialMedia
@@ -108,6 +113,8 @@ class BusinessRepository
         $website,
         bool $allowReveal,
         bool $existingBusiness,
+        bool $hasCommercialLicense,
+        $jurisdictionOfCommercialLicense,
         $legalStructure,
         string $yourRoleInBusiness,
         string $reasonOfSellingEquity,
@@ -115,8 +122,11 @@ class BusinessRepository
         float $equityForSale,
         float $askingPrice,
         $isInvolvedInAnyProceedings,
+        $isInvolvedInAnyProceedingsDescription,
         $isConcernWithBusinessEmployees,
+        $isConcernWithBusinessEmployeesDescription,
         $isFounderOrHolderInDebt,
+        $isFounderOrHolderInDebtDescription,
         array $threeYearsStatement,
         array $socialMedia,
         array $equityHolders,
@@ -133,6 +143,8 @@ class BusinessRepository
         $business->website = $website;
         $business->allow_reveal = $allowReveal;
         $business->existing_business = $existingBusiness;
+        $business->has_commercial_license = $hasCommercialLicense;
+        $business->jurisdiction_of_commercial_license = $jurisdictionOfCommercialLicense;
         $business->legal_structure = $legalStructure;
         $business->your_role_in_business = $yourRoleInBusiness;
         $business->reason_of_selling_equity = $reasonOfSellingEquity;
@@ -140,8 +152,11 @@ class BusinessRepository
         $business->equity_for_sale = $equityForSale;
         $business->asking_price = $askingPrice;
         $business->is_involved_in_any_proceedings = $isInvolvedInAnyProceedings;
+        $business->is_involved_in_any_proceedings_description = $isInvolvedInAnyProceedingsDescription;
         $business->is_concern_with_business_employees = $isConcernWithBusinessEmployees;
+        $business->is_concern_with_business_employees_description = $isConcernWithBusinessEmployeesDescription;
         $business->is_founder_or_holder_in_debt = $isFounderOrHolderInDebt;
+        $business->is_founder_or_holder_in_debt_description = $isFounderOrHolderInDebtDescription;
         $business->three_years_statement = json_encode($threeYearsStatement);
         $business->social_media = json_encode($socialMedia);
         $business->equity_holders = json_encode($equityHolders);
@@ -275,6 +290,10 @@ class BusinessRepository
             $business->allow_reveal = $data['allow_reveal'];
         if (array_has($data, 'existing_business'))
             $business->existing_business = $data['existing_business'];
+        if (array_has($data, 'has_commercial_license'))
+            $business->has_commercial_license = $data['has_commercial_license'];
+        if (array_has($data, 'jurisdiction_of_commercial_license'))
+            $business->jurisdiction_of_commercial_license = $data['jurisdiction_of_commercial_license'];
         if (array_has($data, 'legal_structure'))
             $business->legal_structure = $data['legal_structure'];
         if (array_has($data, 'your_role_in_business'))
@@ -289,10 +308,16 @@ class BusinessRepository
             $business->equity_for_sale = $data['asking_price'];
         if (array_has($data, 'is_involved_in_any_proceedings'))
             $business->is_involved_in_any_proceedings = $data['is_involved_in_any_proceedings'];
+        if (array_has($data, 'is_involved_in_any_proceedings_description'))
+            $business->is_involved_in_any_proceedings_description = $data['is_involved_in_any_proceedings_description'];
         if (array_has($data, 'is_concern_with_business_employees'))
             $business->is_concern_with_business_employees = $data['is_concern_with_business_employees'];
+        if (array_has($data, 'is_concern_with_business_employees_description'))
+            $business->is_concern_with_business_employees_description = $data['is_concern_with_business_employees_description'];
         if (array_has($data, 'is_founder_or_holder_in_debt'))
             $business->is_founder_or_holder_in_debt = $data['is_founder_or_holder_in_debt'];
+        if (array_has($data, 'is_founder_or_holder_in_debt_description'))
+            $business->is_founder_or_holder_in_debt_description = $data['is_founder_or_holder_in_debt_description'];
         if (array_has($data, 'three_years_statement'))
             $business->three_years_statement = json_encode($data['three_years_statement']);
         if (array_has($data, 'social_media'))
