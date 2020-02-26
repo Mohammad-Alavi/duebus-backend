@@ -4,7 +4,8 @@
 
 # Allowed Rest Actions
 allowedActions:
-  index:
+    index:
+    show:
 
 # Model Class name
 modelClass: Denora\Duebus\Models\Settings
