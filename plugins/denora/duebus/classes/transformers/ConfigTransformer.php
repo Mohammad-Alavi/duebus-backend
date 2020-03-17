@@ -26,24 +26,7 @@ class ConfigTransformer
         'promotions_count_max' => 6,
 
         'about_us' => [
-            'sections' => [
-                [
-                    'section_title' => 'Our Story',
-                    'section_text' => 'He heard stories: Of Mergers and Men, Pride and Partnerships, and Companies Fall Apart. Some were told to him by their characters, while others were just tales circling around the business world. A lot of these business stories could have had different endings—or wouldn’t have ended at all—had there been more visibility and connections in the market. 
-
-As a partner in several companies, including a business incubator, and working closely in the family business, our founder has talked with individuals across different sectors, each of whom told him their own account of the current state of business. The more he heard, the more often he pondered the concept of an online hub that would foster opportunity and provide its users with virtual guidance. It would be a safe space for people to post their businesses and business ideas anonymously in pursuit of goals like selling a company or investing in another business. No matter the business’s size or industry, this platform would be the reference destination for seeking potentially lucrative prospects with ease. 
-
-Once a fleeting idea, today this platform is called DueBus.'
-                ],
-                [
-                    'section_title' => 'Mission',
-                    'section_text' => 'We connect Investors, Entrepreneurs, and their Representatives through an online hub that facilitates shared business opportunities.'
-                ],
-                [
-                    'section_title' => 'Vision',
-                    'section_text' => 'To conduct business deals in good trust online from virtual meet to sign.'
-                ],
-            ],
+            'sections' => [],
             'our_story' => [
                 'title' => 'Our Story',
                 'text' => 'He heard stories: Of Mergers and Men, Pride and Partnerships, and Companies Fall Apart. Some were told to him by their characters, while others were just tales circling around the business world. A lot of these business stories could have had different endings—or wouldn’t have ended at all—had there been more visibility and connections in the market. 
