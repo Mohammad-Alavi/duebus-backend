@@ -61,6 +61,7 @@ class BusinessTransformer {
 
             'equity_holders' => json_decode($business->equity_holders),
 
+            'is_owned' => $isOwned,
             'is_viewed' => $isOwned || $isViewed,
             'view_expires_in_seconds' => $viewExpiresAt? Carbon::now()->diffInSeconds($viewExpiresAt) :null,
             'is_revealed' => $isOwned || $isRevealed,
