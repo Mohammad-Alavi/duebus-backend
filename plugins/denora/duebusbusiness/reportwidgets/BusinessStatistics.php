@@ -23,24 +23,8 @@ class BusinessStatistics extends ReportWidgetBase
 
         $this->vars['title'] = 'Business Statistics';
         $this->vars['all_businesses_count'] = $this->businessRepository->countAll();
-
-        $industries = array_column(ConfigTransformer::transform()['business_fields']['industries'], 'label');
-
-        $this->vars['businesses_data_in_html'] = $this->getBusinessesDataInHtml($industries);
-    }
-
-    public function getBusinessesDataInHtml($industries)
-    {
-        $businessesDataInHtml = '<ul>';
-
-        foreach ($industries as $industry) {
-            $count = $this->businessRepository->countAll($industry);
-            if ($count < 1) continue;
-            $businessesDataInHtml .= '<li>' . $industry . '<span>' . $count . '</span></li>';
-        }
-        $businessesDataInHtml .= '</ul>';
-
-        return $businessesDataInHtml;
+        $this->vars['published_businesses_count'] = $this->businessRepository->countAll(null, true);
+        $this->vars['unpublished_businesses_count'] = $this->businessRepository->countAll(null, false);
     }
 
     public function render()

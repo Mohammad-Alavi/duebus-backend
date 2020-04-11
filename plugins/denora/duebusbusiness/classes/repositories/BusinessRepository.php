@@ -369,12 +369,17 @@ class BusinessRepository
 
     /**
      * @param $industry
+     * @param null $isPublished
      * @return int
      */
-    public function countAll($industry = null): int
+    public function countAll($industry = null, $isPublished = null): int
     {
-        if ($industry == null) return Business::all()->count();
-        return Business::query()->where('industry', $industry)->count();
+        $query = Business::query();
+        if ($industry != null)
+            $query->where('industry', $industry);
+        if ($isPublished != null)
+            $query->where('is_published', $isPublished);
+        return $query->count();
     }
 
 }

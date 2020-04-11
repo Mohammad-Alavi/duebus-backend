@@ -19,6 +19,12 @@ class Plugin extends PluginBase {
                 'permissions' => [
                 ],
             ],
+            'Denora\Duebusbusiness\ReportWidgets\IndustryStatistics' => [
+                'label'   => 'Industry Statistics',
+                'context' => 'dashboard',
+                'permissions' => [
+                ],
+            ],
         ];
     }
 
