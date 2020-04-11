@@ -1,0 +1,14 @@
+<div class="report-widget">
+    <h3><?= $title ?></h3>
+
+<div
+    class="control-chart centered wrap-legend"
+    data-control="chart-pie"
+    data-size="200"
+    data-center-text="<?= $all_transactions_count ?>">
+    <ul>
+        <li>Successful<span><?= $paid_transactions_count ?></span></li>
+        <li>Failed<span><?= $unpaid_transactions_count ?></span></li>
+    </ul>
+</div>
+</div>

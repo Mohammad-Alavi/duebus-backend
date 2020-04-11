@@ -1,17 +1,18 @@
 <?php namespace Denora\TapCompany\Classes\Repositories;
 
-use Carbon\Carbon;
 use Denora\TapCompany\Models\Transaction;
 use Illuminate\Database\Eloquent\Builder;
 
-class TransactionRepository {
+class TransactionRepository
+{
 
     /**
      * @param int $id
      *
      * @return Builder|Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
      */
-    function find(int $id) {
+    function find(int $id)
+    {
         return Transaction::find($id);
     }
 
@@ -20,7 +21,8 @@ class TransactionRepository {
      *
      * @return Builder|\Illuminate\Database\Eloquent\Model|object|null
      */
-    function findByChargeId(string $chargeId) {
+    function findByChargeId(string $chargeId)
+    {
         return Transaction::query()->where('charge_id', '=', $chargeId)->first();
     }
 
@@ -28,7 +30,8 @@ class TransactionRepository {
      * @param int $businessId
      * @return Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
      */
-    function findBusinessTransaction(int $businessId){
+    function findBusinessTransaction(int $businessId)
+    {
         return Transaction::query()
             ->where('chargeable', '=', 'business')
             ->where('chargeable_id', '=', $businessId)
@@ -40,7 +43,8 @@ class TransactionRepository {
      * @param int $userId
      * @return Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
      */
-    function findPaidWalletTransactions(int $userId){
+    function findPaidWalletTransactions(int $userId)
+    {
         return Transaction::query()
             ->where('chargeable', '=', 'wallet')
             ->where('chargeable_id', '=', $userId)
@@ -63,7 +67,8 @@ class TransactionRepository {
      *
      * @return Transaction
      */
-    function createTransaction(int $userId, string $chargeable, int $chargeableId, $walletPayload, $inquiryPayload, string $chargeId, string $paymentUrl, int $price, int $points, string $redirectUrl, string $description = '') {
+    function createTransaction(int $userId, string $chargeable, int $chargeableId, $walletPayload, $inquiryPayload, string $chargeId, string $paymentUrl, int $price, int $points, string $redirectUrl, string $description = '')
+    {
 
         $transaction = new Transaction();
         $transaction->user_id = $userId;
@@ -81,6 +86,16 @@ class TransactionRepository {
         $transaction->save();
 
         return $transaction;
+    }
+
+    public function countAll($isPaid = null)
+    {
+        $query = Transaction::query();
+        if ($isPaid === true)
+            $query->whereNotNull('paid_at');
+        if ($isPaid === false)
+            $query->whereNull('paid_at');
+        return $query->count();
     }
 
 }

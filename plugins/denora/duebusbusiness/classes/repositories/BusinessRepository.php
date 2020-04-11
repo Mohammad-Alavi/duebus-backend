@@ -10,6 +10,7 @@ use Denora\Notification\Classes\Events\BusinessRevealedEvent;
 use Denora\Notification\Classes\Events\BusinessViewedEvent;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use function GuzzleHttp\Promise\all;
 
 class BusinessRepository
 {
@@ -367,11 +368,18 @@ class BusinessRepository
     }
 
     /**
+     * @param $industry
+     * @param null $isPublished
      * @return int
      */
-    public function countAll(): int
+    public function countAll($industry = null, $isPublished = null): int
     {
-        return Business::all()->count();
+        $query = Business::query();
+        if ($industry != null)
+            $query->where('industry', $industry);
+        if ($isPublished != null)
+            $query->where('is_published', $isPublished);
+        return $query->count();
     }
 
 }
