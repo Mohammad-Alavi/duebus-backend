@@ -2,15 +2,10 @@
     <h3><?= $title ?></h3>
 
     <div
-        class="control-chart"
-        data-control="chart-pie"
-        data-size="200"
-        data-center-text="<?= $all_businesses_count ?>">
-<!--        <ul>-->
-<!--            <li>Entrepreneur <span>1408</span></li>-->
-<!--            <li>Investor <span>271</span></li>-->
-<!--            <li>Representative <span>1056</span></li>-->
-<!--        </ul>-->
+        class="control-chart wrap-legend"
+        data-control="chart-bar"
+        data-height="200"
+        data-full-width="1">
         <?= $businesses_data_in_html ?>
 
     </div>

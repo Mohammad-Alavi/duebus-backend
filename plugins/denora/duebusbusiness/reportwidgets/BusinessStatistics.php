@@ -35,9 +35,11 @@ class BusinessStatistics extends ReportWidgetBase
 
         foreach ($industries as $industry) {
             $count = $this->businessRepository->countAll($industry);
+            if ($count < 1) continue;
             $businessesDataInHtml .= '<li>' . $industry . '<span>' . $count . '</span></li>';
         }
         $businessesDataInHtml .= '</ul>';
+
         return $businessesDataInHtml;
     }
 
