@@ -17,12 +17,14 @@ class BuilderTableCreateDenoraDuebusPackages extends Migration
             $table->double('offer', 10, 0);
             $table->integer('points');
             $table->boolean('recommended')->default(0);
+            $table->integer('validity_months')->default(0);
+            $table->integer('validity_days')->default(0);
             $table->integer('sort_order')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });
     }
-    
+
     public function down()
     {
         Schema::dropIfExists('denora_duebus_packages');
