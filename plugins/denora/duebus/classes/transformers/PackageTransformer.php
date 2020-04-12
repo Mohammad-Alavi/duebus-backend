@@ -21,6 +21,11 @@ class PackageTransformer {
             'points'      => $package->points,
             'recommended' => (bool)$package->recommended,
 
+            'validity'=>[
+                'months' => $package->validity_months,
+                'days'   => $package->validity_days,
+            ],
+
             'created_at' => $package->created_at,
             'updated_at' => $package->updated_at,
         ];

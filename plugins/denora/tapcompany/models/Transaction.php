@@ -47,7 +47,7 @@ class Transaction extends Model
             case 'wallet':
             {
                 $user = $userRepository->findById($this->chargeable_id);
-                $userRepository->chargeWallet($user->id, $this->points);
+                $userRepository->chargeWallet($user->id, $this->package_id);
                 //  Publish the business if exists
                 $user = $userRepository->findById($this->chargeable_id);
                 $payload = $this->wallet_payload;

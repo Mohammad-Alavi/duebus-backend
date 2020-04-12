@@ -188,7 +188,7 @@ tabs:
             span: full
             type: textarea
             tab: 'About Us'
-        section6:
+        section_p_a_p:
             label: 'Privacy Policy'
             span: full
             type: section
@@ -199,6 +199,40 @@ tabs:
             span: full
             type: textarea
             tab: 'About Us'
+        section_t_a_c:
+            label: 'Terms And Conditions'
+            span: full
+            type: section
+            tab: 'About Us'
+        terms_and_conditions_text:
+            label: Text
+            size: small
+            span: full
+            type: textarea
+            tab: 'About Us'
+        section_contact_us:
+            label: 'Contact us'
+            span: full
+            type: section
+            tab: 'About Us'
+        contact_us_repeater:
+            label: 'Contact fields'
+            prompt: 'Add new Contact field'
+            span: full
+            type: repeater
+            tab: 'About Us'
+            form:
+                fields:
+                    title:
+                        label: Title
+                        span: left
+                        placeholder: 'Phone, Email or Address'
+                        type: text
+                    text:
+                        label: Text
+                        span: right
+                        placeholder: '"+14873241", "example@example.com"'
+                        type: text
         range_of_investments_repeater:
             label: 'Range of investments'
             prompt: 'Add new range'

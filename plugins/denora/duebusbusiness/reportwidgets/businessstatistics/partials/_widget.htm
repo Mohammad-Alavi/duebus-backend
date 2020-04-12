@@ -1,0 +1,14 @@
+<div class="report-widget">
+    <h3><?= $title ?></h3>
+
+    <div
+        class="control-chart centered wrap-legend"
+        data-control="chart-pie"
+        data-size="200"
+        data-center-text="<?= $all_businesses_count ?>">
+        <ul>
+            <li>Published<span><?= $published_businesses_count ?></span></li>
+            <li>UnPublished<span><?= $unpublished_businesses_count ?></span></li>
+        </ul>
+    </div>
+</div>

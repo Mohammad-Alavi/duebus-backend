@@ -32,4 +32,17 @@ class Plugin extends PluginBase {
             ],
         ];
     }
+
+    public function registerReportWidgets()
+    {
+        return [
+            'Denora\TapCompany\ReportWidgets\TransactionStatistics' => [
+                'label'   => 'Transaction Statistics',
+                'context' => 'dashboard',
+                'permissions' => [
+                ],
+            ],
+        ];
+    }
+
 }

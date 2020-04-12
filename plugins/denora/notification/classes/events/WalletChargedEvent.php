@@ -9,10 +9,10 @@ class WalletChargedEvent extends BaseEvent
         return BaseEvent::$ACTION_TYPE_WALLET_CHARGED;
     }
 
-    public function __construct(int $receiverUserId, float $points)
+    public function __construct(int $receiverUserId, $package)
     {
         $this->objectType = BaseEvent::$OBJECT_TYPE_WALLET;
-        $this->cost = $points;
+        $this->cost = $package->points;
         parent::__construct($receiverUserId);
     }
 }

@@ -18,12 +18,31 @@ tabs:
             span: auto
             type: textarea
             tab: General
+        section1:
+            label: 'Validity date'
+            span: full
+            type: section
+            tab: General
+        validity_months:
+            label: Months
+            span: left
+            default: '0'
+            type: number
+            tab: General
+        validity_days:
+            label: Days
+            span: right
+            default: '0'
+            type: number
+            tab: General
         amount:
             label: 'Amount (KWD)'
             span: auto
+            placeholder: 'Price without offer'
+            default: '0'
             required: 1
             type: number
-            comment: 'Price without offer'
+            comment: 'Leave 0 for free packages'
             tab: Price
         offer:
             label: 'Offer (KWD)'
@@ -35,6 +54,7 @@ tabs:
         points:
             label: Points
             span: auto
+            default: '0'
             required: 1
             type: number
             comment: 'Number of points that will be added to user''s wallet.'

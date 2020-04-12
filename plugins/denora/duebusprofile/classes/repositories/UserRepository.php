@@ -1,36 +1,31 @@
 <?php namespace Denora\Duebusprofile\Classes\Repositories;
 
 use Carbon\Carbon;
+use Denora\Duebus\Classes\Repositories\PackageRepository;
 use Denora\Notification\Classes\Events\WalletChargedEvent;
 use RainLab\User\Models\User;
 
-class UserRepository {
-
-    /**
-     * @param int $userId
-     *
-     * @return User
-     */
-    public function findById(int $userId) {
-        return User::find($userId);
-    }
+class UserRepository
+{
 
     /**
      * @param string $userEmail
      *
      * @return User
      */
-    public function findByEmail(string $userEmail) {
+    public function findByEmail(string $userEmail)
+    {
         return User::findByEmail($userEmail);
     }
 
     /**
-     * @param int   $userId
+     * @param int $userId
      * @param array $data
      *
      * @return User
      */
-    public function updateUser(int $userId, array $data) {
+    public function updateUser(int $userId, array $data)
+    {
 
         $user = $this->findById($userId);
 
@@ -50,14 +45,53 @@ class UserRepository {
 
     /**
      * @param int $userId
-     * @param int $points
+     *
+     * @return User
      */
-    public function chargeWallet(int $userId, int $points) {
+    public function findById(int $userId)
+    {
+        return User::find($userId);
+    }
+
+    /**
+     * @param int $userId
+     * @param $packageId
+     */
+    public function chargeWallet(int $userId, $packageId)
+    {
+        $package = (new PackageRepository())->findById($packageId);
         $user = $this->findById($userId);
-        $user->point = $user->points + $points;
-        $user->point_expires_at = Carbon::now()->addMonths(12);
+        $user->point = $user->points + $package->points;
+        $user->point_expires_at = Carbon::now()->addMonths($package->validity_months)->addDays($package->validity_days);
         $user->save();
-        new WalletChargedEvent($userId, $points);
+        new WalletChargedEvent($userId, $package);
+    }
+
+    public function countAllUsers()
+    {
+        return User::query()->count();
+    }
+
+    public function countAllInvestors(bool $countAlsoRepresentatives = false)
+    {
+        $query = User::query()->has('investor');
+        if (!$countAlsoRepresentatives)
+            $query->doesntHave('representative');
+        return $query->count();
+    }
+
+    public function countAllEntrepreneurs(bool $countAlsoRepresentatives = false)
+    {
+        $query = User::query()->has('entrepreneur');
+        if (!$countAlsoRepresentatives)
+            $query->doesntHave('representative');
+        return $query->count();
+    }
+
+    public function countAllRepresentatives()
+    {
+        $query = User::query()->has('representative');
+        return $query->count();
     }
 
 }

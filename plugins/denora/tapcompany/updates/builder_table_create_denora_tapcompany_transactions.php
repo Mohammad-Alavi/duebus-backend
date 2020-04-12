@@ -11,14 +11,14 @@ class BuilderTableCreateDenoraTapcompanyTransactions extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('package_id')->nullable();
             $table->string('chargeable');
             $table->integer('chargeable_id');
             $table->json('wallet_payload')->nullable();
             $table->json('inquiry_payload')->nullable();
-            $table->string('charge_id')->unique();
+            $table->string('charge_id')->nullable();
             $table->text('payment_url');
             $table->integer('price');
-            $table->integer('points');
             $table->text('description')->nullable();
             $table->text('redirect_url');
 

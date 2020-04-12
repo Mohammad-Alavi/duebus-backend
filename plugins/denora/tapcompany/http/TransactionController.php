@@ -54,16 +54,16 @@ class TransactionController extends Controller
 
         $walletPayload = null;
         $inquiryPayload = null;
+        $packageId = null;
         if ($data['chargeable'] == 'wallet') {
+            $packageId = $data['package_id'];
             $walletPayload = Request::input('wallet_payload', null);
             $packageRepository = new PackageRepository();
-            $package = $packageRepository->findById($data['package_id']);
+            $package = $packageRepository->findById($packageId);
             $price = $package->price;
-            $points = $package->points;
             $chargeableId = $user->id;
         } else if ($data['chargeable'] == 'business') {
             $price = ConfigTransformer::transform()['prices']['business_price_with_no_package'];
-            $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
 
@@ -72,7 +72,6 @@ class TransactionController extends Controller
         } else if ($data['chargeable'] == 'view') {
             if (!$user->investor) return Response::make(['You must be an investor'], 400);
             $price = ConfigTransformer::transform()['prices']['view_price_with_no_package'];
-            $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
 
@@ -85,7 +84,6 @@ class TransactionController extends Controller
         } else if ($data['chargeable'] == 'reveal') {
             if (!$user->investor) return Response::make(['You must be an investor'], 400);
             $price = ConfigTransformer::transform()['prices']['reveal_price_with_no_package'];
-            $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
 
@@ -99,7 +97,6 @@ class TransactionController extends Controller
             $inquiryPayload = $data['inquiry_payload'];
             $price = ConfigTransformer::transform()['prices']['inquiry_price_with_no_package'];
             $price = $price * count(json_decode($inquiryPayload));
-            $points = 0;
             $chargeableId = $data['business_id'];
             $business = (new BusinessRepository())->findById($chargeableId);
 
@@ -109,18 +106,25 @@ class TransactionController extends Controller
         } else {
             return Response::make(['Chargeable is not recognized'], 400);
         }
-        /** @var ResponseInterface $response */
-        $response = $helper->createCharge($price);
 
-        //  Create Transaction
-        $body = $response->getBody()->getContents();
-        $body = json_decode($body, true);
-        $chargeId = $body['id'];
-        $transactionUrl = $body['transaction']['url'];
+        if ($price == 0){
+            $chargeId = null;
+            $transactionUrl = $data['redirect_url'];
+        }else{
+            /** @var ResponseInterface $response */
+            $response = $helper->createCharge($price);
+
+            //  Create Transaction
+            $body = $response->getBody()->getContents();
+            $body = json_decode($body, true);
+            $chargeId = $body['id'];
+            $transactionUrl = $body['transaction']['url'];
+        }
 
         $transactionRepository = new TransactionRepository();
         $transaction = $transactionRepository->createTransaction(
             $user->id,
+            $packageId,
             $data['chargeable'],
             $chargeableId,
             $walletPayload,
@@ -128,13 +132,13 @@ class TransactionController extends Controller
             $chargeId,
             $transactionUrl,
             $price,
-            $points,
             $data['redirect_url'],
             ''
         );
 
-        return TransactionTransformer::transform($transaction);
+        $transaction = $transactionRepository->find($transaction->id);
 
+        return TransactionTransformer::transform($transaction);
     }
 
 
