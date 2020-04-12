@@ -54,24 +54,36 @@ class TransactionRepository
 
     /**
      * @param int $userId
+     * @param $packageId
      * @param string $chargeable
      * @param int $chargeableId
      * @param $walletPayload
      * @param $inquiryPayload
-     * @param string $chargeId
-     * @param string $paymentUrl
+     * @param $chargeId
+     * @param $paymentUrl
      * @param int $price
-     * @param int $points
      * @param string $redirectUrl
      * @param string $description
      *
      * @return Transaction
      */
-    function createTransaction(int $userId, string $chargeable, int $chargeableId, $walletPayload, $inquiryPayload, string $chargeId, string $paymentUrl, int $price, int $points, string $redirectUrl, string $description = '')
+    function createTransaction(
+        int $userId,
+        $packageId,
+        string $chargeable,
+        int $chargeableId,
+        $walletPayload,
+        $inquiryPayload,
+        $chargeId,
+        $paymentUrl,
+        int $price,
+        string $redirectUrl,
+        string $description = ''
+    )
     {
-
         $transaction = new Transaction();
         $transaction->user_id = $userId;
+        $transaction->package_id = $packageId;
         $transaction->chargeable = $chargeable;
         $transaction->chargeable_id = $chargeableId;
         $transaction->wallet_payload = $walletPayload;
@@ -79,11 +91,12 @@ class TransactionRepository
         $transaction->charge_id = $chargeId;
         $transaction->payment_url = $paymentUrl;
         $transaction->price = $price;
-        $transaction->points = $points;
         $transaction->redirect_url = $redirectUrl;
         $transaction->description = $description;
 
         $transaction->save();
+
+        if ($transaction->price == 0) $transaction->capture();
 
         return $transaction;
     }
